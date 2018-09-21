@@ -1,22 +1,22 @@
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:25:50 CDT 2018
+Date        : Fri Sep 21 03:13:55 CDT 2018
 Description : Not installing a signal handler for the already ignored signal 13.
 Node        : aditya-MacBookPro
-Process     : main <6026>
-Thread      : main thread 7f1c5a044740
-Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537514750.018667777
+Process     : main <10093>
+Thread      : main thread 7f152c91e740
+Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537517635.049922942
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:25:50 CDT 2018
+Date        : Fri Sep 21 03:13:55 CDT 2018
 Description : u_domainNew:Database allocated on heap
 Node        : aditya-MacBookPro
-Process     : main <6026>
-Thread      : spliced 7f1c5a08c700
-Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537514750.027628478
+Process     : main <10093>
+Thread      : spliced 7f152c967700
+Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537517635.058935015
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:25:50 CDT 2018
+Date        : Fri Sep 21 03:13:55 CDT 2018
 Description : ---------------------------------------------------------------
               -- The service is using the following configuration settings --
               ---------------------------------------------------------------
@@ -29,84 +29,84 @@ Description : ---------------------------------------------------------------
               Builtin topics       : true
               Priority inheritance : false
 Node        : aditya-MacBookPro
-Process     : main <6026>
-Thread      : spliced 7f1c5a08c700
-Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537514750.053297472
+Process     : main <10093>
+Thread      : spliced 7f152c967700
+Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537517635.077242251
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:25:50 CDT 2018
+Date        : Fri Sep 21 03:13:55 CDT 2018
 Description : ++++++++++++++++++++++++++++++++++++++++++++++++
               ++ The service 'splicedaemon' is now operational. 
               ++++++++++++++++++++++++++++++++++++++++++++++++
 Node        : aditya-MacBookPro
-Process     : main <6026>
-Thread      : spliced 7f1c5a08c700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537514750.055195525
+Process     : main <10093>
+Thread      : spliced 7f152c967700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517635.079381325
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:25:50 CDT 2018
-Description : SOAP service is reachable via port 34119
+Date        : Fri Sep 21 03:13:55 CDT 2018
+Description : SOAP service is reachable via port 33129
 Node        : aditya-MacBookPro
-Process     : main <6026>
-Thread      : cmsoap 7f1c5396a700
-Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537514750.057735492
+Process     : main <10093>
+Thread      : cmsoap 7f152a2ba700
+Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537517635.081656898
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:25:50 CDT 2018
+Date        : Fri Sep 21 03:13:55 CDT 2018
 Description : ++++++++++++++++++++++++++++++++++++++++++++++++
               ++ The service 'cmsoap' is now operational. 
               ++++++++++++++++++++++++++++++++++++++++++++++++
 Node        : aditya-MacBookPro
-Process     : main <6026>
-Thread      : cmsoap 7f1c5396a700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537514750.059560025
+Process     : main <10093>
+Thread      : cmsoap 7f152a2ba700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517635.081961724
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:25:50 CDT 2018
+Date        : Fri Sep 21 03:13:55 CDT 2018
 Description : ++++++++++++++++++++++++++++++++++++++++++++++++
               ++ The service 'ddsi2' is now operational. 
               ++++++++++++++++++++++++++++++++++++++++++++++++
 Node        : aditya-MacBookPro
-Process     : main <6026>
-Thread      : ddsi2 7f1c535fb700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537514750.069563944
+Process     : main <10093>
+Thread      : ddsi2 7f1529f4b700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517635.090347881
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:25:50 CDT 2018
-Description : The durability service can by identified by ID: 1634863706
+Date        : Fri Sep 21 03:13:55 CDT 2018
+Description : The durability service can by identified by ID: 1160688996
 Node        : aditya-MacBookPro
-Process     : main <6026>
-Thread      : durability 7f1c5329b700
-Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537514750.172249475
+Process     : main <10093>
+Thread      : durability 7f1529beb700
+Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537517635.200691063
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:25:57 CDT 2018
+Date        : Fri Sep 21 03:14:02 CDT 2018
 Description : ++++++++++++++++++++++++++++++++++++++++++++++++
               ++ The service 'durability' is now operational. 
               ++++++++++++++++++++++++++++++++++++++++++++++++
 Node        : aditya-MacBookPro
-Process     : main <6026>
-Thread      : durability 7f1c5329b700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537514757.183812462
+Process     : main <10093>
+Thread      : durability 7f1529beb700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517642.211532683
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:27:22 CDT 2018
+Date        : Fri Sep 21 03:14:30 CDT 2018
 Description : Not installing a signal handler for the already ignored signal 13.
 Node        : aditya-MacBookPro
-Process     : main <6180>
-Thread      : main thread 7f3c5fd4a740
-Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537514842.613636693
+Process     : main <10185>
+Thread      : main thread 7ff882b03740
+Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537517670.337671547
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:27:22 CDT 2018
+Date        : Fri Sep 21 03:14:30 CDT 2018
 Description : u_domainNew:Database allocated on heap
 Node        : aditya-MacBookPro
-Process     : main <6180>
-Thread      : spliced 7f3c5fd92700
-Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537514842.622411879
+Process     : main <10185>
+Thread      : spliced 7ff882b4c700
+Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537517670.345420141
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:27:22 CDT 2018
+Date        : Fri Sep 21 03:14:30 CDT 2018
 Description : ---------------------------------------------------------------
               -- The service is using the following configuration settings --
               ---------------------------------------------------------------
@@ -119,84 +119,84 @@ Description : ---------------------------------------------------------------
               Builtin topics       : true
               Priority inheritance : false
 Node        : aditya-MacBookPro
-Process     : main <6180>
-Thread      : spliced 7f3c5fd92700
-Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537514842.639332076
+Process     : main <10185>
+Thread      : spliced 7ff882b4c700
+Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537517670.363560088
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:27:22 CDT 2018
+Date        : Fri Sep 21 03:14:30 CDT 2018
 Description : ++++++++++++++++++++++++++++++++++++++++++++++++
               ++ The service 'splicedaemon' is now operational. 
               ++++++++++++++++++++++++++++++++++++++++++++++++
 Node        : aditya-MacBookPro
-Process     : main <6180>
-Thread      : spliced 7f3c5fd92700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537514842.642591757
+Process     : main <10185>
+Thread      : spliced 7ff882b4c700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517670.364438757
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:27:22 CDT 2018
-Description : SOAP service is reachable via port 37073
+Date        : Fri Sep 21 03:14:30 CDT 2018
+Description : SOAP service is reachable via port 41961
 Node        : aditya-MacBookPro
-Process     : main <6180>
-Thread      : cmsoap 7f3c5d6e6700
-Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537514842.646330793
+Process     : main <10185>
+Thread      : cmsoap 7ff88049f700
+Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537517670.365983426
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:27:22 CDT 2018
+Date        : Fri Sep 21 03:14:30 CDT 2018
 Description : ++++++++++++++++++++++++++++++++++++++++++++++++
               ++ The service 'cmsoap' is now operational. 
               ++++++++++++++++++++++++++++++++++++++++++++++++
 Node        : aditya-MacBookPro
-Process     : main <6180>
-Thread      : cmsoap 7f3c5d6e6700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537514842.646479912
+Process     : main <10185>
+Thread      : cmsoap 7ff88049f700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517670.367160476
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:27:22 CDT 2018
+Date        : Fri Sep 21 03:14:30 CDT 2018
 Description : ++++++++++++++++++++++++++++++++++++++++++++++++
               ++ The service 'ddsi2' is now operational. 
               ++++++++++++++++++++++++++++++++++++++++++++++++
 Node        : aditya-MacBookPro
-Process     : main <6180>
-Thread      : ddsi2 7f3c5d377700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537514842.650757325
+Process     : main <10185>
+Thread      : ddsi2 7ff880130700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517670.373505706
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:27:22 CDT 2018
-Description : The durability service can by identified by ID: 1882571972
+Date        : Fri Sep 21 03:14:30 CDT 2018
+Description : The durability service can by identified by ID: 538297127
 Node        : aditya-MacBookPro
-Process     : main <6180>
-Thread      : durability 7f3c5d017700
-Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537514842.660508056
+Process     : main <10185>
+Thread      : durability 7ff85bd8f700
+Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537517670.496263093
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:27:29 CDT 2018
+Date        : Fri Sep 21 03:14:37 CDT 2018
 Description : ++++++++++++++++++++++++++++++++++++++++++++++++
               ++ The service 'durability' is now operational. 
               ++++++++++++++++++++++++++++++++++++++++++++++++
 Node        : aditya-MacBookPro
-Process     : main <6180>
-Thread      : durability 7f3c5d017700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537514849.674043687
+Process     : main <10185>
+Thread      : durability 7ff85bd8f700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517677.509744916
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:27:41 CDT 2018
+Date        : Fri Sep 21 03:14:46 CDT 2018
 Description : Not installing a signal handler for the already ignored signal 13.
 Node        : aditya-MacBookPro
-Process     : main <6264>
-Thread      : main thread 7f22164b8740
-Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537514861.640927339
+Process     : main <10267>
+Thread      : main thread 7f12ca07b740
+Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537517686.965424428
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:27:41 CDT 2018
+Date        : Fri Sep 21 03:14:46 CDT 2018
 Description : u_domainNew:Database allocated on heap
 Node        : aditya-MacBookPro
-Process     : main <6264>
-Thread      : spliced 7f2216500700
-Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537514861.649887125
+Process     : main <10267>
+Thread      : spliced 7f12ca0c4700
+Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537517686.974101512
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:27:41 CDT 2018
+Date        : Fri Sep 21 03:14:46 CDT 2018
 Description : ---------------------------------------------------------------
               -- The service is using the following configuration settings --
               ---------------------------------------------------------------
@@ -209,84 +209,84 @@ Description : ---------------------------------------------------------------
               Builtin topics       : true
               Priority inheritance : false
 Node        : aditya-MacBookPro
-Process     : main <6264>
-Thread      : spliced 7f2216500700
-Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537514861.666011106
+Process     : main <10267>
+Thread      : spliced 7f12ca0c4700
+Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537517686.989821578
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:27:41 CDT 2018
+Date        : Fri Sep 21 03:14:46 CDT 2018
 Description : ++++++++++++++++++++++++++++++++++++++++++++++++
               ++ The service 'splicedaemon' is now operational. 
               ++++++++++++++++++++++++++++++++++++++++++++++++
 Node        : aditya-MacBookPro
-Process     : main <6264>
-Thread      : spliced 7f2216500700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537514861.666953866
+Process     : main <10267>
+Thread      : spliced 7f12ca0c4700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517686.991492080
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:27:41 CDT 2018
-Description : SOAP service is reachable via port 42799
+Date        : Fri Sep 21 03:14:46 CDT 2018
+Description : SOAP service is reachable via port 39169
 Node        : aditya-MacBookPro
-Process     : main <6264>
-Thread      : cmsoap 7f21efdef700
-Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537514861.670156658
+Process     : main <10267>
+Thread      : cmsoap 7f12c396a700
+Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537517686.993831081
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:27:41 CDT 2018
+Date        : Fri Sep 21 03:14:46 CDT 2018
 Description : ++++++++++++++++++++++++++++++++++++++++++++++++
               ++ The service 'cmsoap' is now operational. 
               ++++++++++++++++++++++++++++++++++++++++++++++++
 Node        : aditya-MacBookPro
-Process     : main <6264>
-Thread      : cmsoap 7f21efdef700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537514861.671271828
+Process     : main <10267>
+Thread      : cmsoap 7f12c396a700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517686.994273710
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:27:41 CDT 2018
+Date        : Fri Sep 21 03:14:46 CDT 2018
 Description : ++++++++++++++++++++++++++++++++++++++++++++++++
               ++ The service 'ddsi2' is now operational. 
               ++++++++++++++++++++++++++++++++++++++++++++++++
 Node        : aditya-MacBookPro
-Process     : main <6264>
-Thread      : ddsi2 7f21efa80700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537514861.683277660
+Process     : main <10267>
+Thread      : ddsi2 7f12c35fb700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517686.997762046
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:27:41 CDT 2018
-Description : The durability service can by identified by ID: 1642432420
+Date        : Fri Sep 21 03:14:47 CDT 2018
+Description : The durability service can by identified by ID: 2044478111
 Node        : aditya-MacBookPro
-Process     : main <6264>
-Thread      : durability 7f21ef720700
-Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537514861.801136572
+Process     : main <10267>
+Thread      : durability 7f12c329b700
+Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537517687.117310946
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:27:48 CDT 2018
+Date        : Fri Sep 21 03:14:54 CDT 2018
 Description : ++++++++++++++++++++++++++++++++++++++++++++++++
               ++ The service 'durability' is now operational. 
               ++++++++++++++++++++++++++++++++++++++++++++++++
 Node        : aditya-MacBookPro
-Process     : main <6264>
-Thread      : durability 7f21ef720700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537514868.816283441
+Process     : main <10267>
+Thread      : durability 7f12c329b700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517694.131286070
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:29:16 CDT 2018
+Date        : Fri Sep 21 03:15:04 CDT 2018
 Description : Not installing a signal handler for the already ignored signal 13.
 Node        : aditya-MacBookPro
-Process     : main <6450>
-Thread      : main thread 7fc9be7a3740
-Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537514956.024258318
+Process     : main <10348>
+Thread      : main thread 7f7a91ed7740
+Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537517704.905589219
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:29:16 CDT 2018
+Date        : Fri Sep 21 03:15:04 CDT 2018
 Description : u_domainNew:Database allocated on heap
 Node        : aditya-MacBookPro
-Process     : main <6450>
-Thread      : spliced 7fc9be7eb700
-Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537514956.032826602
+Process     : main <10348>
+Thread      : spliced 7f7a91f20700
+Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537517704.911426056
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:29:16 CDT 2018
+Date        : Fri Sep 21 03:15:04 CDT 2018
 Description : ---------------------------------------------------------------
               -- The service is using the following configuration settings --
               ---------------------------------------------------------------
@@ -299,1946 +299,62 @@ Description : ---------------------------------------------------------------
               Builtin topics       : true
               Priority inheritance : false
 Node        : aditya-MacBookPro
-Process     : main <6450>
-Thread      : spliced 7fc9be7eb700
-Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537514956.047090753
+Process     : main <10348>
+Thread      : spliced 7f7a91f20700
+Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537517704.924069074
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:29:16 CDT 2018
+Date        : Fri Sep 21 03:15:04 CDT 2018
 Description : ++++++++++++++++++++++++++++++++++++++++++++++++
               ++ The service 'splicedaemon' is now operational. 
               ++++++++++++++++++++++++++++++++++++++++++++++++
 Node        : aditya-MacBookPro
-Process     : main <6450>
-Thread      : spliced 7fc9be7eb700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537514956.048156807
+Process     : main <10348>
+Thread      : spliced 7f7a91f20700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517704.924987331
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:29:16 CDT 2018
-Description : SOAP service is reachable via port 43809
+Date        : Fri Sep 21 03:15:04 CDT 2018
+Description : SOAP service is reachable via port 42067
 Node        : aditya-MacBookPro
-Process     : main <6450>
-Thread      : cmsoap 7fc9bc13f700
-Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537514956.049347857
+Process     : main <10348>
+Thread      : cmsoap 7f7a8f873700
+Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537517704.927123097
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:29:16 CDT 2018
+Date        : Fri Sep 21 03:15:04 CDT 2018
 Description : ++++++++++++++++++++++++++++++++++++++++++++++++
               ++ The service 'cmsoap' is now operational. 
               ++++++++++++++++++++++++++++++++++++++++++++++++
 Node        : aditya-MacBookPro
-Process     : main <6450>
-Thread      : cmsoap 7fc9bc13f700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537514956.049656865
+Process     : main <10348>
+Thread      : cmsoap 7f7a8f873700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517704.927558063
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:29:16 CDT 2018
+Date        : Fri Sep 21 03:15:04 CDT 2018
 Description : ++++++++++++++++++++++++++++++++++++++++++++++++
               ++ The service 'ddsi2' is now operational. 
               ++++++++++++++++++++++++++++++++++++++++++++++++
 Node        : aditya-MacBookPro
-Process     : main <6450>
-Thread      : ddsi2 7fc997d91700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537514956.054370446
+Process     : main <10348>
+Thread      : ddsi2 7f7a8f504700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517704.931475357
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:29:16 CDT 2018
-Description : The durability service can by identified by ID: 1165432197
+Date        : Fri Sep 21 03:15:04 CDT 2018
+Description : The durability service can by identified by ID: 438438399
 Node        : aditya-MacBookPro
-Process     : main <6450>
-Thread      : durability 7fc997a31700
-Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537514956.066564409
+Process     : main <10348>
+Thread      : durability 7f7a8f1a4700
+Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537517704.943628306
 ========================================================================================
 Report      : INFO
-Date        : Fri Sep 21 02:29:23 CDT 2018
+Date        : Fri Sep 21 03:15:11 CDT 2018
 Description : ++++++++++++++++++++++++++++++++++++++++++++++++
               ++ The service 'durability' is now operational. 
               ++++++++++++++++++++++++++++++++++++++++++++++++
 Node        : aditya-MacBookPro
-Process     : main <6450>
-Thread      : durability 7fc997a31700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537514963.078560749
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:29:32 CDT 2018
-Description : Not installing a signal handler for the already ignored signal 13.
-Node        : aditya-MacBookPro
-Process     : main <6527>
-Thread      : main thread 7f3f7cedf740
-Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537514972.434018730
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:29:32 CDT 2018
-Description : u_domainNew:Database allocated on heap
-Node        : aditya-MacBookPro
-Process     : main <6527>
-Thread      : spliced 7f3f7cf27700
-Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537514972.442723062
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:29:32 CDT 2018
-Description : ---------------------------------------------------------------
-              -- The service is using the following configuration settings --
-              ---------------------------------------------------------------
-              Domain (id)          : ospl_sp_ddsi (0)
-              Storage              : 10240 Kbytes
-              Storage threshold    : 1024 Kbytes
-              Storage address      : Not available
-              Locking              : default
-              Memory mode          : Heap memory
-              Builtin topics       : true
-              Priority inheritance : false
-Node        : aditya-MacBookPro
-Process     : main <6527>
-Thread      : spliced 7f3f7cf27700
-Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537514972.454551056
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:29:32 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'splicedaemon' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <6527>
-Thread      : spliced 7f3f7cf27700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537514972.455423877
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:29:32 CDT 2018
-Description : SOAP service is reachable via port 46647
-Node        : aditya-MacBookPro
-Process     : main <6527>
-Thread      : cmsoap 7f3f7a87b700
-Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537514972.456698788
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:29:32 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'cmsoap' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <6527>
-Thread      : cmsoap 7f3f7a87b700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537514972.456948118
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:29:32 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'ddsi2' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <6527>
-Thread      : ddsi2 7f3f7a50c700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537514972.464348282
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:29:32 CDT 2018
-Description : The durability service can by identified by ID: 1185433483
-Node        : aditya-MacBookPro
-Process     : main <6527>
-Thread      : durability 7f3f7a179700
-Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537514972.587551897
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:29:39 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'durability' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <6527>
-Thread      : durability 7f3f7a179700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537514979.601617480
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:29:45 CDT 2018
-Description : Not installing a signal handler for the already ignored signal 13.
-Node        : aditya-MacBookPro
-Process     : main <6600>
-Thread      : main thread 7f80824e4740
-Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537514985.021015009
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:29:45 CDT 2018
-Description : u_domainNew:Database allocated on heap
-Node        : aditya-MacBookPro
-Process     : main <6600>
-Thread      : spliced 7f808252c700
-Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537514985.029855974
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:29:45 CDT 2018
-Description : ---------------------------------------------------------------
-              -- The service is using the following configuration settings --
-              ---------------------------------------------------------------
-              Domain (id)          : ospl_sp_ddsi (0)
-              Storage              : 10240 Kbytes
-              Storage threshold    : 1024 Kbytes
-              Storage address      : Not available
-              Locking              : default
-              Memory mode          : Heap memory
-              Builtin topics       : true
-              Priority inheritance : false
-Node        : aditya-MacBookPro
-Process     : main <6600>
-Thread      : spliced 7f808252c700
-Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537514985.043974928
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:29:45 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'splicedaemon' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <6600>
-Thread      : spliced 7f808252c700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537514985.045360085
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:29:45 CDT 2018
-Description : SOAP service is reachable via port 41857
-Node        : aditya-MacBookPro
-Process     : main <6600>
-Thread      : cmsoap 7f805bdef700
-Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537514985.047180699
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:29:45 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'cmsoap' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <6600>
-Thread      : cmsoap 7f805bdef700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537514985.047414242
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:29:45 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'ddsi2' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <6600>
-Thread      : ddsi2 7f805ba80700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537514985.052969987
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:29:45 CDT 2018
-Description : The durability service can by identified by ID: 1078677476
-Node        : aditya-MacBookPro
-Process     : main <6600>
-Thread      : durability 7f805b720700
-Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537514985.059650947
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:31:48 CDT 2018
-Description : Not installing a signal handler for the already ignored signal 13.
-Node        : aditya-MacBookPro
-Process     : main <6740>
-Thread      : main thread 7f20d36a8740
-Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537515108.410081298
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:31:48 CDT 2018
-Description : u_domainNew:Database allocated on heap
-Node        : aditya-MacBookPro
-Process     : main <6740>
-Thread      : spliced 7f20d36f0700
-Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537515108.416653643
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:31:48 CDT 2018
-Description : ---------------------------------------------------------------
-              -- The service is using the following configuration settings --
-              ---------------------------------------------------------------
-              Domain (id)          : ospl_sp_ddsi (0)
-              Storage              : 10240 Kbytes
-              Storage threshold    : 1024 Kbytes
-              Storage address      : Not available
-              Locking              : default
-              Memory mode          : Heap memory
-              Builtin topics       : true
-              Priority inheritance : false
-Node        : aditya-MacBookPro
-Process     : main <6740>
-Thread      : spliced 7f20d36f0700
-Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537515108.434733163
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:31:48 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'splicedaemon' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <6740>
-Thread      : spliced 7f20d36f0700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537515108.435745091
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:31:48 CDT 2018
-Description : SOAP service is reachable via port 34937
-Node        : aditya-MacBookPro
-Process     : main <6740>
-Thread      : cmsoap 7f20d1044700
-Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537515108.437541602
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:31:48 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'cmsoap' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <6740>
-Thread      : cmsoap 7f20d1044700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537515108.437828242
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:31:48 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'ddsi2' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <6740>
-Thread      : ddsi2 7f20d0cd5700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537515108.449011041
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:31:48 CDT 2018
-Description : The durability service can by identified by ID: 1610164763
-Node        : aditya-MacBookPro
-Process     : main <6740>
-Thread      : durability 7f20d0964700
-Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537515108.560429462
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:31:55 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'durability' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <6740>
-Thread      : durability 7f20d0964700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537515115.575721731
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:33:00 CDT 2018
-Description : Not installing a signal handler for the already ignored signal 13.
-Node        : aditya-MacBookPro
-Process     : main <6874>
-Thread      : main thread 7fcd0d8b0740
-Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537515180.401395764
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:33:00 CDT 2018
-Description : u_domainNew:Database allocated on heap
-Node        : aditya-MacBookPro
-Process     : main <6874>
-Thread      : spliced 7fcd0d8f8700
-Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537515180.410132177
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:33:00 CDT 2018
-Description : ---------------------------------------------------------------
-              -- The service is using the following configuration settings --
-              ---------------------------------------------------------------
-              Domain (id)          : ospl_sp_ddsi (0)
-              Storage              : 10240 Kbytes
-              Storage threshold    : 1024 Kbytes
-              Storage address      : Not available
-              Locking              : default
-              Memory mode          : Heap memory
-              Builtin topics       : true
-              Priority inheritance : false
-Node        : aditya-MacBookPro
-Process     : main <6874>
-Thread      : spliced 7fcd0d8f8700
-Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537515180.425934036
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:33:00 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'splicedaemon' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <6874>
-Thread      : spliced 7fcd0d8f8700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537515180.426923084
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:33:00 CDT 2018
-Description : SOAP service is reachable via port 34497
-Node        : aditya-MacBookPro
-Process     : main <6874>
-Thread      : cmsoap 7fcd0b24c700
-Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537515180.428467742
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:33:00 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'cmsoap' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <6874>
-Thread      : cmsoap 7fcd0b24c700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537515180.428757676
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:33:00 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'ddsi2' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <6874>
-Thread      : ddsi2 7fcd0aedd700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537515180.433616129
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:33:00 CDT 2018
-Description : The durability service can by identified by ID: 548967112
-Node        : aditya-MacBookPro
-Process     : main <6874>
-Thread      : durability 7fcd0ab5b700
-Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537515180.444286395
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:33:07 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'durability' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <6874>
-Thread      : durability 7fcd0ab5b700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537515187.458803792
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:40:08 CDT 2018
-Description : Not installing a signal handler for the already ignored signal 13.
-Node        : aditya-MacBookPro
-Process     : main <7162>
-Thread      : main thread 7f034919d740
-Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537515608.872648085
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:40:08 CDT 2018
-Description : u_domainNew:Database allocated on heap
-Node        : aditya-MacBookPro
-Process     : main <7162>
-Thread      : spliced 7f03491e5700
-Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537515608.877863755
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:40:08 CDT 2018
-Description : ---------------------------------------------------------------
-              -- The service is using the following configuration settings --
-              ---------------------------------------------------------------
-              Domain (id)          : ospl_sp_ddsi (0)
-              Storage              : 10240 Kbytes
-              Storage threshold    : 1024 Kbytes
-              Storage address      : Not available
-              Locking              : default
-              Memory mode          : Heap memory
-              Builtin topics       : true
-              Priority inheritance : false
-Node        : aditya-MacBookPro
-Process     : main <7162>
-Thread      : spliced 7f03491e5700
-Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537515608.888660635
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:40:08 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'splicedaemon' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <7162>
-Thread      : spliced 7f03491e5700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537515608.889813213
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:40:08 CDT 2018
-Description : SOAP service is reachable via port 43609
-Node        : aditya-MacBookPro
-Process     : main <7162>
-Thread      : cmsoap 7f0346b39700
-Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537515608.891168003
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:40:08 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'cmsoap' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <7162>
-Thread      : cmsoap 7f0346b39700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537515608.891371937
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:40:08 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'ddsi2' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <7162>
-Thread      : ddsi2 7f03467ca700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537515608.899005265
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:40:08 CDT 2018
-Description : The durability service can by identified by ID: 733461800
-Node        : aditya-MacBookPro
-Process     : main <7162>
-Thread      : durability 7f034646a700
-Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537515608.902539985
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:43:26 CDT 2018
-Description : Not installing a signal handler for the already ignored signal 13.
-Node        : aditya-MacBookPro
-Process     : main <7391>
-Thread      : main thread 7f6424e44740
-Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537515806.353584405
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:43:26 CDT 2018
-Description : u_domainNew:Database allocated on heap
-Node        : aditya-MacBookPro
-Process     : main <7391>
-Thread      : spliced 7f6424e8c700
-Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537515806.361872787
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:43:26 CDT 2018
-Description : ---------------------------------------------------------------
-              -- The service is using the following configuration settings --
-              ---------------------------------------------------------------
-              Domain (id)          : ospl_sp_ddsi (0)
-              Storage              : 10240 Kbytes
-              Storage threshold    : 1024 Kbytes
-              Storage address      : Not available
-              Locking              : default
-              Memory mode          : Heap memory
-              Builtin topics       : true
-              Priority inheritance : false
-Node        : aditya-MacBookPro
-Process     : main <7391>
-Thread      : spliced 7f6424e8c700
-Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537515806.378160099
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:43:26 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'splicedaemon' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <7391>
-Thread      : spliced 7f6424e8c700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537515806.379445900
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:43:26 CDT 2018
-Description : SOAP service is reachable via port 34665
-Node        : aditya-MacBookPro
-Process     : main <7391>
-Thread      : cmsoap 7f64227e0700
-Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537515806.384444475
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:43:26 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'cmsoap' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <7391>
-Thread      : cmsoap 7f64227e0700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537515806.386316490
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:43:26 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'ddsi2' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <7391>
-Thread      : ddsi2 7f6422471700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537515806.393870281
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:43:26 CDT 2018
-Description : The durability service can by identified by ID: 1605289756
-Node        : aditya-MacBookPro
-Process     : main <7391>
-Thread      : durability 7f6422111700
-Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537515806.505655816
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:43:33 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'durability' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <7391>
-Thread      : durability 7f6422111700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537515813.516887375
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:44:08 CDT 2018
-Description : Not installing a signal handler for the already ignored signal 13.
-Node        : aditya-MacBookPro
-Process     : main <7491>
-Thread      : main thread 7f4874e8a740
-Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537515848.778467523
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:44:08 CDT 2018
-Description : u_domainNew:Database allocated on heap
-Node        : aditya-MacBookPro
-Process     : main <7491>
-Thread      : spliced 7f4874ed2700
-Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537515848.785542453
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:44:08 CDT 2018
-Description : ---------------------------------------------------------------
-              -- The service is using the following configuration settings --
-              ---------------------------------------------------------------
-              Domain (id)          : ospl_sp_ddsi (0)
-              Storage              : 10240 Kbytes
-              Storage threshold    : 1024 Kbytes
-              Storage address      : Not available
-              Locking              : default
-              Memory mode          : Heap memory
-              Builtin topics       : true
-              Priority inheritance : false
-Node        : aditya-MacBookPro
-Process     : main <7491>
-Thread      : spliced 7f4874ed2700
-Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537515848.798345451
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:44:08 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'splicedaemon' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <7491>
-Thread      : spliced 7f4874ed2700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537515848.799812155
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:44:08 CDT 2018
-Description : SOAP service is reachable via port 37043
-Node        : aditya-MacBookPro
-Process     : main <7491>
-Thread      : cmsoap 7f4872826700
-Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537515848.802863721
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:44:08 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'cmsoap' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <7491>
-Thread      : cmsoap 7f4872826700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537515848.803504445
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:44:08 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'ddsi2' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <7491>
-Thread      : ddsi2 7f48724b7700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537515848.811602703
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:44:08 CDT 2018
-Description : The durability service can by identified by ID: 869159396
-Node        : aditya-MacBookPro
-Process     : main <7491>
-Thread      : durability 7f4872135700
-Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537515848.918979492
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:52:00 CDT 2018
-Description : Not installing a signal handler for the already ignored signal 13.
-Node        : aditya-MacBookPro
-Process     : main <7825>
-Thread      : main thread 7f686bd63740
-Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537516320.357034395
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:52:00 CDT 2018
-Description : u_domainNew:Database allocated on heap
-Node        : aditya-MacBookPro
-Process     : main <7825>
-Thread      : spliced 7f686bdac700
-Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537516320.365755162
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:52:00 CDT 2018
-Description : ---------------------------------------------------------------
-              -- The service is using the following configuration settings --
-              ---------------------------------------------------------------
-              Domain (id)          : ospl_sp_ddsi (0)
-              Storage              : 10240 Kbytes
-              Storage threshold    : 1024 Kbytes
-              Storage address      : Not available
-              Locking              : default
-              Memory mode          : Heap memory
-              Builtin topics       : true
-              Priority inheritance : false
-Node        : aditya-MacBookPro
-Process     : main <7825>
-Thread      : spliced 7f686bdac700
-Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537516320.377819704
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:52:00 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'splicedaemon' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <7825>
-Thread      : spliced 7f686bdac700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516320.378830675
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:52:00 CDT 2018
-Description : SOAP service is reachable via port 44757
-Node        : aditya-MacBookPro
-Process     : main <7825>
-Thread      : cmsoap 7f68696ff700
-Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537516320.385041151
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:52:00 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'cmsoap' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <7825>
-Thread      : cmsoap 7f68696ff700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516320.385232826
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:52:00 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'ddsi2' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <7825>
-Thread      : ddsi2 7f6869390700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516320.389587211
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:52:00 CDT 2018
-Description : The durability service can by identified by ID: 1186281627
-Node        : aditya-MacBookPro
-Process     : main <7825>
-Thread      : durability 7f6869030700
-Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537516320.495129179
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:52:07 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'durability' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <7825>
-Thread      : durability 7f6869030700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516327.507995586
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:52:17 CDT 2018
-Description : Exception (signal 6) occurred in process
-Node        : aditya-MacBookPro
-Process     : main <7825>
-Thread      : signalHandler 7f686a216700
-Internals   : V6.4.140320OSS/24b1387/24b1387/signalHandlerThread/os_signalHandler.c/447/0/1537516337.486567181
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:52:32 CDT 2018
-Description : Not installing a signal handler for the already ignored signal 13.
-Node        : aditya-MacBookPro
-Process     : main <7932>
-Thread      : main thread 7f7816fb8740
-Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537516352.470768803
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:52:32 CDT 2018
-Description : u_domainNew:Database allocated on heap
-Node        : aditya-MacBookPro
-Process     : main <7932>
-Thread      : spliced 7f7817001700
-Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537516352.483864354
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:52:32 CDT 2018
-Description : ---------------------------------------------------------------
-              -- The service is using the following configuration settings --
-              ---------------------------------------------------------------
-              Domain (id)          : ospl_sp_ddsi (0)
-              Storage              : 10240 Kbytes
-              Storage threshold    : 1024 Kbytes
-              Storage address      : Not available
-              Locking              : default
-              Memory mode          : Heap memory
-              Builtin topics       : true
-              Priority inheritance : false
-Node        : aditya-MacBookPro
-Process     : main <7932>
-Thread      : spliced 7f7817001700
-Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537516352.516262404
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:52:32 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'splicedaemon' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <7932>
-Thread      : spliced 7f7817001700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516352.521361375
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:52:32 CDT 2018
-Description : SOAP service is reachable via port 40447
-Node        : aditya-MacBookPro
-Process     : main <7932>
-Thread      : cmsoap 7f7814954700
-Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537516352.549891508
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:52:32 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'cmsoap' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <7932>
-Thread      : cmsoap 7f7814954700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516352.553185443
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:52:32 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'ddsi2' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <7932>
-Thread      : ddsi2 7f78145e5700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516352.561555114
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:52:32 CDT 2018
-Description : The durability service can by identified by ID: 1895467582
-Node        : aditya-MacBookPro
-Process     : main <7932>
-Thread      : durability 7f7814285700
-Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537516352.672038828
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:52:39 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'durability' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <7932>
-Thread      : durability 7f7814285700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516359.684875353
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:52:44 CDT 2018
-Description : Exception (signal 6) occurred in process
-Node        : aditya-MacBookPro
-Process     : main <7932>
-Thread      : signalHandler 7f781546b700
-Internals   : V6.4.140320OSS/24b1387/24b1387/signalHandlerThread/os_signalHandler.c/447/0/1537516364.370809251
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:53:21 CDT 2018
-Description : Not installing a signal handler for the already ignored signal 13.
-Node        : aditya-MacBookPro
-Process     : main <8061>
-Thread      : main thread 7f2af9f5a740
-Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537516401.793358664
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:53:21 CDT 2018
-Description : u_domainNew:Database allocated on heap
-Node        : aditya-MacBookPro
-Process     : main <8061>
-Thread      : spliced 7f2af9fa3700
-Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537516401.801830505
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:53:21 CDT 2018
-Description : ---------------------------------------------------------------
-              -- The service is using the following configuration settings --
-              ---------------------------------------------------------------
-              Domain (id)          : ospl_sp_ddsi (0)
-              Storage              : 10240 Kbytes
-              Storage threshold    : 1024 Kbytes
-              Storage address      : Not available
-              Locking              : default
-              Memory mode          : Heap memory
-              Builtin topics       : true
-              Priority inheritance : false
-Node        : aditya-MacBookPro
-Process     : main <8061>
-Thread      : spliced 7f2af9fa3700
-Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537516401.819135188
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:53:21 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'splicedaemon' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <8061>
-Thread      : spliced 7f2af9fa3700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516401.820470988
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:53:21 CDT 2018
-Description : SOAP service is reachable via port 40577
-Node        : aditya-MacBookPro
-Process     : main <8061>
-Thread      : cmsoap 7f2af38e9700
-Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537516401.822716308
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:53:21 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'cmsoap' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <8061>
-Thread      : cmsoap 7f2af38e9700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516401.823003791
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:53:21 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'ddsi2' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <8061>
-Thread      : ddsi2 7f2af357a700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516401.831144200
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:53:21 CDT 2018
-Description : The durability service can by identified by ID: 507893288
-Node        : aditya-MacBookPro
-Process     : main <8061>
-Thread      : durability 7f2af321a700
-Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537516401.944730311
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:53:28 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'durability' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <8061>
-Thread      : durability 7f2af321a700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516408.957089429
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:53:34 CDT 2018
-Description : Exception (signal 6) occurred in process
-Node        : aditya-MacBookPro
-Process     : main <8061>
-Thread      : signalHandler 7f2af840d700
-Internals   : V6.4.140320OSS/24b1387/24b1387/signalHandlerThread/os_signalHandler.c/447/0/1537516414.918175070
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:55:01 CDT 2018
-Description : Not installing a signal handler for the already ignored signal 13.
-Node        : aditya-MacBookPro
-Process     : main <8245>
-Thread      : main thread 7f0fb2072740
-Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537516501.621820777
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:55:01 CDT 2018
-Description : u_domainNew:Database allocated on heap
-Node        : aditya-MacBookPro
-Process     : main <8245>
-Thread      : spliced 7f0fb20bb700
-Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537516501.630609114
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:55:01 CDT 2018
-Description : ---------------------------------------------------------------
-              -- The service is using the following configuration settings --
-              ---------------------------------------------------------------
-              Domain (id)          : ospl_sp_ddsi (0)
-              Storage              : 10240 Kbytes
-              Storage threshold    : 1024 Kbytes
-              Storage address      : Not available
-              Locking              : default
-              Memory mode          : Heap memory
-              Builtin topics       : true
-              Priority inheritance : false
-Node        : aditya-MacBookPro
-Process     : main <8245>
-Thread      : spliced 7f0fb20bb700
-Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537516501.646220253
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:55:01 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'splicedaemon' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <8245>
-Thread      : spliced 7f0fb20bb700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516501.647164609
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:55:01 CDT 2018
-Description : SOAP service is reachable via port 37041
-Node        : aditya-MacBookPro
-Process     : main <8245>
-Thread      : cmsoap 7f0fab96a700
-Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537516501.650828175
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:55:01 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'cmsoap' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <8245>
-Thread      : cmsoap 7f0fab96a700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516501.651056516
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:55:01 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'ddsi2' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <8245>
-Thread      : ddsi2 7f0fab5fb700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516501.659046133
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:55:01 CDT 2018
-Description : The durability service can by identified by ID: 1564288426
-Node        : aditya-MacBookPro
-Process     : main <8245>
-Thread      : durability 7f0fab29b700
-Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537516501.881550677
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:55:08 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'durability' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <8245>
-Thread      : durability 7f0fab29b700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516508.895260101
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:55:15 CDT 2018
-Description : Exception (signal 11) occurred in process
-Node        : aditya-MacBookPro
-Process     : main <8245>
-Thread      : signalHandler 7f0fb0525700
-Internals   : V6.4.140320OSS/24b1387/24b1387/signalHandlerThread/os_signalHandler.c/447/0/1537516515.030077973
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:56:39 CDT 2018
-Description : Not installing a signal handler for the already ignored signal 13.
-Node        : aditya-MacBookPro
-Process     : main <8397>
-Thread      : main thread 7f8a9f1a2740
-Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537516599.035275553
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:56:39 CDT 2018
-Description : u_domainNew:Database allocated on heap
-Node        : aditya-MacBookPro
-Process     : main <8397>
-Thread      : spliced 7f8a9f1eb700
-Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537516599.042965096
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:56:39 CDT 2018
-Description : ---------------------------------------------------------------
-              -- The service is using the following configuration settings --
-              ---------------------------------------------------------------
-              Domain (id)          : ospl_sp_ddsi (0)
-              Storage              : 10240 Kbytes
-              Storage threshold    : 1024 Kbytes
-              Storage address      : Not available
-              Locking              : default
-              Memory mode          : Heap memory
-              Builtin topics       : true
-              Priority inheritance : false
-Node        : aditya-MacBookPro
-Process     : main <8397>
-Thread      : spliced 7f8a9f1eb700
-Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537516599.055944121
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:56:39 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'splicedaemon' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <8397>
-Thread      : spliced 7f8a9f1eb700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516599.056922957
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:56:39 CDT 2018
-Description : SOAP service is reachable via port 38823
-Node        : aditya-MacBookPro
-Process     : main <8397>
-Thread      : cmsoap 7f8a9cb3e700
-Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537516599.058944921
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:56:39 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'cmsoap' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <8397>
-Thread      : cmsoap 7f8a9cb3e700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516599.059263407
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:56:39 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'ddsi2' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <8397>
-Thread      : ddsi2 7f8a9c7cf700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516599.068560095
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:56:39 CDT 2018
-Description : The durability service can by identified by ID: 989699306
-Node        : aditya-MacBookPro
-Process     : main <8397>
-Thread      : durability 7f8a9c44d700
-Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537516599.281818279
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:56:45 CDT 2018
-Description : Exception (signal 11) occurred in process
-Node        : aditya-MacBookPro
-Process     : main <8397>
-Thread      : signalHandler 7f8a9d655700
-Internals   : V6.4.140320OSS/24b1387/24b1387/signalHandlerThread/os_signalHandler.c/447/0/1537516605.881926462
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:57:49 CDT 2018
-Description : Not installing a signal handler for the already ignored signal 13.
-Node        : aditya-MacBookPro
-Process     : main <8534>
-Thread      : main thread 7f642b09f740
-Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537516669.292370759
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:57:49 CDT 2018
-Description : u_domainNew:Database allocated on heap
-Node        : aditya-MacBookPro
-Process     : main <8534>
-Thread      : spliced 7f642b0e8700
-Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537516669.299675440
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:57:49 CDT 2018
-Description : ---------------------------------------------------------------
-              -- The service is using the following configuration settings --
-              ---------------------------------------------------------------
-              Domain (id)          : ospl_sp_ddsi (0)
-              Storage              : 10240 Kbytes
-              Storage threshold    : 1024 Kbytes
-              Storage address      : Not available
-              Locking              : default
-              Memory mode          : Heap memory
-              Builtin topics       : true
-              Priority inheritance : false
-Node        : aditya-MacBookPro
-Process     : main <8534>
-Thread      : spliced 7f642b0e8700
-Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537516669.315519158
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:57:49 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'splicedaemon' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <8534>
-Thread      : spliced 7f642b0e8700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516669.316587218
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:57:49 CDT 2018
-Description : SOAP service is reachable via port 35191
-Node        : aditya-MacBookPro
-Process     : main <8534>
-Thread      : cmsoap 7f6428a3b700
-Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537516669.322346791
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:57:49 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'cmsoap' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <8534>
-Thread      : cmsoap 7f6428a3b700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516669.322572348
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:57:49 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'ddsi2' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <8534>
-Thread      : ddsi2 7f64286cc700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516669.329336432
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:57:49 CDT 2018
-Description : The durability service can by identified by ID: 1283181352
-Node        : aditya-MacBookPro
-Process     : main <8534>
-Thread      : durability 7f642834a700
-Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537516669.336645373
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:57:56 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'durability' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <8534>
-Thread      : durability 7f642834a700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516676.349935959
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:57:57 CDT 2018
-Description : Exception (signal 11) occurred in process
-Node        : aditya-MacBookPro
-Process     : main <8534>
-Thread      : signalHandler 7f6429552700
-Internals   : V6.4.140320OSS/24b1387/24b1387/signalHandlerThread/os_signalHandler.c/447/0/1537516677.508698552
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:59:43 CDT 2018
-Description : Not installing a signal handler for the already ignored signal 13.
-Node        : aditya-MacBookPro
-Process     : main <8682>
-Thread      : main thread 7f7482ffb740
-Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537516783.313537644
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:59:43 CDT 2018
-Description : u_domainNew:Database allocated on heap
-Node        : aditya-MacBookPro
-Process     : main <8682>
-Thread      : spliced 7f7483044700
-Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537516783.322243421
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:59:43 CDT 2018
-Description : ---------------------------------------------------------------
-              -- The service is using the following configuration settings --
-              ---------------------------------------------------------------
-              Domain (id)          : ospl_sp_ddsi (0)
-              Storage              : 10240 Kbytes
-              Storage threshold    : 1024 Kbytes
-              Storage address      : Not available
-              Locking              : default
-              Memory mode          : Heap memory
-              Builtin topics       : true
-              Priority inheritance : false
-Node        : aditya-MacBookPro
-Process     : main <8682>
-Thread      : spliced 7f7483044700
-Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537516783.348733619
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:59:43 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'splicedaemon' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <8682>
-Thread      : spliced 7f7483044700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516783.350239109
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:59:43 CDT 2018
-Description : SOAP service is reachable via port 40271
-Node        : aditya-MacBookPro
-Process     : main <8682>
-Thread      : cmsoap 7f7480997700
-Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537516783.355465264
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:59:43 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'cmsoap' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <8682>
-Thread      : cmsoap 7f7480997700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516783.355947846
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:59:43 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'ddsi2' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <8682>
-Thread      : ddsi2 7f7480628700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516783.367440122
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:59:43 CDT 2018
-Description : The durability service can by identified by ID: 1730124062
-Node        : aditya-MacBookPro
-Process     : main <8682>
-Thread      : durability 7f74802c8700
-Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537516783.472760884
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 02:59:50 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'durability' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <8682>
-Thread      : durability 7f74802c8700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516790.487609142
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:00:02 CDT 2018
-Description : Exception (signal 11) occurred in process
-Node        : aditya-MacBookPro
-Process     : main <8682>
-Thread      : signalHandler 7f74814ae700
-Internals   : V6.4.140320OSS/24b1387/24b1387/signalHandlerThread/os_signalHandler.c/447/0/1537516802.263018368
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:00:41 CDT 2018
-Description : Not installing a signal handler for the already ignored signal 13.
-Node        : aditya-MacBookPro
-Process     : main <8822>
-Thread      : main thread 7fbec3738740
-Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537516841.193244046
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:00:41 CDT 2018
-Description : u_domainNew:Database allocated on heap
-Node        : aditya-MacBookPro
-Process     : main <8822>
-Thread      : spliced 7fbec3781700
-Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537516841.201890298
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:00:41 CDT 2018
-Description : ---------------------------------------------------------------
-              -- The service is using the following configuration settings --
-              ---------------------------------------------------------------
-              Domain (id)          : ospl_sp_ddsi (0)
-              Storage              : 10240 Kbytes
-              Storage threshold    : 1024 Kbytes
-              Storage address      : Not available
-              Locking              : default
-              Memory mode          : Heap memory
-              Builtin topics       : true
-              Priority inheritance : false
-Node        : aditya-MacBookPro
-Process     : main <8822>
-Thread      : spliced 7fbec3781700
-Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537516841.218629322
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:00:41 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'splicedaemon' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <8822>
-Thread      : spliced 7fbec3781700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516841.220613892
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:00:41 CDT 2018
-Description : SOAP service is reachable via port 36019
-Node        : aditya-MacBookPro
-Process     : main <8822>
-Thread      : cmsoap 7fbec10d4700
-Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537516841.223315792
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:00:41 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'cmsoap' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <8822>
-Thread      : cmsoap 7fbec10d4700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516841.223553024
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:00:41 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'ddsi2' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <8822>
-Thread      : ddsi2 7fbec0d65700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516841.232064434
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:00:41 CDT 2018
-Description : The durability service can by identified by ID: 262103922
-Node        : aditya-MacBookPro
-Process     : main <8822>
-Thread      : durability 7fbec09f4700
-Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537516841.338476759
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:01:44 CDT 2018
-Description : Not installing a signal handler for the already ignored signal 13.
-Node        : aditya-MacBookPro
-Process     : main <8965>
-Thread      : main thread 7fef4cb83740
-Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537516904.031932956
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:01:44 CDT 2018
-Description : u_domainNew:Database allocated on heap
-Node        : aditya-MacBookPro
-Process     : main <8965>
-Thread      : spliced 7fef4cbcc700
-Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537516904.040191455
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:01:44 CDT 2018
-Description : ---------------------------------------------------------------
-              -- The service is using the following configuration settings --
-              ---------------------------------------------------------------
-              Domain (id)          : ospl_sp_ddsi (0)
-              Storage              : 10240 Kbytes
-              Storage threshold    : 1024 Kbytes
-              Storage address      : Not available
-              Locking              : default
-              Memory mode          : Heap memory
-              Builtin topics       : true
-              Priority inheritance : false
-Node        : aditya-MacBookPro
-Process     : main <8965>
-Thread      : spliced 7fef4cbcc700
-Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537516904.051831266
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:01:44 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'splicedaemon' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <8965>
-Thread      : spliced 7fef4cbcc700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516904.053286241
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:01:44 CDT 2018
-Description : SOAP service is reachable via port 32955
-Node        : aditya-MacBookPro
-Process     : main <8965>
-Thread      : cmsoap 7fef4a51f700
-Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537516904.062705744
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:01:44 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'cmsoap' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <8965>
-Thread      : cmsoap 7fef4a51f700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516904.062962990
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:01:44 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'ddsi2' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <8965>
-Thread      : ddsi2 7fef4a1b0700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516904.066678947
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:01:44 CDT 2018
-Description : The durability service can by identified by ID: 867941383
-Node        : aditya-MacBookPro
-Process     : main <8965>
-Thread      : durability 7fef49e50700
-Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537516904.071005590
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:01:51 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'durability' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <8965>
-Thread      : durability 7fef49e50700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537516911.081335131
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:03:52 CDT 2018
-Description : Not installing a signal handler for the already ignored signal 13.
-Node        : aditya-MacBookPro
-Process     : main <9134>
-Thread      : main thread 7fb1221a1740
-Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537517032.704886680
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:03:52 CDT 2018
-Description : u_domainNew:Database allocated on heap
-Node        : aditya-MacBookPro
-Process     : main <9134>
-Thread      : spliced 7fb1221ea700
-Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537517032.713059912
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:03:52 CDT 2018
-Description : ---------------------------------------------------------------
-              -- The service is using the following configuration settings --
-              ---------------------------------------------------------------
-              Domain (id)          : ospl_sp_ddsi (0)
-              Storage              : 10240 Kbytes
-              Storage threshold    : 1024 Kbytes
-              Storage address      : Not available
-              Locking              : default
-              Memory mode          : Heap memory
-              Builtin topics       : true
-              Priority inheritance : false
-Node        : aditya-MacBookPro
-Process     : main <9134>
-Thread      : spliced 7fb1221ea700
-Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537517032.724794193
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:03:52 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'splicedaemon' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <9134>
-Thread      : spliced 7fb1221ea700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517032.725764103
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:03:52 CDT 2018
-Description : SOAP service is reachable via port 45653
-Node        : aditya-MacBookPro
-Process     : main <9134>
-Thread      : cmsoap 7fb103af6700
-Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537517032.730948448
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:03:52 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'cmsoap' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <9134>
-Thread      : cmsoap 7fb103af6700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517032.731292917
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:03:52 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'ddsi2' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <9134>
-Thread      : ddsi2 7fb103787700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517032.744592502
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:03:52 CDT 2018
-Description : The durability service can by identified by ID: 1774661958
-Node        : aditya-MacBookPro
-Process     : main <9134>
-Thread      : durability 7fb103427700
-Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537517032.849045118
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:03:59 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'durability' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <9134>
-Thread      : durability 7fb103427700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517039.863356876
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:04:26 CDT 2018
-Description : Not installing a signal handler for the already ignored signal 13.
-Node        : aditya-MacBookPro
-Process     : main <9259>
-Thread      : main thread 7fd27e3e2740
-Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537517066.842289074
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:04:26 CDT 2018
-Description : u_domainNew:Database allocated on heap
-Node        : aditya-MacBookPro
-Process     : main <9259>
-Thread      : spliced 7fd27e42b700
-Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537517066.849067033
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:04:26 CDT 2018
-Description : ---------------------------------------------------------------
-              -- The service is using the following configuration settings --
-              ---------------------------------------------------------------
-              Domain (id)          : ospl_sp_ddsi (0)
-              Storage              : 10240 Kbytes
-              Storage threshold    : 1024 Kbytes
-              Storage address      : Not available
-              Locking              : default
-              Memory mode          : Heap memory
-              Builtin topics       : true
-              Priority inheritance : false
-Node        : aditya-MacBookPro
-Process     : main <9259>
-Thread      : spliced 7fd27e42b700
-Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537517066.864747058
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:04:26 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'splicedaemon' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <9259>
-Thread      : spliced 7fd27e42b700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517066.866124240
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:04:26 CDT 2018
-Description : SOAP service is reachable via port 41691
-Node        : aditya-MacBookPro
-Process     : main <9259>
-Thread      : cmsoap 7fd27c206700
-Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537517066.869776425
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:04:26 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'cmsoap' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <9259>
-Thread      : cmsoap 7fd27c206700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517066.870064898
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:04:26 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'ddsi2' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <9259>
-Thread      : ddsi2 7fd27c105700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517066.878684857
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:04:26 CDT 2018
-Description : The durability service can by identified by ID: 536059641
-Node        : aditya-MacBookPro
-Process     : main <9259>
-Thread      : durability 7fd2676aa700
-Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537517066.989268910
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:04:34 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'durability' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <9259>
-Thread      : durability 7fd2676aa700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517074.002333007
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:06:14 CDT 2018
-Description : Not installing a signal handler for the already ignored signal 13.
-Node        : aditya-MacBookPro
-Process     : main <9408>
-Thread      : main thread 7fc8b6baf740
-Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537517174.017965626
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:06:14 CDT 2018
-Description : u_domainNew:Database allocated on heap
-Node        : aditya-MacBookPro
-Process     : main <9408>
-Thread      : spliced 7fc8b6bf8700
-Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537517174.024689151
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:06:14 CDT 2018
-Description : ---------------------------------------------------------------
-              -- The service is using the following configuration settings --
-              ---------------------------------------------------------------
-              Domain (id)          : ospl_sp_ddsi (0)
-              Storage              : 10240 Kbytes
-              Storage threshold    : 1024 Kbytes
-              Storage address      : Not available
-              Locking              : default
-              Memory mode          : Heap memory
-              Builtin topics       : true
-              Priority inheritance : false
-Node        : aditya-MacBookPro
-Process     : main <9408>
-Thread      : spliced 7fc8b6bf8700
-Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537517174.043554292
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:06:14 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'splicedaemon' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <9408>
-Thread      : spliced 7fc8b6bf8700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517174.044883422
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:06:14 CDT 2018
-Description : SOAP service is reachable via port 41457
-Node        : aditya-MacBookPro
-Process     : main <9408>
-Thread      : cmsoap 7fc8b454b700
-Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537517174.047067180
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:06:14 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'cmsoap' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <9408>
-Thread      : cmsoap 7fc8b454b700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517174.047689976
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:06:14 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'ddsi2' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <9408>
-Thread      : ddsi2 7fc8b41dc700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517174.057005281
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:06:14 CDT 2018
-Description : The durability service can by identified by ID: 809086420
-Node        : aditya-MacBookPro
-Process     : main <9408>
-Thread      : durability 7fc88bda0700
-Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537517174.061932996
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:08:26 CDT 2018
-Description : Not installing a signal handler for the already ignored signal 13.
-Node        : aditya-MacBookPro
-Process     : main <9537>
-Thread      : main thread 7fe113fb5740
-Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537517306.339856124
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:08:26 CDT 2018
-Description : u_domainNew:Database allocated on heap
-Node        : aditya-MacBookPro
-Process     : main <9537>
-Thread      : spliced 7fe113ffe700
-Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537517306.348024040
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:08:26 CDT 2018
-Description : ---------------------------------------------------------------
-              -- The service is using the following configuration settings --
-              ---------------------------------------------------------------
-              Domain (id)          : ospl_sp_ddsi (0)
-              Storage              : 10240 Kbytes
-              Storage threshold    : 1024 Kbytes
-              Storage address      : Not available
-              Locking              : default
-              Memory mode          : Heap memory
-              Builtin topics       : true
-              Priority inheritance : false
-Node        : aditya-MacBookPro
-Process     : main <9537>
-Thread      : spliced 7fe113ffe700
-Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537517306.363654045
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:08:26 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'splicedaemon' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <9537>
-Thread      : spliced 7fe113ffe700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517306.364888935
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:08:26 CDT 2018
-Description : SOAP service is reachable via port 33893
-Node        : aditya-MacBookPro
-Process     : main <9537>
-Thread      : cmsoap 7fe111951700
-Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537517306.366684805
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:08:26 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'cmsoap' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <9537>
-Thread      : cmsoap 7fe111951700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517306.366952280
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:08:26 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'ddsi2' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <9537>
-Thread      : ddsi2 7fe1115e2700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517306.371660219
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:08:26 CDT 2018
-Description : The durability service can by identified by ID: 1107314601
-Node        : aditya-MacBookPro
-Process     : main <9537>
-Thread      : durability 7fe111271700
-Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537517306.382494051
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:08:32 CDT 2018
-Description : Exception (signal 6) occurred in process
-Node        : aditya-MacBookPro
-Process     : main <9537>
-Thread      : signalHandler 7fe112468700
-Internals   : V6.4.140320OSS/24b1387/24b1387/signalHandlerThread/os_signalHandler.c/447/0/1537517312.293332609
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:09:27 CDT 2018
-Description : Not installing a signal handler for the already ignored signal 13.
-Node        : aditya-MacBookPro
-Process     : main <9666>
-Thread      : main thread 7f00fffd1740
-Internals   : V6.4.140320OSS/24b1387/24b1387/os_signalHandlerThread/os_signalHandler.c/793/0/1537517367.625935368
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:09:27 CDT 2018
-Description : u_domainNew:Database allocated on heap
-Node        : aditya-MacBookPro
-Process     : main <9666>
-Thread      : spliced 7f010001a700
-Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1537517367.635875900
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:09:27 CDT 2018
-Description : ---------------------------------------------------------------
-              -- The service is using the following configuration settings --
-              ---------------------------------------------------------------
-              Domain (id)          : ospl_sp_ddsi (0)
-              Storage              : 10240 Kbytes
-              Storage threshold    : 1024 Kbytes
-              Storage address      : Not available
-              Locking              : default
-              Memory mode          : Heap memory
-              Builtin topics       : true
-              Priority inheritance : false
-Node        : aditya-MacBookPro
-Process     : main <9666>
-Thread      : spliced 7f010001a700
-Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1537517367.653032791
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:09:27 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'splicedaemon' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <9666>
-Thread      : spliced 7f010001a700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517367.654073681
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:09:27 CDT 2018
-Description : SOAP service is reachable via port 35331
-Node        : aditya-MacBookPro
-Process     : main <9666>
-Thread      : cmsoap 7f00fd96d700
-Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1537517367.655923147
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:09:27 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'cmsoap' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <9666>
-Thread      : cmsoap 7f00fd96d700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517367.656172772
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:09:27 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'ddsi2' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <9666>
-Thread      : ddsi2 7f00fd5fe700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517367.665589589
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:09:27 CDT 2018
-Description : The durability service can by identified by ID: 1989999556
-Node        : aditya-MacBookPro
-Process     : main <9666>
-Thread      : durability 7f00fd27c700
-Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1537517367.788657035
-========================================================================================
-Report      : INFO
-Date        : Fri Sep 21 03:09:34 CDT 2018
-Description : ++++++++++++++++++++++++++++++++++++++++++++++++
-              ++ The service 'durability' is now operational. 
-              ++++++++++++++++++++++++++++++++++++++++++++++++
-Node        : aditya-MacBookPro
-Process     : main <9666>
-Thread      : durability 7f00fd27c700
-Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517374.803584688
+Process     : main <10348>
+Thread      : durability 7f7a8f1a4700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1537517711.958250062

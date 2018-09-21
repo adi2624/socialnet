@@ -16,7 +16,7 @@
 #include <boost/lexical_cast.hpp>
 using namespace DDS;
 using namespace TSN;
- int sno=0;        //KEEPS TRACK OF SERIAL NO:
+ int sno=0;        //KEEPS TRACK OF SERIAL NO: DO NOT REMOVE IT'S A GLOBAL VARIABLE
 void make_post(char string[17],int sno);
 int user_informationPublisher(int argc, char *argv[])
 {
@@ -87,7 +87,7 @@ if (is_empty)
     // do your error handling
 
    // Empty File
-  std::ofstream output;
+  std::ofstream output;                                       //Generate a new UUID if file is empty.
   output.open("hello.tsn",ios::out);
   std::cout<<"The file is empty. Generating new UUID.....\n";
     boost::uuids::uuid uuid = boost::uuids::random_generator()();
@@ -110,7 +110,7 @@ else
   std::cout<<"UUID FOUND. Loading from file"<<std::endl;
   std::ifstream input;
   input.open("hello.tsn",ios::in);
-  char uuidCharArray[17];
+  char uuidCharArray[17];                                   //LOAD GENERATED UUID AND COUNT THE NO OF POSTS IN THE DISK.
   input.getline(uuidCharArray,25);
   std::cout<<"Loaded: "<<uuidCharArray<<std::endl;
   while(!input.eof())
@@ -130,7 +130,7 @@ strncpy(msgInstance.uuid,uuidCharArray + 5, 22);
   msgInstance.last_name = my_post.get_last_name().c_str();
   
   //std::cout<<msgInstance.uuid<<endl;
-  msgInstance.interests.length(my_post.get_interests().size());
+  msgInstance.interests.length(my_post.get_interests().size());       //SET UP VALUES IN user_information STRUCT FOR DDS.
   for(int i=0;i<my_post.get_interests().size();i++)
   {
       msgInstance.interests[i] = my_post.get_interests().at(i).c_str();
@@ -147,13 +147,13 @@ strncpy(msgInstance.uuid,uuidCharArray + 5, 22);
   {
   cout << msgInstance.interests[i]<<endl;
   }
-  std::cout<<"Would you like to make a post (Y/N)?"<<endl;
+  std::cout<<"Would you like to make a post (Y/N)?"<<endl;  //Ask a user to make a post.
   std::string temp_post;
   cin>>temp_post;
  
   if(temp_post=="Y")
   {
-    make_post(msgInstance.uuid, ++sno);
+    make_post(msgInstance.uuid, sno);
   }
   ReturnCode_t status = TSNWriter->write(msgInstance, DDS::HANDLE_NIL);
   checkStatus(status, "MsgDataWriter::write");
@@ -267,13 +267,13 @@ std::string load_post(int post_no)
     std::istringstream iss(line);
     std::string c;                          //GET LINE AND PUSH INTO STRINGSTREAM.
     c=iss.str();                              
-    std::cout<<"String received "<<c<<endl;
+   // std::cout<<"String received "<<c<<endl;  //Debugging string
     std::size_t pos = c.find("SNO:");
     std::size_t pos2=c.find("POST:");           //FIND DATA after POST:
     if(i!=0)      //IGNORE UUID AT TOP OF FILE
     { 
     std::string number_string = c.substr(pos+4,pos2-4);       
-    std::cout<<"Number String "<<number_string<<std::endl;   //FIND NUMBER BETWEEN SNO: and POST:
+   // std::cout<<"Number String "<<number_string<<std::endl;   //please.ignore(#debug) FIND NUMBER BETWEEN SNO: and POST:
     number = std::stoi(number_string);
     }
     i++;
@@ -303,7 +303,7 @@ int OSPL_MAIN (int argc, char *argv[])
      std::cout<<"Starting Subscriber ........ "<<std::endl;
      user_informationSubscriber(argc,argv);
      std::string temp;
-     temp=load_post(4);
+     temp=load_post(1); //Make sure to change the number of the post that you want to find.
      std::cout<<"Found :"<<temp<<std::endl;
      return 0;
 
