@@ -8,7 +8,8 @@
 #include "DDSEntityManager.h"
 #include "ccpp_tsn.h"
 #include "os.h"
-#include "Post.cpp"
+#include "User.h"
+//#include "Post.cpp"
 #include "example_main.h"
 #include <boost/uuid/uuid.hpp>            // uuid class
 #include <boost/uuid/uuid_generators.hpp> // generators
@@ -207,6 +208,8 @@ int user_informationSubscriber(int argc, char *argv[])
   bool closed = false;
   ReturnCode_t status =  - 1;
   int count = 0;
+  User static_user;
+  std::vector<std::string> user_interests;
   while (!closed && count < 1500) // We dont want the example to run indefinitely
   {
     status = HelloWorldReader->take(msgList, infoSeq, LENGTH_UNLIMITED,
@@ -217,13 +220,22 @@ int user_informationSubscriber(int argc, char *argv[])
       cout << "=== [Subscriber] message received :" << endl;
       cout << "    userID  : " << msgList[j].uuid << endl;
       cout << "    Name : \"" << msgList[j].first_name <<" "<< msgList[j].last_name<< "\"" << endl;
+      std::string fname(msgList[j].first_name);
+      static_user.set_first_name(fname);
+      std::string lname(msgList[j].last_name);
+      static_user.set_last_name(lname);
+
       cout << " The following are the user's "<< msgList[j].interests.length()<<" interests " << endl;
       for (DDS::ULong k = 0; k < msgList[j].interests.length(); k++)
       {
          cout << "   " << k+1 << "  " << msgList[j].interests[k] << endl;
-}
+         std::string interest(msgList[j].interests[k]);
+         user_interests.push_back(interest);
+      }
       closed = true;
     }
+    static_user.set_interests(user_interests);
+    static_user.write_to_file();
     status = HelloWorldReader->return_loan(msgList, infoSeq);
     checkStatus(status, "user_informationDataReader::return_loan");
     os_nanoSleep(delay_200ms);
@@ -291,6 +303,25 @@ std::string load_post(int post_no)
   }
   
 }
+std::vector<std::string> list_all_users()
+{
+  std::ifstream users_file("users.tsn");
+  std::string input,fname,lname;
+  std::vector<std::string> users_vector;
+  while(!users_file.eof()) 
+  {
+  std::getline(users_file,input);
+  std::stringstream ss;
+  ss<<input;
+  ss>>fname>>lname;
+  fname =fname.substr(1);
+  users_vector.push_back(fname+" "+lname);
+  }
+  
+  return users_vector;
+  
+
+}
 int OSPL_MAIN (int argc, char *argv[])
 {
     std::vector<std::string> topic_names;
@@ -310,12 +341,23 @@ int OSPL_MAIN (int argc, char *argv[])
        while(1)
        {
          user_informationSubscriber(argc,argv);
-         sleep(30);
+         sleep(5);
+         std::string input;
+         std::cin>>input;
+         if(input=="N")
+         {
+           break;
+         }
        }
      }
      std::string temp;
      temp=load_post(1); //Make sure to change the number of the post that you want to find.
      std::cout<<"Found :"<<temp<<std::endl;
+     std::vector<std::string> users_list = list_all_users();
+     for(int i=0;i<users_list.size();i++)
+     {
+       std::cout<<users_list.at(i)<<std::endl;
+     }
      return 0;
 
 }

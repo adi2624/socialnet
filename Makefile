@@ -25,7 +25,7 @@ IDL_GENERATED= ${IDL_GENERATED_H} ${IDL_GENERATED_CPP}
 ${IDL_GENERATED}: idl/tsn.idl
 	${OSPL_HOME}/bin/idlpp -l cpp idl/tsn.idl
 
-COMMON_CPP= cpp/src/CheckStatus.cpp cpp/src/DDSEntityManager.cpp 
+COMMON_CPP= cpp/src/CheckStatus.cpp cpp/src/DDSEntityManager.cpp cpp/src/User.cpp cpp/src/Post.cpp
 
 COMMON_H=   cpp/src/CheckStatus.h cpp/src/DDSEntityManager.h 
 
