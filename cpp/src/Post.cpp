@@ -1,5 +1,6 @@
-#include<Post.h>
+#include"Post.h"
 #include<string.h>
+
 void Post::set_interest(std::vector<std::string> input_interests)
 {
     for(int i=0;i<input_interests.size();i++)

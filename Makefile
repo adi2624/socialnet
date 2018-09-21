@@ -32,7 +32,7 @@ COMMON_H=   cpp/src/CheckStatus.h cpp/src/DDSEntityManager.h
 #src/io.h was removed from COMMON_H
 REQUEST_FILES = cpp/src/Request.cpp
 REQUEST_H_FILES = cpp/src/Request.h
-
+POST_H = cpp/src/Post.h
 RESPONSE_FILES = cpp/src/Response.cpp
 RESPONSE_H_FILES = cpp/src/Response.h
 

@@ -1,6 +1,7 @@
 #include "User.h"
 #include<fstream>
 #include<iostream>
+
 void User::set_user_information()
 {
     // This method is self explanatory 
