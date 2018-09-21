@@ -1,0 +1,136 @@
+# -*-Makefile-*-
+#----------------------------------------------------------------------------
+#       Macros
+#----------------------------------------------------------------------------
+
+CC            = gcc
+CXX           = g++
+LD            = $(CXX) $(CCFLAGS) $(PICFLAGS) $(GENFLAGS)
+AR            = ar
+PICFLAGS      = -fPIC
+CPPFLAGS      = $(PICFLAGS) $(GENFLAGS) -D_REENTRANT -Wall -I"$(ACE_ROOT)" -I"$(TAO_ROOT)" -I"$(TAO_ROOT)/include" -I"$(ACE_ROOT)/include" -I"../../../../../include" -I"../../../../../include/sys" -I"../../../../../include/dcps/C++/CCPP" -I"../../../../../include/dcps/C++/CCPP/DDS_OpenFusion_2" -I"." -I"../../../../../examples/include" -I"../../../../../examples"
+OBJEXT        = .o
+OUTPUT_OPTION = -o "$@"
+COMPILE.c     = $(CC) $(CFLAGS) $(CPPFLAGS) -c
+COMPILE.cc    = $(CXX) $(CCFLAGS) $(CPPFLAGS) -c
+LDFLAGS       = -L"." -L"$(ACE_ROOT)/lib" -L"$(TAO_ROOT)/lib" -L"../../../../../lib" -Wl,-rpath,\$$ORIGIN -Wl,-rpath,\$$ORIGIN/../../../../../lib
+CCC           = $(CXX)
+MAKEFILE      = Makefile.ccpp_helloworld_types
+DEPENDENCIES  = $(MAKEFILE)
+LTARGETDIR    = ./
+CAT           = cat
+MV            = mv -f
+RM            = rm -rf
+CP            = cp -p
+NUL           = /dev/null
+MKDIR         = mkdir -p
+TESTDIRSTART  = test -d
+TESTDIREND    = ||
+TOUCH         = touch
+EXEEXT        = 
+LIBPREFIX     = lib
+LIBSUFFIX     = 
+GENFLAGS      = -O3 -DNDEBUG
+LDLIBS        = -l"TAO_PortableServer$(LIBSUFFIX)" -l"TAO_AnyTypeCode$(LIBSUFFIX)" -l"TAO$(LIBSUFFIX)" -l"ACE$(LIBSUFFIX)" -l"dcpsccpp" -l"ddskernel" -ldl $(subst lib,-l,$(sort $(basename $(notdir $(wildcard /usr/lib/librt.so /lib/librt.so))))) -lpthread
+OBJS          = .obj$(CFG)/tsnSplDcps$(OBJEXT) .obj$(CFG)/tsnDcps_impl$(OBJEXT) .obj$(CFG)/tsnDcpsC$(OBJEXT) .obj$(CFG)/tsnDcpsS$(OBJEXT) .obj$(CFG)/tsnC$(OBJEXT) .obj$(CFG)/tsnS$(OBJEXT)
+AREXT         = .a
+LIB           = $(LTARGETDIR)$(LIBPREFIX)ccpp_helloworld_types$(LIBSUFFIX)$(AREXT)
+SOEXT         = .so
+SHTARGETDIR   = ./
+SHLIB         = $(SHTARGETDIR)$(LIBPREFIX)ccpp_helloworld_types$(LIBSUFFIX)$(SOEXT)
+SHFLAGS       = -shared
+SRC           = tsnSplDcps.cpp tsnDcps_impl.cpp tsnDcpsC.cpp tsnDcpsS.cpp tsnC.cpp tsnS.cpp
+LINK.cc       = $(LD) $(LDFLAGS)
+DYNAMICFLAGS  = -DOSPL_BUILDEXAMPLE_LIB
+STATICFLAGS   = -DACE_AS_STATIC_LIBS -DTAO_AS_STATIC_LIBS
+EXPORTFLAGS   = $(DYNAMICFLAGS)
+
+#----------------------------------------------------------------------------
+#       Local targets
+#----------------------------------------------------------------------------
+
+all: $(SHLIB)
+
+$(SHLIB): $(OBJS)
+	@$(TESTDIRSTART) "$(SHTARGETDIR)" $(TESTDIREND) $(MKDIR) "$(SHTARGETDIR)"
+	$(LINK.cc) $(SHFLAGS) $(OBJS) $(LDLIBS) $(OUTPUT_OPTION)
+
+$(LIB): $(OBJS)
+	@$(TESTDIRSTART) "$(LTARGETDIR)" $(TESTDIREND) $(MKDIR) "$(LTARGETDIR)"
+	$(AR) $(ARFLAGS) $(LIB) $(OBJS) 
+
+GENERATED_DIRTY = tsnDcpsC.inl tsnDcpsC.h tsnDcpsS.h tsnDcpsC.cpp tsnDcpsS.cpp ./tsnC.inl ./tsnC.h ./tsnS.h ./tsnC.cpp ./tsnS.cpp ./tsnDcps.idl ./ccpp_tsn.h ./tsnSplDcps.cpp ./tsnDcps_impl.cpp ./tsnDcps_impl.h ./tsnSplDcps.h
+
+
+export DYLD_LIBRARY_PATH := $(DYLD_LIBRARY_PATH):$(ACE_ROOT)/lib
+export LD_LIBRARY_PATH   := $(LD_LIBRARY_PATH):$(ACE_ROOT)/lib
+export SHLIB_PATH        := $(SHLIB_PATH):$(ACE_ROOT)/lib
+export LIBPATH           := $(LIBPATH):$(ACE_ROOT)/lib
+export PATH              := $(PATH):$(ACE_ROOT)/lib
+
+.NOTPARALLEL:
+tsnDcpsC.inl tsnDcpsC.h tsnDcpsS.h tsnDcpsC.cpp tsnDcpsS.cpp: tsnDcps.idl
+	$(ACE_ROOT)/bin/tao_idl -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I "../../../../../etc/idl" -I ../../idl -Wb,export_macro=OS_EXAMPLE_API -Wb,export_include=../../../../../examples/include/examples_export.h tsnDcps.idl
+
+
+.NOTPARALLEL:
+./tsnC.inl ./tsnC.h ./tsnS.h ./tsnC.cpp ./tsnS.cpp: ../../idl/tsn.idl
+	@$(TESTDIRSTART) "." $(TESTDIREND) $(MKDIR) "."
+	$(ACE_ROOT)/bin/tao_idl -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I "../../../../../etc/idl" -I ../../idl -Wb,export_macro=OS_EXAMPLE_API -Wb,export_include=../../../../../examples/include/examples_export.h ../../idl/tsn.idl
+
+
+
+
+
+export DYLD_LIBRARY_PATH := $(DYLD_LIBRARY_PATH):../../../../../bin:../../../../../lib
+export LD_LIBRARY_PATH   := $(LD_LIBRARY_PATH):../../../../../bin:../../../../../lib
+export SHLIB_PATH        := $(SHLIB_PATH):../../../../../bin:../../../../../lib
+export LIBPATH           := $(LIBPATH):../../../../../bin:../../../../../lib
+export PATH              := $(PATH):../../../../../bin:../../../../../lib
+
+.NOTPARALLEL:
+./tsnDcps.idl ./ccpp_tsn.h ./tsnSplDcps.cpp ./tsnDcps_impl.cpp ./tsnDcps_impl.h ./tsnSplDcps.h: ../../idl/tsn.idl
+	@$(TESTDIRSTART) "." $(TESTDIREND) $(MKDIR) "."
+	"../../../../../bin/idlpp" -I "../../../../../etc/idl" -C -l cpp -b CCPP/DDS_OpenFusion_2 ../../idl/tsn.idl
+
+.PRECIOUS: $(GENERATED_DIRTY)
+$(OBJS): $(GENERATED_DIRTY)
+
+generated: $(GENERATED_DIRTY)
+	@-:
+
+.obj$(CFG)/tsnSplDcps$(OBJEXT): tsnSplDcps.cpp
+	@$(TESTDIRSTART) ".obj$(CFG)/" $(TESTDIREND) $(MKDIR) ".obj$(CFG)/"
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) tsnSplDcps.cpp
+
+.obj$(CFG)/tsnDcps_impl$(OBJEXT): tsnDcps_impl.cpp
+	@$(TESTDIRSTART) ".obj$(CFG)/" $(TESTDIREND) $(MKDIR) ".obj$(CFG)/"
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) tsnDcps_impl.cpp
+
+.obj$(CFG)/tsnDcpsC$(OBJEXT): tsnDcpsC.cpp
+	@$(TESTDIRSTART) ".obj$(CFG)/" $(TESTDIREND) $(MKDIR) ".obj$(CFG)/"
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) tsnDcpsC.cpp
+
+.obj$(CFG)/tsnDcpsS$(OBJEXT): tsnDcpsS.cpp
+	@$(TESTDIRSTART) ".obj$(CFG)/" $(TESTDIREND) $(MKDIR) ".obj$(CFG)/"
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) tsnDcpsS.cpp
+
+.obj$(CFG)/tsnC$(OBJEXT): tsnC.cpp
+	@$(TESTDIRSTART) ".obj$(CFG)/" $(TESTDIREND) $(MKDIR) ".obj$(CFG)/"
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) tsnC.cpp
+
+.obj$(CFG)/tsnS$(OBJEXT): tsnS.cpp
+	@$(TESTDIRSTART) ".obj$(CFG)/" $(TESTDIREND) $(MKDIR) ".obj$(CFG)/"
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) tsnS.cpp
+
+clean:
+	-$(RM) $(OBJS)
+
+realclean: clean
+	-$(RM) $(SHLIB) $(LIB)
+	-$(RM) $(GENERATED_DIRTY)
+	-$(RM) .obj$(CFG)/
+
+check-syntax:
+	$(COMPILE.cc) $(EXPORTFLAGS) $(CHK_SOURCES)
+

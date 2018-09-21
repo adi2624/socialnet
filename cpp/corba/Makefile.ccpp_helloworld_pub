@@ -1,0 +1,92 @@
+# -*-Makefile-*-
+#----------------------------------------------------------------------------
+#       Macros
+#----------------------------------------------------------------------------
+
+CC            = gcc
+CXX           = g++
+LD            = $(CXX) $(CCFLAGS) $(PICFLAGS) $(GENFLAGS)
+AR            = ar
+PICFLAGS      = -fPIC
+CPPFLAGS      = $(PICFLAGS) $(GENFLAGS) -D_REENTRANT -Wall -I"." -I"../../../../../examples/include" -I"../../../../../examples" -I"../../../../../include" -I"../../../../../include/sys" -I"$(ACE_ROOT)" -I"$(TAO_ROOT)" -I"$(TAO_ROOT)/include" -I"$(ACE_ROOT)/include" -I"../../../../../include/dcps/C++/CCPP" -I"../../../../../include/dcps/C++/CCPP/DDS_OpenFusion_2"
+OBJEXT        = .o
+OUTPUT_OPTION = -o "$@"
+COMPILE.c     = $(CC) $(CFLAGS) $(CPPFLAGS) -c
+COMPILE.cc    = $(CXX) $(CCFLAGS) $(CPPFLAGS) -c
+LDFLAGS       = -L"." -L"../../../../../lib" -L"$(ACE_ROOT)/lib" -L"$(TAO_ROOT)/lib" -Wl,-rpath,\$$ORIGIN -Wl,-rpath,\$$ORIGIN/../../../../../lib
+CCC           = $(CXX)
+MAKEFILE      = Makefile.ccpp_helloworld_pub
+DEPENDENCIES  = $(MAKEFILE)
+BTARGETDIR    = ./
+BIN           = $(BTARGETDIR)HelloWorldDataPublisher$(EXESUFFIX)$(EXEEXT)
+CAT           = cat
+MV            = mv -f
+RM            = rm -rf
+CP            = cp -p
+NUL           = /dev/null
+MKDIR         = mkdir -p
+TESTDIRSTART  = test -d
+TESTDIREND    = ||
+TOUCH         = touch
+EXEEXT        = 
+LIBPREFIX     = lib
+LIBSUFFIX     = 
+GENFLAGS      = -O3 -DNDEBUG
+LDLIBS        = -l"ccpp_helloworld_types$(LIBSUFFIX)" -l"TAO_PortableServer$(LIBSUFFIX)" -l"TAO_AnyTypeCode$(LIBSUFFIX)" -l"TAO$(LIBSUFFIX)" -l"ACE$(LIBSUFFIX)" -l"dcpsccpp" -l"ddskernel" -ldl $(subst lib,-l,$(sort $(basename $(notdir $(wildcard /usr/lib/librt.so /lib/librt.so))))) -lpthread
+OBJS          = .obj$(CFG)/CheckStatus$(OBJEXT) .obj$(CFG)/DDSEntityManager$(OBJEXT) .obj$(CFG)/HelloWorldDataPublisher$(OBJEXT)
+SRC           = ../src/CheckStatus.cpp ../src/DDSEntityManager.cpp ../src/HelloWorldDataPublisher.cpp
+LINK.cc       = $(LD) $(LDFLAGS)
+STATICFLAGS   = -DACE_AS_STATIC_LIBS -DTAO_AS_STATIC_LIBS
+EXPORTFLAGS   = 
+
+#----------------------------------------------------------------------------
+#       Local targets
+#----------------------------------------------------------------------------
+
+all: $(BIN)
+
+$(BIN): $(OBJS)
+	@$(TESTDIRSTART) "$(BTARGETDIR)" $(TESTDIREND) $(MKDIR) "$(BTARGETDIR)"
+	$(LINK.cc) $(OBJS) $(LDLIBS) $(OUTPUT_OPTION)
+
+GENERATED_DIRTY =
+
+
+
+
+
+
+export DYLD_LIBRARY_PATH := $(DYLD_LIBRARY_PATH):$(ACE_ROOT)/lib
+export LD_LIBRARY_PATH   := $(LD_LIBRARY_PATH):$(ACE_ROOT)/lib
+export SHLIB_PATH        := $(SHLIB_PATH):$(ACE_ROOT)/lib
+export LIBPATH           := $(LIBPATH):$(ACE_ROOT)/lib
+export PATH              := $(PATH):$(ACE_ROOT)/lib
+.PRECIOUS: $(GENERATED_DIRTY)
+$(OBJS): $(GENERATED_DIRTY)
+
+generated: $(GENERATED_DIRTY)
+	@-:
+
+.obj$(CFG)/CheckStatus$(OBJEXT): ../src/CheckStatus.cpp
+	@$(TESTDIRSTART) ".obj$(CFG)/" $(TESTDIREND) $(MKDIR) ".obj$(CFG)/"
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) ../src/CheckStatus.cpp
+
+.obj$(CFG)/DDSEntityManager$(OBJEXT): ../src/DDSEntityManager.cpp
+	@$(TESTDIRSTART) ".obj$(CFG)/" $(TESTDIREND) $(MKDIR) ".obj$(CFG)/"
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) ../src/DDSEntityManager.cpp
+
+.obj$(CFG)/HelloWorldDataPublisher$(OBJEXT): ../src/HelloWorldDataPublisher.cpp
+	@$(TESTDIRSTART) ".obj$(CFG)/" $(TESTDIREND) $(MKDIR) ".obj$(CFG)/"
+	$(COMPILE.cc) $(EXPORTFLAGS) $(OUTPUT_OPTION) ../src/HelloWorldDataPublisher.cpp
+
+clean:
+	-$(RM) $(OBJS)
+
+realclean: clean
+	-$(RM) $(BIN)
+	-$(RM) $(GENERATED_DIRTY)
+	-$(RM) .obj$(CFG)/
+
+check-syntax:
+	$(COMPILE.cc) $(EXPORTFLAGS) $(CHK_SOURCES)
+
