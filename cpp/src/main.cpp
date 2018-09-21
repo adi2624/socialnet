@@ -300,8 +300,19 @@ int OSPL_MAIN (int argc, char *argv[])
     std::cout<<"Publishing startup data on user_information "<<std::endl;
      user_informationPublisher(argc, argv);
      std::cout<<"Publishing has finished"<<std::endl;
-     std::cout<<"Starting Subscriber ........ "<<std::endl;
-     user_informationSubscriber(argc,argv);
+    // std::cout<<"Starting Subscriber ........ "<<std::endl;
+    // user_informationSubscriber(argc,argv);
+     std::cout<<"Do you want to start a 10 second subscriber loop?"<<std::endl;
+     std::string input;
+     std::cin>>input;
+     if(input=="Y")
+     {
+       while(1)
+       {
+         user_informationSubscriber(argc,argv);
+         sleep(30);
+       }
+     }
      std::string temp;
      temp=load_post(1); //Make sure to change the number of the post that you want to find.
      std::cout<<"Found :"<<temp<<std::endl;
