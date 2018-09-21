@@ -16,6 +16,7 @@
 #include <boost/lexical_cast.hpp>
 using namespace DDS;
 using namespace TSN;
+ int sno=0;        //KEEPS TRACK OF SERIAL NO:
 void make_post(char string[17],int sno);
 int user_informationPublisher(int argc, char *argv[])
 {
@@ -102,6 +103,7 @@ if (is_empty)
 
   output<<"UUID:"<<uuidCharArray<<std::endl;
   output.close();
+  sno++;    //INCREMENT SERIAL NO TO POST 1.
 }
 else
 {
@@ -111,6 +113,12 @@ else
   char uuidCharArray[17];
   input.getline(uuidCharArray,25);
   std::cout<<"Loaded: "<<uuidCharArray<<std::endl;
+  while(!input.eof())
+  {
+    std::string garbage_value;
+    std::getline(input,garbage_value);
+    sno++;
+  }
   input.close();
 }
 
@@ -142,7 +150,7 @@ strncpy(msgInstance.uuid,uuidCharArray + 5, 22);
   std::cout<<"Would you like to make a post (Y/N)?"<<endl;
   std::string temp_post;
   cin>>temp_post;
-  int sno=0;
+ 
   if(temp_post=="Y")
   {
     make_post(msgInstance.uuid, ++sno);
@@ -238,46 +246,49 @@ void make_post(char string[17], int sno)
   myfile.open("hello.tsn",ios::app);
   std::string post_text;
   std::cout<<"Enter the post text"<<std::endl;
-  std::cin>>post_text;
+  cin.ignore();
+  getline(std::cin,post_text);
   myfile<<"SNO:"<<sno<<" POST:"<<post_text<<endl;
   myfile.close();
 }
 std::string load_post(int post_no)
 {
-  int number=0;
-  char array[100];
-  std::ifstream get_post;
-  get_post.open("hello.tsn",ios::in);
-  char x='0'+post_no;       //ISSUE: Only works for 9 posts.
-  std::cout<<x<<std::endl;
- // std::itoa(post_no,x,10);
-  while(array[4]!=x)
+  int number=0,i=0;
+  bool found_post = false;
+  std::string line,post;
+  std::ifstream get_post("hello.tsn");
+  if (!get_post.is_open())
+    perror("error while opening file");
+  //get_post.open("hello.tsn",ios::in);
+  if (get_post.bad())
+    perror("error while reading file");
+  while(std::getline(get_post,line))
   {
-  
-  get_post.getline(array,25);
-  
+    std::istringstream iss(line);
+    std::string c;                          //GET LINE AND PUSH INTO STRINGSTREAM.
+    c=iss.str();                              
+    std::cout<<"String received "<<c<<endl;
+    std::size_t pos = c.find("SNO:");
+    std::size_t pos2=c.find("POST:");           //FIND DATA after POST:
+    if(i!=0)      //IGNORE UUID AT TOP OF FILE
+    { 
+    std::string number_string = c.substr(pos+4,pos2-4);       
+    std::cout<<"Number String "<<number_string<<std::endl;   //FIND NUMBER BETWEEN SNO: and POST:
+    number = std::stoi(number_string);
+    }
+    i++;
+    if(number==post_no)
+    {
+      std::string final_post_text = c.substr(pos2+4);
+    std::cout<<"Final text:"<<final_post_text<<std::endl;   //RETURN FOUND POST DATA
+    return final_post_text;
+    }
     
   }
-  std::cout<<array<<std::endl;
-  std::string post;
-  size_t size = sizeof(array)/sizeof(array[0]);
-  
-  std::cout<<"Returning:"<<post<<std::endl;
- /*
-  const char delim[3] = " :";
-  char *token;
-
-  token = strtok(array, delim);
-
-  while(token != NULL)
+  if(found_post==false)
   {
-    std::cout << token << std::endl;
-    token = strtok(NULL, delim);
+    return "Fail";    //If nothing is returned upon search, a segmentation fault will occur.
   }
-  */
-  
-  //std::cout<<"POST: "<<post<<std::endl;
-  return "hello";
   
 }
 int OSPL_MAIN (int argc, char *argv[])
@@ -292,7 +303,8 @@ int OSPL_MAIN (int argc, char *argv[])
      std::cout<<"Starting Subscriber ........ "<<std::endl;
      user_informationSubscriber(argc,argv);
      std::string temp;
-     temp=load_post(1);
+     temp=load_post(4);
+     std::cout<<"Found :"<<temp<<std::endl;
      return 0;
 
 }
