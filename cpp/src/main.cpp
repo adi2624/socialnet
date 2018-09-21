@@ -9,7 +9,6 @@
 #include "ccpp_tsn.h"
 #include "os.h"
 #include "User.h"
-//#include "Post.cpp"
 #include "example_main.h"
 #include <boost/uuid/uuid.hpp>            // uuid class
 #include <boost/uuid/uuid_generators.hpp> // generators
