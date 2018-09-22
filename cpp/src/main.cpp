@@ -4,6 +4,7 @@
 #include<vector>
 #include<cstdlib>
 #include<string>
+#include<thread>
 #include<fstream>
 #include "DDSEntityManager.h"
 #include "ccpp_tsn.h"
@@ -147,6 +148,10 @@ strncpy(msgInstance.uuid,uuidCharArray + 5, 22);
   {
   cout << msgInstance.interests[i]<<endl;
   }
+  
+  ReturnCode_t status = TSNWriter->write(msgInstance, DDS::HANDLE_NIL);
+  checkStatus(status, "MsgDataWriter::write");
+  os_nanoSleep(delay_1s);
   std::cout<<"Would you like to make a post (Y/N)?"<<endl;  //Ask a user to make a post.
   std::string temp_post;
   cin>>temp_post;
@@ -155,9 +160,6 @@ strncpy(msgInstance.uuid,uuidCharArray + 5, 22);
   {
     make_post(msgInstance.uuid, sno);
   }
-  ReturnCode_t status = TSNWriter->write(msgInstance, DDS::HANDLE_NIL);
-  checkStatus(status, "MsgDataWriter::write");
-  os_nanoSleep(delay_1s);
 
   /* Remove the DataWriters */
   mgr.deleteWriter();
@@ -248,7 +250,7 @@ int user_informationSubscriber(int argc, char *argv[])
   mgr.deleteSubscriber();
   mgr.deleteTopic();
   mgr.deleteParticipant();
-
+  std::cout<<"The subscriber is ending"<<std::endl;
   return 0;
 }
 void make_post(char string[17], int sno)
@@ -321,34 +323,44 @@ std::vector<std::string> list_all_users()
   
 
 }
+void run_subscriber(int argc, char *argv[])
+{
+  while(1)
+  {
+  user_informationSubscriber(argc,argv);
+  sleep(10);
+  }
+}
 int OSPL_MAIN (int argc, char *argv[])
 {
     std::vector<std::string> topic_names;
     std::string user_info("\"user_information\"");
      std::cout<<"Welcome to the Social Network!"<<std::endl;
     std::cout<<"The program is listening for UserInformation published on the "<<user_info<<" topic"<<std::endl;
-    std::cout<<"Publishing startup data on user_information "<<std::endl;
-     user_informationPublisher(argc, argv);
-     std::cout<<"Publishing has finished"<<std::endl;
-    // std::cout<<"Starting Subscriber ........ "<<std::endl;
-    // user_informationSubscriber(argc,argv);
-     std::cout<<"Do you want to start a 10 second subscriber loop?"<<std::endl;
-     std::string input;
-     std::cin>>input;
-     if(input=="Y")
-     {
-       while(1)
-       {
-         user_informationSubscriber(argc,argv);
-         sleep(5);
-         std::string input;
-         std::cin>>input;
-         if(input=="N")
-         {
-           break;
-         }
-       }
-     }
+    std::cout<<"Starting Subscriber ........ "<<std::endl;
+     std::string input="N";
+     
+           std::thread second(run_subscriber,argc,argv);
+           do
+           {
+           user_informationPublisher(argc,argv);          //TESTING: RUN PUBLISHER INFINITE LOOP.
+           std::cout<<"Publishing has finished, would you like to run the publisher again?(Y/N)"<<std::endl;
+           std::cin>>input;
+           std::cout<<"Remember that it takes 30 seconds before a subscribed message is received and only shows up after the (y/n) to run publisher or not"<<std::endl;
+           }while(input=="Y");
+         
+      
+        
+        //first.join();   IMPORTANT! THIS NEEDS TO BE JOINED LATER.
+        
+
+        //std::cout<<"Joining has finished"<<std::endl;
+          
+         
+      /*
+
+      TESTING FOR LIST ALL USERS. WRITE_TO_FILE() HAS BEEN DEACTIVATED HERE.
+
      std::string temp;
      temp=load_post(1); //Make sure to change the number of the post that you want to find.
      std::cout<<"Found :"<<temp<<std::endl;
@@ -357,6 +369,8 @@ int OSPL_MAIN (int argc, char *argv[])
      {
        std::cout<<users_list.at(i)<<std::endl;
      }
+     */
+      second.join();
      return 0;
 
 }
