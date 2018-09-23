@@ -339,11 +339,12 @@ int OSPL_MAIN (int argc, char *argv[])
     std::cout<<"The program is listening for UserInformation published on the "<<user_info<<" topic"<<std::endl;
     std::cout<<"Starting Subscriber ........ "<<std::endl;
      std::string input="N";
-     
-           std::thread second(run_subscriber,argc,argv);
+        user_informationPublisher(argc,argv); 
+           //std::thread second(run_subscriber,argc,argv);
+
            do
            {
-           user_informationPublisher(argc,argv);          //TESTING: RUN PUBLISHER INFINITE LOOP.
+                    //TESTING: RUN PUBLISHER INFINITE LOOP.
            std::cout<<"Publishing has finished, would you like to run the publisher again?(Y/N)"<<std::endl;
            std::cin>>input;
            std::cout<<"Remember that it takes 30 seconds before a subscribed message is received and only shows up after the (y/n) to run publisher or not"<<std::endl;
@@ -370,7 +371,7 @@ int OSPL_MAIN (int argc, char *argv[])
        std::cout<<users_list.at(i)<<std::endl;
      }
      */
-      second.join();
+     // second.join();
      return 0;
 
 }

@@ -18,6 +18,8 @@ public:
 	
     void set_user_information();
     void write_to_file();
+    void set_user_uuid(std::string uuid_string);
+    char * return_uuid();
 private:
 	std::vector<std::string> interests;
     std::string first_name;

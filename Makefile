@@ -4,7 +4,7 @@ CFLAGS = -DDEBUG_PRINT -DDEBUG_STATES -Wall -O0 -g -I. -I./include -I${OSPL_HOME
 CXXFLAGS = -std=c++11
 DIR = /idl
 
-all: UserInformationPublisher UserInformationSubscriber Response Request main
+all: Response Request main
 
 
 IDL_GENERATED_H= \
@@ -45,7 +45,7 @@ UserInformationSubscriber: ${IDL_GENERATED_H} ${IDL_GENERATED_CPP} cpp/src/UserI
 Response: ${IDL_GENERATED_H} ${IDL_GENERATED_CPP} cpp/src/Response.cpp ${RESPONSE_FILES} ${RESPONSE_H_FILES}  ${COMMON_H} ${COMMON_CPP}
 	g++ -o $@ ${CFLAGS} ${CXXFLAGS} $^ ${LIBS}
 
-Request: ${IDL_GENERATED_H} ${IDL_GENERATED_CPP} cpp/src/Request.cpp ${REQUEST_FILES} ${REQUEST_H_FILES} ${COMMON_H} ${COMMON_CPP}
+Request: ${IDL_GENERATED_H} ${IDL_GENERATED_CPP} ${REQUEST_FILES} ${REQUEST_H_FILES} ${COMMON_H} ${COMMON_CPP}
 	g++ -o $@ ${CFLAGS} ${CXXFLAGS} $^ ${LIBS}
 
 main:   ${IDL_GENERATED_H} ${IDL_GENERATED_CPP} cpp/src/main.cpp

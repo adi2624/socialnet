@@ -2,6 +2,21 @@
 #include<fstream>
 #include<iostream>
 
+char* User::return_uuid()
+{
+    return  uuidCharArray;
+}
+void User::set_user_uuid(std::string uuid_string)
+{
+    for(int i = 0; i <=17;i++)
+    {
+        this->uuidCharArray[i] = uuid_string[i];
+        if(i == 17)
+        {
+            this->uuidCharArray[i] = '\0';
+        }
+    }
+}
 void User::set_user_information()
 {
     // This method is self explanatory 
