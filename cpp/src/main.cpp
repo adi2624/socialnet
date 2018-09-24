@@ -25,6 +25,7 @@ int sno=0;        //KEEPS TRACK OF SERIAL NO: DO NOT REMOVE IT'S A GLOBAL VARIAB
 int test; // This is a test variable so that I can see if the hash map works 
 void make_post(char string[17],int sno);
 std::map<int, std::string> userPostMap;
+<<<<<<< HEAD
 long calculate_seconds(int month, unsigned day, unsigned year)
 {
   // TODO: FINISH THIS FUNCTION
@@ -32,13 +33,23 @@ long calculate_seconds(int month, unsigned day, unsigned year)
   return temp;
 
 }
+=======
+/*////////////////////////////////////
+/
+/       USER INFORMATION PUBLISHER
+/   
+/
+////////////////////////////////////*/
+>>>>>>> f3030c7558beea00bc4a6a4f69fcea50b9b3a9c1
 int user_informationPublisher(int argc, char *argv[])
 {
   os_time delay_1s = { 1, 0 };
   DDSEntityManager mgr;
 
+  std::cout<<"Creating Participant"<<std::endl;  
   // create domain participant
   mgr.createParticipant("TSN example");
+  std::cout<<"Participant created"<<std::endl;
 
   //create type
  user_informationTypeSupport_var mt = new user_informationTypeSupport();
@@ -113,7 +124,6 @@ while(!myfile.eof())
   is_empty = false; 
 }
 myfile.close();
-//std::cout<<"mai yaha hu "<<is_empty<<std::endl;
 
 if (is_empty)
 {
@@ -129,7 +139,7 @@ if (is_empty)
     {
         uuidCharArray[i] = uuid_string[i];
         if(i == 17)
-        {
+        {                                       //COPY GENERATED UUID TO uuidCharArray
             uuidCharArray[i] = '\0';
         }
     }
@@ -143,13 +153,17 @@ else
   user_found = 1;
 }
 
+<<<<<<< HEAD
 
 strncpy(msgInstance.uuid,uuidCharArray + 5, 22-5);
+=======
+strncpy(msgInstance.uuid,uuidCharArray + 5, 22-5);  //COPY UUID INTO MSGINSTANCE OBJECT
+>>>>>>> f3030c7558beea00bc4a6a4f69fcea50b9b3a9c1
 
 
 /*  End of Boost UUID  */
-  msgInstance.first_name = my_post.get_first_name().c_str();
-  msgInstance.last_name = my_post.get_last_name().c_str();
+  msgInstance.first_name = my_post.get_first_name().c_str();    //SET FNAME AND LNAME IS MSGINSTANCE
+  msgInstance.last_name = my_post.get_last_name().c_str();      
   
   //std::cout<<msgInstance.uuid<<endl;
   msgInstance.interests.length(my_post.get_interests().size());       //SET UP VALUES IN user_information STRUCT FOR DDS.
@@ -170,9 +184,23 @@ strncpy(msgInstance.uuid,uuidCharArray + 5, 22-5);
   cout << msgInstance.interests[i]<<endl;
   }
   
-  ReturnCode_t status = TSNWriter->write(msgInstance, DDS::HANDLE_NIL);
+  //WRITE TO THE DDS NETWORK.
+  ReturnCode_t status = TSNWriter->write(msgInstance, DDS::HANDLE_NIL);   
   checkStatus(status, "MsgDataWriter::write");
   os_nanoSleep(delay_1s);
+<<<<<<< HEAD
+=======
+  //CODE THAT ASKS IF YOU WANT TO MAKE A POST
+  std::cout<<"Would you like to make a post (Y/N)?"<<endl;  //Ask a user to make a post.
+  std::string temp_post;
+  cin>>temp_post;
+ 
+  if(temp_post == "Y" || temp_post == "y")
+  {
+    test = sno;
+    make_post(msgInstance.uuid, sno);   //MAKE THE POST
+  }
+>>>>>>> f3030c7558beea00bc4a6a4f69fcea50b9b3a9c1
 
   /* Remove the DataWriters */
   mgr.deleteWriter();
@@ -187,12 +215,17 @@ strncpy(msgInstance.uuid,uuidCharArray + 5, 22-5);
 
   return user_found;
 }
-
+/*////////////////////////////////////
+/
+/       USER INFORMATION SUBSCRIBER
+/   
+/
+////////////////////////////////////*/
 int user_informationSubscriber(int argc, char *argv[])
 {
   os_time delay_2ms = { 0, 2000000 };
   os_time delay_200ms = { 0, 200000000 };
-  user_informationSeq msgList;
+  user_informationSeq msgList;    //DATA STRUCTURE THAT RECEIVES MSGS.
   SampleInfoSeq infoSeq;
 
   DDSEntityManager mgr;
@@ -224,7 +257,7 @@ int user_informationSubscriber(int argc, char *argv[])
   bool flag = false;
   ReturnCode_t status =  - 1;
   int count = 0;
-  User static_user;
+  User static_user; //USER OBJECT TO WRITE PARAMETERS TO USERS.TSN
   std::vector<std::string> user_interests;
   while (!closed && count < 1500) // We dont want the example to run indefinitely
   {
@@ -238,7 +271,7 @@ int user_informationSubscriber(int argc, char *argv[])
       cout << "    Name : \"" << msgList[j].first_name <<" "<< msgList[j].last_name<< "\"" << endl;
       std::string fname(msgList[j].first_name);
       static_user.set_first_name(fname);
-      std::string lname(msgList[j].last_name);
+      std::string lname(msgList[j].last_name);    //SET PARAMETERS IN THE USER OBJECT AFTER READING.
       static_user.set_last_name(lname);
       static_user.set_user_uuid(msgList[j].uuid);
 
@@ -253,9 +286,9 @@ int user_informationSubscriber(int argc, char *argv[])
       closed = true;
       flag = true;
     }
-    static_user.set_interests(user_interests);
+    static_user.set_interests(user_interests);  //PUSH INTERESTS TO USER OBJECT
     if(flag == true)
-      static_user.write_to_file();
+      static_user.write_to_file();  //WRITE USER TO FILE
     status = HelloWorldReader->return_loan(msgList, infoSeq);
     checkStatus(status, "user_informationDataReader::return_loan");
     os_nanoSleep(delay_200ms);
@@ -272,24 +305,43 @@ int user_informationSubscriber(int argc, char *argv[])
   std::cout<<"The subscriber is ending"<<std::endl;
   return 0;
 }
+//END OF SUBSCRIBER
+/*////////////////////////////////////
+/
+/       MAKE POST
+/   
+/
+////////////////////////////////////*/
 void make_post(char string[17], int sno)
 {
   std::ofstream myfile;
   myfile.open("hello.tsn",ios::app);
   std::string post_text;
-  std::cout<<"Enter the post text"<<std::endl;
-  cin.ignore();
+  std::cout<<"Enter the post text"<<std::endl;        
+  cin.ignore();                                               
   getline(std::cin,post_text);
   userPostMap[sno] = post_text;
   myfile<<"SNO:"<<sno<<" POST:"<<post_text<<endl;
   myfile.close();
 }
+/*////////////////////////////////////
+/
+/       LOAD POST
+/   
+/
+////////////////////////////////////*/
 std::string load_post(int post_no)
 {
   std::map<int, std::string>::iterator postIter = userPostMap.find(post_no);
   if(postIter == userPostMap.end()) return "Fail";
   return postIter->second; 
 }
+/*////////////////////////////////////
+/
+/       LIST USERS
+/   
+/
+////////////////////////////////////*/
 std::vector<std::string> list_all_users()
 {
   std::ifstream users_file("users.tsn");
@@ -309,6 +361,12 @@ std::vector<std::string> list_all_users()
   
 
 }
+/*////////////////////////////////////
+/
+/   LOOP TO CONTINUOUSLY RUN SUBSCRIBER
+/   
+/
+////////////////////////////////////*/
 void run_subscriber(int argc, char *argv[])
 {
   while(1)
@@ -317,6 +375,12 @@ void run_subscriber(int argc, char *argv[])
   sleep(10);
   }
 }
+/*////////////////////////////////////
+/
+/       MAIN
+/   
+/
+////////////////////////////////////*/
 int OSPL_MAIN (int argc, char *argv[])
 {
     std::vector<std::string> topic_names;
@@ -325,6 +389,7 @@ int OSPL_MAIN (int argc, char *argv[])
     std::cout<<"The program is listening for UserInformation published on the "<<user_info<<" topic"<<std::endl;
     std::cout<<"Starting Subscriber ........ "<<std::endl;
     std::string input="N";
+<<<<<<< HEAD
     int is_user_found = user_informationPublisher(argc,argv); 
            //std::thread second(run_subscriber,argc,argv);
     char uuidCharArray[17];  
@@ -345,6 +410,11 @@ int OSPL_MAIN (int argc, char *argv[])
       input.close();
     }
            std::cout<<"Would you like to make a post (Y/N)?"<<endl;  //Ask a user to make a post.
+=======
+        user_informationPublisher(argc,argv); 
+           //std::thread second(run_subscriber,argc,argv);    //PROGRAM SEG FAULTS UPON LAUNCHING THREAD. RUN SUBSCRIBER SHOULD USE THREAD TO CHECK CONTINUOSLY BUT DISABLED FOR NOW.
+
+>>>>>>> f3030c7558beea00bc4a6a4f69fcea50b9b3a9c1
            do
            {
             //TESTING: RUN PUBLISHER INFINITE LOOP.
