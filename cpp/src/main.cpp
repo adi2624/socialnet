@@ -207,6 +207,7 @@ int user_informationSubscriber(int argc, char *argv[])
   cout << "=== [Subscriber] Ready ..." << endl;
 
   bool closed = false;
+  bool flag = false;
   ReturnCode_t status =  - 1;
   int count = 0;
   User static_user;
@@ -225,6 +226,8 @@ int user_informationSubscriber(int argc, char *argv[])
       static_user.set_first_name(fname);
       std::string lname(msgList[j].last_name);
       static_user.set_last_name(lname);
+      static_user.set_user_uuid(msgList[j].uuid);
+
 
       cout << " The following are the user's "<< msgList[j].interests.length()<<" interests " << endl;
       for (DDS::ULong k = 0; k < msgList[j].interests.length(); k++)
@@ -234,9 +237,11 @@ int user_informationSubscriber(int argc, char *argv[])
          user_interests.push_back(interest);
       }
       closed = true;
+      flag = true;
     }
     static_user.set_interests(user_interests);
-    static_user.write_to_file();
+    if(flag == true)
+      static_user.write_to_file();
     status = HelloWorldReader->return_loan(msgList, infoSeq);
     checkStatus(status, "user_informationDataReader::return_loan");
     os_nanoSleep(delay_200ms);

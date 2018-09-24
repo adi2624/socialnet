@@ -40,45 +40,38 @@ void User::set_user_information()
 void User::write_to_file()
 {
     std::ofstream userFile;
-    userFile.open("users.tsn",std::ios::app);
+    userFile.open("users.tsn",std::ios_base::app);
+
     if(userFile.is_open())
     {
-       // std::string uuuid(UUUID);
-        // each user will be delimited by a ~ character 
-        userFile << "~";
-        userFile <<first_name<<" "<<last_name <<" ";
-        // here we start writing all the individual post that we have for the user
-        //write all user interests to the file
+       /*
+        ~FNAME:AdityaLNAME:RajguruInterests:Swimming Hockey NetflixUUID:dfefbf46-6dd2-4a7
+        ~FNAME:DeviLNAME:TripathyInterests:TableTennis Coding AstronomyUUID:123456789abcdefg
+       */
+
+        userFile << "~FNAME" <<" " << first_name <<" "<<"LNAME"<<" "<<last_name<<" "<<"Interests: ";
         for(auto const& interest: interests)
         {
             userFile << interest << " "; 
         }
-        userFile << "\n";
-        //write user posts to the file 
-        /*
-        for(auto const& post: user_posts)
+
+        userFile << "UUID: ";
+        return_uuid();
+
+        for(int i = 0; i < strlen(uuidCharArray); i++)
         {
-            userFile << post.get_serial_number() << " " << post.get_post_data() << " " << post.get_creation_date()<< "\n";
+            userFile << uuidCharArray[i];
         }
-        */
-        /*                      example file
-         * ~UUID1
-         * September 20, 1997
-         * Hockey Football Computers
-         * 01 Today I went for a walk. DATE
-         * 02 I dont feel so goo today DATE
-         * ~UUID2 
-         * September 18, 1989
-         * Running Painting 
-         * 03
-         *  Today I painted a house DATE
-         * 04 I dont want to work today DATE 
-         */
+
+        userFile << "\n";
+
+
+
 
         userFile.close();
     }
     else
     {
         throw std::runtime_error("Could not open file");
-    }
+    } 
 }
