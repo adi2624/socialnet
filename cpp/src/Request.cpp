@@ -1,10 +1,16 @@
 #include"Request.h"
 using namespace DDS;
 using namespace TSN;
+/*////////////////////////////////////
+/
+/ LOAD USERS FROM THE USERS.TSN FILE INTO MEMORY
+/   
+/
+////////////////////////////////////*/
 std::vector<User> list_pub_users()
 {
 	
-	std::vector<User> name_user;
+	std::vector<User> name_user;		//EXPORT A VECTOR OF USERS AFTER LOADING ALL USERS FROM USERS.TSN
 	std::string temp_line;
 	std::ifstream file("dummy_users.tsn");
 	int i=0;
@@ -30,6 +36,12 @@ std::vector<User> list_pub_users()
 	file.close();
 	return name_user;
 }
+/*////////////////////////////////////
+/
+/       REQUEST PUBLISHER
+/   
+/
+////////////////////////////////////*/
 int requestPublisher(int argc, char* argv[])
 {
 	os_time delay_1s = { 1, 0 };
@@ -50,7 +62,7 @@ int requestPublisher(int argc, char* argv[])
   	requestDataWriter_var PublisherWriter = requestDataWriter::_narrow(writer.in());
 	std::cout<<"Please select user from below to send a request to :"<<std::endl;
 	std::vector<User> name_user;
-	name_user = list_pub_users();
+	name_user = list_pub_users();		//LIST ALL THE USERS TO CHOOSE FROM.
 	int input;
 	for(int i=0;i<name_user.size();i++)
 	{
@@ -59,11 +71,11 @@ int requestPublisher(int argc, char* argv[])
 		std::cout<<"LNAME: "<<name_user.at(i).get_last_name()<<std::endl;
 		std::cout<<"UUID: "<<name_user.at(i).return_uuid()<<std::endl;
 	}
-	std::cout<<"Enter the user number"<<std::endl;
+	std::cout<<"Enter the user number"<<std::endl;	//ENTER THE USER NUMBER.
 	std::cin>>input;
 	node_request user_request;
 	strcpy(user_request.fulfiller_uuid , name_user.at(input-1).return_uuid());
-	std::cout<<"The received request was for UUID:"<<user_request.fulfiller_uuid<<std::endl;
+	std::cout<<"The received request was for UUID:"<<user_request.fulfiller_uuid<<std::endl; //OUTPUT THE UUID of the Intended Receiver.
 	std::cout<<"Enter the serial no of the post that you want from this user"<<std::endl;
 	std::cin>>input;
 	user_request.requested_posts.length(1);
@@ -72,7 +84,7 @@ int requestPublisher(int argc, char* argv[])
 	
 
 	
-	//LOAD UUID FROM HELLO.TSN
+	//LOAD LOCAL USER'S UUID FROM HELLO.TSN
 	std::ifstream input_file;
   input_file.open("hello.tsn",ios::in);
   char uuidCharArray[17];      
@@ -101,6 +113,12 @@ int requestPublisher(int argc, char* argv[])
   mgr.deleteParticipant();
 	return 0;
 }
+/*////////////////////////////////////
+/
+/       REQUEST SUBSCRIBER
+/   
+/
+////////////////////////////////////*/
 int requestSubscriber(int argc, char* argv[])
 {
 	os_time delay_2ms = { 0, 2000000 };
@@ -130,6 +148,7 @@ int requestSubscriber(int argc, char* argv[])
     checkStatus(status, "requestDataReader::take");
     for (DDS::ULong j = 0; j < reqList.length(); j++)
     {
+		//CODE TO CHECK THE CORRECT UUID's ARE BEING SENT AND RECEIVED.
       cout << "=== [Subscriber] message received :" << endl;
       cout << "    Sender userID  : " << reqList[j].uuid << endl;
       cout << "    IS THIS MY UUID? : \"" << reqList[j].user_requests[0].fulfiller_uuid <<"and post_no"<<reqList[j].user_requests[0].requested_posts[0]<<std::endl;
@@ -152,16 +171,22 @@ int requestSubscriber(int argc, char* argv[])
   std::cout<<"The subscriber is ending"<<std::endl;
 	return 0;
 }
+/*////////////////////////////////////
+/
+/       MAIN
+/   
+/
+////////////////////////////////////*/
 int main(int argc, char* argv[])
 {
 		
-	int temp = requestPublisher(argc,argv);
+	int temp = requestPublisher(argc,argv); //START PUBLISHER ONCE.
 	std::cout<<"Do you want to start the subscriber?(Y/N)"<<std::endl;
 	std::string input;
 	std::cin>>input;
 	if(input=="Y")
 	{
-		int return_code = requestSubscriber(argc,argv);
+		int return_code = requestSubscriber(argc,argv);	//RUN SUBSCRIBER
 	}
 
 	/*
