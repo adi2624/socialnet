@@ -14,6 +14,8 @@ public:
     std::string get_first_name() { return first_name; }
     void set_last_name(std::string lname) { last_name = lname; }
     std::string get_last_name() { return last_name; }
+    void set_date(long birth) { birth_date = birth; }
+    long get_birth_date() { return birth_date; }
 	//
 	
     void set_user_information();
@@ -24,12 +26,7 @@ private:
 	std::vector<std::string> interests;
     std::string first_name;
     std::string last_name;
-    /*
-     * for this next line we will have to import a boost date library
-     * we are already using boost so I figures this shouldnt be a big deal
-     */
-
-    //date birth_date;
+    long birth_date;
     char uuidCharArray[17];
     std::vector<Post> user_posts;
 };
