@@ -123,7 +123,7 @@ else
   input.close();
 }
 
-strncpy(msgInstance.uuid,uuidCharArray + 5, 22);
+strncpy(msgInstance.uuid,uuidCharArray + 5, 22-5);
 
 
 /*  End of Boost UUID  */
