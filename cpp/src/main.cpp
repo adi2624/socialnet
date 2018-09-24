@@ -3,6 +3,7 @@
 #include <iostream>
 #include<vector>
 #include<cstdlib>
+#include <map>
 #include<string>
 #include<thread>
 #include<fstream>
@@ -17,8 +18,11 @@
 #include <boost/lexical_cast.hpp>
 using namespace DDS;
 using namespace TSN;
- int sno=0;        //KEEPS TRACK OF SERIAL NO: DO NOT REMOVE IT'S A GLOBAL VARIABLE
+int sno=0;        //KEEPS TRACK OF SERIAL NO: DO NOT REMOVE IT'S A GLOBAL VARIABLE
+
+int test; // This is a test variable so that I can see if the hash map works 
 void make_post(char string[17],int sno);
+std::map<int, std::string> userPostMap;
 int user_informationPublisher(int argc, char *argv[])
 {
   os_time delay_1s = { 1, 0 };
@@ -132,7 +136,7 @@ strncpy(msgInstance.uuid,uuidCharArray + 5, 22-5);
   
   //std::cout<<msgInstance.uuid<<endl;
   msgInstance.interests.length(my_post.get_interests().size());       //SET UP VALUES IN user_information STRUCT FOR DDS.
-  for(int i=0;i<my_post.get_interests().size();i++)
+  for(auto i=0;i<my_post.get_interests().size();i++)
   {
       msgInstance.interests[i] = my_post.get_interests().at(i).c_str();
   }
@@ -156,8 +160,9 @@ strncpy(msgInstance.uuid,uuidCharArray + 5, 22-5);
   std::string temp_post;
   cin>>temp_post;
  
-  if(temp_post=="Y")
+  if(temp_post == "Y" || temp_post == "y")
   {
+    test = sno;
     make_post(msgInstance.uuid, sno);
   }
 
@@ -174,6 +179,7 @@ strncpy(msgInstance.uuid,uuidCharArray + 5, 22-5);
 
   return 0;
 }
+
 int user_informationSubscriber(int argc, char *argv[])
 {
   os_time delay_2ms = { 0, 2000000 };
@@ -266,47 +272,52 @@ void make_post(char string[17], int sno)
   std::cout<<"Enter the post text"<<std::endl;
   cin.ignore();
   getline(std::cin,post_text);
+  userPostMap[sno] = post_text;
   myfile<<"SNO:"<<sno<<" POST:"<<post_text<<endl;
   myfile.close();
 }
 std::string load_post(int post_no)
 {
-  int number=0,i=0;
-  bool found_post = false;
-  std::string line,post;
-  std::ifstream get_post("hello.tsn");
-  if (!get_post.is_open())
-    perror("error while opening file");
-  //get_post.open("hello.tsn",ios::in);
-  if (get_post.bad())
-    perror("error while reading file");
-  while(std::getline(get_post,line))
-  {
-    std::istringstream iss(line);
-    std::string c;                          //GET LINE AND PUSH INTO STRINGSTREAM.
-    c=iss.str();                              
-   // std::cout<<"String received "<<c<<endl;  //Debugging string
-    std::size_t pos = c.find("SNO:");
-    std::size_t pos2=c.find("POST:");           //FIND DATA after POST:
-    if(i!=0)      //IGNORE UUID AT TOP OF FILE
-    { 
-    std::string number_string = c.substr(pos+4,pos2-4);       
-   // std::cout<<"Number String "<<number_string<<std::endl;   //please.ignore(#debug) FIND NUMBER BETWEEN SNO: and POST:
-    number = std::stoi(number_string);
-    }
-    i++;
-    if(number==post_no)
-    {
-      std::string final_post_text = c.substr(pos2+4);
-    std::cout<<"Final text:"<<final_post_text<<std::endl;   //RETURN FOUND POST DATA
-    return final_post_text;
-    }
+  // guarenteed to run in O(logn)
+  std::map<int, std::string>::iterator postIter = userPostMap.find(post_no);
+  if(postIter == userPostMap.end()) return "Fail";
+  return postIter->second; 
+  // int number=0,i=0;
+  // bool found_post = false;
+  // std::string line,post;
+  // std::ifstream get_post("hello.tsn");
+  // if (!get_post.is_open())
+  //   perror("error while opening file");
+  // //get_post.open("hello.tsn",ios::in);
+  // if (get_post.bad())
+  //   perror("error while reading file");
+  // while(std::getline(get_post,line))
+  // {
+  //   std::istringstream iss(line);
+  //   std::string c;                          //GET LINE AND PUSH INTO STRINGSTREAM.
+  //   c=iss.str();                              
+  //  // std::cout<<"String received "<<c<<endl;  //Debugging string
+  //   std::size_t pos = c.find("SNO:");
+  //   std::size_t pos2=c.find("POST:");           //FIND DATA after POST:
+  //   if(i!=0)      //IGNORE UUID AT TOP OF FILE
+  //   { 
+  //   std::string number_string = c.substr(pos+4,pos2-4);       
+  //  // std::cout<<"Number String "<<number_string<<std::endl;   //please.ignore(#debug) FIND NUMBER BETWEEN SNO: and POST:
+  //   number = std::stoi(number_string);
+  //   }
+  //   i++;
+  //   if(number==post_no)
+  //   {
+  //     std::string final_post_text = c.substr(pos2+4);
+  //   std::cout<<"Final text:"<<final_post_text<<std::endl;   //RETURN FOUND POST DATA
+  //   return final_post_text;
+  //   }
     
-  }
-  if(found_post==false)
-  {
-    return "Fail";    //If nothing is returned upon search, a segmentation fault will occur.
-  }
+  // }
+  // if(found_post==false)
+  // {
+  //   return "Fail";    //If nothing is returned upon search, a segmentation fault will occur.
+  // }
   
 }
 std::vector<std::string> list_all_users()
@@ -340,19 +351,23 @@ int OSPL_MAIN (int argc, char *argv[])
 {
     std::vector<std::string> topic_names;
     std::string user_info("\"user_information\"");
-     std::cout<<"Welcome to the Social Network!"<<std::endl;
+    std::cout<<"Welcome to the Social Network!"<<std::endl;
     std::cout<<"The program is listening for UserInformation published on the "<<user_info<<" topic"<<std::endl;
     std::cout<<"Starting Subscriber ........ "<<std::endl;
-     std::string input="N";
+    std::string input="N";
         user_informationPublisher(argc,argv); 
            //std::thread second(run_subscriber,argc,argv);
 
            do
            {
                     //TESTING: RUN PUBLISHER INFINITE LOOP.
+            // testing the hash map 
+            std::cout << "Loading post " << test << ":" << std::endl;
+            std::string postText = load_post(test);
+            std::cout << "Post data: " << std::endl << postText << std::endl;
            std::cout<<"Publishing has finished, would you like to run the publisher again?(Y/N)"<<std::endl;
            std::cin>>input;
-           std::cout<<"Remember that it takes 30 seconds before a subscribed message is received and only shows up after the (y/n) to run publisher or not"<<std::endl;
+           //std::cout<<"Remember that it takes 30 seconds before a subscribed message is received and only shows up after the (y/n) to run publisher or not"<<std::endl;
            }while(input=="Y");
          
       

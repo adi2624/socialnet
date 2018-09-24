@@ -105,8 +105,10 @@ char uuidCharArray[17];
     }
 
 
-for(int i=0;i<17;i++)
+for(int i=0;i<=17;i++)
 {
+  //this doenst have the ending null character, but I added it
+  if(i == 17) msgInstance.uuid[i] = '\0';
   msgInstance.uuid[i] = uuidCharArray[i];       //Truncation of BOOST UUID to 16 byte C Char Array and addition of null character
 }
 
