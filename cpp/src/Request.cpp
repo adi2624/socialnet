@@ -60,6 +60,9 @@ int requestPublisher(int argc, char* argv[])
   	mgr.createWriter(autodispose_unregistered_instances);
   	DataWriter_var writer = mgr.getWriter();
   	requestDataWriter_var PublisherWriter = requestDataWriter::_narrow(writer.in());
+
+
+
 	std::cout<<"Please select user from below to send a request to :"<<std::endl;
 	std::vector<User> name_user;
 	name_user = list_pub_users();		//LIST ALL THE USERS TO CHOOSE FROM.
@@ -121,10 +124,10 @@ int requestPublisher(int argc, char* argv[])
 ////////////////////////////////////*/
 int requestSubscriber(int argc, char* argv[])
 {
-	os_time delay_2ms = { 0, 2000000 };
+  os_time delay_2ms = { 0, 2000000 };
   os_time delay_200ms = { 0, 200000000 };
   requestSeq reqList;
-    SampleInfoSeq infoSeq;
+  SampleInfoSeq infoSeq;
   DDSEntityManager mgr;
   mgr.createParticipant("Publisher Example");
   requestTypeSupport_var mt = new requestTypeSupport();
@@ -137,7 +140,6 @@ int requestSubscriber(int argc, char* argv[])
 	 requestDataReader_var PublisherReader = requestDataReader::_narrow(dreader.in());
   checkHandle(PublisherReader.in(), "requestDataReader::_narrow");
   cout << "=== [Subscriber] Ready ..." << endl;
-
   bool closed = false;
   ReturnCode_t status =  - 1;
   int count = 0;

@@ -1,13 +1,13 @@
 #include <string>
 #include <sstream>
 #include <iostream>
-#include<vector>
-#include<cstdlib>
+#include <vector>
+#include <cstdlib>
 #include <map>
-#include<string>
-#include<thread>
+#include <string>
+#include <thread>
 #include <regex>
-#include<fstream>
+#include <fstream>
 #include "DDSEntityManager.h"
 #include "ccpp_tsn.h"
 #include "os.h"
@@ -49,7 +49,7 @@ int user_informationPublisher(int argc, char *argv[])
   std::cout<<"Participant created"<<std::endl;
 
   //create type
- user_informationTypeSupport_var mt = new user_informationTypeSupport();
+  user_informationTypeSupport_var mt = new user_informationTypeSupport();
   mgr.registerType(mt.in());
 
   //create Topic
@@ -67,7 +67,7 @@ int user_informationPublisher(int argc, char *argv[])
 
   // Publish Events
   DataWriter_var dwriter = mgr.getWriter();
-user_informationDataWriter_var TSNWriter = user_informationDataWriter::_narrow(dwriter.in());
+  user_informationDataWriter_var TSNWriter = user_informationDataWriter::_narrow(dwriter.in());
 
 int user_found = 0;
 Post my_post;
