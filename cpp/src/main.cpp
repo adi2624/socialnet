@@ -25,7 +25,6 @@ int sno=0;        //KEEPS TRACK OF SERIAL NO: DO NOT REMOVE IT'S A GLOBAL VARIAB
 int test; // This is a test variable so that I can see if the hash map works 
 void make_post(char string[17],int sno);
 std::map<int, std::string> userPostMap;
-<<<<<<< HEAD
 long calculate_seconds(int month, unsigned day, unsigned year)
 {
   // TODO: FINISH THIS FUNCTION
@@ -33,14 +32,12 @@ long calculate_seconds(int month, unsigned day, unsigned year)
   return temp;
 
 }
-=======
 /*////////////////////////////////////
 /
 /       USER INFORMATION PUBLISHER
 /   
 /
 ////////////////////////////////////*/
->>>>>>> f3030c7558beea00bc4a6a4f69fcea50b9b3a9c1
 int user_informationPublisher(int argc, char *argv[])
 {
   os_time delay_1s = { 1, 0 };
@@ -76,12 +73,12 @@ int user_found = 0;
 Post my_post;
 User my_user;
 std::string temp_user;
-cout<<"Enter the first name of the User"<<endl;
-cin>>temp_user;
+cout<<"Enter your first name: "<< std::endl;
+std::cin>>temp_user;
 my_post.set_first_name(temp_user);
 
-cout<<"Enter the last name of the user"<<endl;
-cin>>temp_user;
+std::cout<<"Enter your last name: "<< std::endl;
+std::cin>>temp_user;
 my_post.set_last_name(temp_user);
 
 std::vector<std::string> user_interests;
@@ -91,7 +88,6 @@ std::cin >> user_answer_interest;
 while(!(user_answer_interest == "end"))
 {
   user_interests.push_back(user_answer_interest);
-  std::cout << user_answer_interest << std::endl;
   std::cin >> user_answer_interest;
 }
 std::string date;
@@ -152,13 +148,7 @@ else
 {
   user_found = 1;
 }
-
-<<<<<<< HEAD
-
-strncpy(msgInstance.uuid,uuidCharArray + 5, 22-5);
-=======
 strncpy(msgInstance.uuid,uuidCharArray + 5, 22-5);  //COPY UUID INTO MSGINSTANCE OBJECT
->>>>>>> f3030c7558beea00bc4a6a4f69fcea50b9b3a9c1
 
 
 /*  End of Boost UUID  */
@@ -188,19 +178,6 @@ strncpy(msgInstance.uuid,uuidCharArray + 5, 22-5);  //COPY UUID INTO MSGINSTANCE
   ReturnCode_t status = TSNWriter->write(msgInstance, DDS::HANDLE_NIL);   
   checkStatus(status, "MsgDataWriter::write");
   os_nanoSleep(delay_1s);
-<<<<<<< HEAD
-=======
-  //CODE THAT ASKS IF YOU WANT TO MAKE A POST
-  std::cout<<"Would you like to make a post (Y/N)?"<<endl;  //Ask a user to make a post.
-  std::string temp_post;
-  cin>>temp_post;
- 
-  if(temp_post == "Y" || temp_post == "y")
-  {
-    test = sno;
-    make_post(msgInstance.uuid, sno);   //MAKE THE POST
-  }
->>>>>>> f3030c7558beea00bc4a6a4f69fcea50b9b3a9c1
 
   /* Remove the DataWriters */
   mgr.deleteWriter();
@@ -389,7 +366,7 @@ int OSPL_MAIN (int argc, char *argv[])
     std::cout<<"The program is listening for UserInformation published on the "<<user_info<<" topic"<<std::endl;
     std::cout<<"Starting Subscriber ........ "<<std::endl;
     std::string input="N";
-<<<<<<< HEAD
+    std::cout << "Lets setup your profile! " << std::endl;
     int is_user_found = user_informationPublisher(argc,argv); 
            //std::thread second(run_subscriber,argc,argv);
     char uuidCharArray[17];  
@@ -409,26 +386,36 @@ int OSPL_MAIN (int argc, char *argv[])
       }
       input.close();
     }
-           std::cout<<"Would you like to make a post (Y/N)?"<<endl;  //Ask a user to make a post.
-=======
-        user_informationPublisher(argc,argv); 
+          //user_informationPublisher(argc,argv); 
            //std::thread second(run_subscriber,argc,argv);    //PROGRAM SEG FAULTS UPON LAUNCHING THREAD. RUN SUBSCRIBER SHOULD USE THREAD TO CHECK CONTINUOSLY BUT DISABLED FOR NOW.
 
->>>>>>> f3030c7558beea00bc4a6a4f69fcea50b9b3a9c1
-           do
+           while(1)
            {
-            //TESTING: RUN PUBLISHER INFINITE LOOP.
-            std::string temp_post;
-            cin>>temp_post;
-           
-            if(temp_post == "Y" || temp_post == "y")
+            int user_action_num;
+            std::string user_action;
+            std::cout << "What would you like to do?" << std::endl;
+            std::cout << "1. List users" << std::endl;
+            std::cout << "2. Show 'user'" << std::endl;
+            std::cout << "3. Edit" << std::endl;
+            std::cout << "4. Resync" << std::endl;
+            std::cout << "5. Post" << std::endl;
+            std::cout << "6. Show statistics" << std::endl;
+            std::cout << "7. Exit" << std::endl;
+            std::cout << "Enter your choice: ";
+            std::cin >> user_action;
+            user_action_num = stoi(user_action);
+            switch(user_action_num)
             {
-              test = sno;
-              make_post(uuidCharArray, sno);
+              case 1: break; //action for list user
+              case 2: break; //action for show user
+              case 3: break; //action for edit
+              case 4: break; //action for resync
+              case 5: make_post(uuidCharArray,sno); break;
+              case 6: break; //action for statistics 
             }
-            std::cout<<"Publishing has finished, would you like to run the publisher again?(Y/N)"<<std::endl;
-            std::cin>>input;
-           }while(input=="Y" || input == "y");
+            if(user_action_num == 7) break;
+
+           }
          
       
         
