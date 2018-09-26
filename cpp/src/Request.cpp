@@ -2,12 +2,53 @@
 #include "Response.h"
 using namespace DDS;
 using namespace TSN;
+Response new_response;
+
 /*////////////////////////////////////
 /
 / LOAD USERS FROM THE USERS.TSN FILE INTO MEMORY
 /   
 /
 ////////////////////////////////////*/
+std::string load_post(int post_no)
+{
+  int number=0,i=0;
+  bool found_post = false;
+  std::string line,post;
+  std::ifstream get_post("hello.tsn");
+  if (!get_post.is_open())
+    perror("error while opening file");
+  //get_post.open("hello.tsn",ios::in);
+  if (get_post.bad())
+    perror("error while reading file");
+  while(std::getline(get_post,line))
+  {
+    std::istringstream iss(line);
+    std::string c;                          //GET LINE AND PUSH INTO STRINGSTREAM.
+    c=iss.str();                              
+   // std::cout<<"String received "<<c<<endl;  //Debugging string
+    std::size_t pos = c.find("SNO:");
+    std::size_t pos2=c.find("POST:");           //FIND DATA after POST:
+    if(i!=0)      //IGNORE UUID AT TOP OF FILE
+    { 
+    std::string number_string = c.substr(pos+4,pos2-4);       
+   // std::cout<<"Number String "<<number_string<<std::endl;   //please.ignore(#debug) FIND NUMBER BETWEEN SNO: and POST:
+    number = std::stoi(number_string);
+    }
+    i++;
+    if(number==post_no)
+    {
+      std::string final_post_text = c.substr(pos2+4);
+    std::cout<<"Final text:"<<final_post_text<<std::endl;   //RETURN FOUND POST DATA
+    return final_post_text;
+    }
+    
+  }
+  if(found_post==false)
+  {
+    return "Fail";    //If nothing is returned upon search, a segmentation fault will occur.
+  }
+}
 std::vector<User> list_pub_users()
 {
 	
@@ -99,11 +140,11 @@ int requestPublisher(int argc, char* argv[])
 	this_user_request.user_requests[0] = user_request;		//COPY NODE REQUEST INTO THE FINAL REQUEST SEQUENCE.
 
 	//TESTING CODE
-	std::cout<<"MY UUID :"<<this_user_request.uuid<<"REQUESTED POST FROM UUID : "<<this_user_request.user_requests[0].fulfiller_uuid<<std::endl;
-	cout << "=== [Publisher] writing a message containing :" << endl;
- 	 cout << "    userID  : " << this_user_request.uuid << std::endl;
-  	cout << "    Fulfiller UUID:" << this_user_request.user_requests[0].fulfiller_uuid  <<"and has requested post_no: "<< this_user_request.user_requests[0].requested_posts[0] << "\"" << endl;
-	ReturnCode_t status = PublisherWriter->write(this_user_request, DDS::HANDLE_NIL);
+  std::cout<<"MY UUID :"<<this_user_request.uuid<<"REQUESTED POST FROM UUID : "<<this_user_request.user_requests[0].fulfiller_uuid<<std::endl;
+  cout << "=== [Publisher] writing a message containing :" << endl;
+  cout << "    userID  : " << this_user_request.uuid << std::endl;
+  cout << "    Fulfiller UUID:" << this_user_request.user_requests[0].fulfiller_uuid  <<"and has requested post_no: "<< this_user_request.user_requests[0].requested_posts[0] << "\"" << endl;
+  ReturnCode_t status = PublisherWriter->write(this_user_request, DDS::HANDLE_NIL);
   checkStatus(status, "requestDataWriter::write");
   os_nanoSleep(delay_1s);
   mgr.deleteWriter();
@@ -129,6 +170,22 @@ int requestSubscriber(int argc, char* argv[])
   os_time delay_200ms = { 0, 200000000 };
   requestSeq reqList;
   SampleInfoSeq infoSeq;
+
+  /////////////////////////////////////
+  /* 		RESPONSE PUBLISHER IS IN HERE INSTEAD			*/
+    DDSEntityManager mgr2;
+	mgr2.createParticipant("Response example");
+	responseTypeSupport_var mt2 = new responseTypeSupport();
+	mgr2.registerType(mt2.in());
+	char topic_name2[] = "response_Msg";
+	mgr2.createTopic(topic_name2);
+	mgr2.createPublisher();
+	bool autodispose_unregistered_instances = false;
+   mgr2.createWriter(autodispose_unregistered_instances);
+   DataWriter_var writer = mgr2.getWriter();
+   responseDataWriter_var responseWriter = responseDataWriter::_narrow(writer.in());
+   response user_response;
+   /////////////////////////////////////
   DDSEntityManager mgr;
   mgr.createParticipant("Publisher Example");
   requestTypeSupport_var mt = new requestTypeSupport();
@@ -145,14 +202,13 @@ int requestSubscriber(int argc, char* argv[])
   ReturnCode_t status =  - 1;
   int count = 0;
   	// same deal, we want this user uuid
-  	Response new_response;
   	std::ifstream input_file;
     input_file.open("hello.tsn",ios::in);
     char uuidCharArray[17];      
     input_file.getline(uuidCharArray,25);
     request this_user_request;
     strncpy(this_user_request.uuid,uuidCharArray + 5, 22);
-    new_response.set_this_uuid(this_user_request.uuid);
+    strncpy(user_response.uuid,uuidCharArray + 5, 22);
    while (!closed && count < 1500) // We dont want the example to run indefinitely
   {
     status = PublisherReader->take(reqList, infoSeq, LENGTH_UNLIMITED,
@@ -166,9 +222,15 @@ int requestSubscriber(int argc, char* argv[])
       cout << "    IS THIS MY UUID? : \"" << reqList[j].user_requests[0].fulfiller_uuid <<"and post_no"<<reqList[j].user_requests[0].requested_posts[0]<<std::endl;
       if( strcmp(this_user_request.uuid,reqList[j].user_requests[0].fulfiller_uuid) )
       {
-      	new_response.add_uuid_to_vec(reqList[j].user_requests[0].requested_posts[0]);
+      	// ONLY SEND DATA IF WE OWN IT 
+      	std::cout << "SENDING DATA ..." << std::endl;
+      	user_response.post_id = reqList[j].user_requests[0].requested_posts[0];
+      	user_response.post_body = load_post(reqList[j].user_requests[0].requested_posts[0]).c_str();
+      	std::cout << "Sending:" << uuidCharArray << user_response.post_id << user_response.post_body << std::endl;
+		ReturnCode_t status = responseWriter->write(user_response, DDS::HANDLE_NIL);
+		checkStatus(status, "responseDataWriter::write");
+
       }
-      new_response.set_is_done(true);
       closed = true;
     }
    
@@ -177,6 +239,18 @@ int requestSubscriber(int argc, char* argv[])
     os_nanoSleep(delay_200ms);
     ++count;
   }
+		// TODO: send one item per second
+
+
+    mgr2.deleteWriter();
+
+	  /* Remove the Publisher. */
+	mgr2.deletePublisher();
+	  /* Remove the Topics. */
+	mgr2.deleteTopic();
+
+	  /* Remove Participant. */
+	mgr2.deleteParticipant();
 
   os_nanoSleep(delay_2ms);
 

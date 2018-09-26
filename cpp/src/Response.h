@@ -25,6 +25,4 @@ public:
 	void set_is_done(bool done) { is_done = done; }
 	bool get_is_done();
 	void add_uuid_to_vec(int element_to_add) { post_id_vec.push_back(element_to_add); }
-	int responsePublisher(int argc, char* argv[]);
-	int responseSubsriber(int argc, char* argv[]);
 };

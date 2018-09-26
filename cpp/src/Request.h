@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <fstream>
 #include "DDSEntityManager.h"
 #include "ccpp_tsn.h"
