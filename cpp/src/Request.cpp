@@ -1,4 +1,5 @@
 #include"Request.h"
+#include "Response.h"
 using namespace DDS;
 using namespace TSN;
 /*////////////////////////////////////
@@ -12,7 +13,7 @@ std::vector<User> list_pub_users()
 	
 	std::vector<User> name_user;		//EXPORT A VECTOR OF USERS AFTER LOADING ALL USERS FROM USERS.TSN
 	std::string temp_line;
-	std::ifstream file("dummy_users.tsn");
+	std::ifstream file("users.tsn");
 	int i=0;
 	while(!file.eof())
 	{
@@ -89,11 +90,11 @@ int requestPublisher(int argc, char* argv[])
 	
 	//LOAD LOCAL USER'S UUID FROM HELLO.TSN
 	std::ifstream input_file;
-  input_file.open("hello.tsn",ios::in);
-  char uuidCharArray[17];      
-  input_file.getline(uuidCharArray,25);
-  request this_user_request;
-  strncpy(this_user_request.uuid,uuidCharArray + 5, 22);
+    input_file.open("hello.tsn",ios::in);
+    char uuidCharArray[17];      
+    input_file.getline(uuidCharArray,25);
+    request this_user_request;
+    strncpy(this_user_request.uuid,uuidCharArray + 5, 22);
 	this_user_request.user_requests.length(1);
 	this_user_request.user_requests[0] = user_request;		//COPY NODE REQUEST INTO THE FINAL REQUEST SEQUENCE.
 
@@ -143,6 +144,15 @@ int requestSubscriber(int argc, char* argv[])
   bool closed = false;
   ReturnCode_t status =  - 1;
   int count = 0;
+  	// same deal, we want this user uuid
+  	Response new_response;
+  	std::ifstream input_file;
+    input_file.open("hello.tsn",ios::in);
+    char uuidCharArray[17];      
+    input_file.getline(uuidCharArray,25);
+    request this_user_request;
+    strncpy(this_user_request.uuid,uuidCharArray + 5, 22);
+    new_response.set_this_uuid(this_user_request.uuid);
    while (!closed && count < 1500) // We dont want the example to run indefinitely
   {
     status = PublisherReader->take(reqList, infoSeq, LENGTH_UNLIMITED,
@@ -154,6 +164,11 @@ int requestSubscriber(int argc, char* argv[])
       cout << "=== [Subscriber] message received :" << endl;
       cout << "    Sender userID  : " << reqList[j].uuid << endl;
       cout << "    IS THIS MY UUID? : \"" << reqList[j].user_requests[0].fulfiller_uuid <<"and post_no"<<reqList[j].user_requests[0].requested_posts[0]<<std::endl;
+      if( strcmp(this_user_request.uuid,reqList[j].user_requests[0].fulfiller_uuid) )
+      {
+      	new_response.add_uuid_to_vec(reqList[j].user_requests[0].requested_posts[0]);
+      }
+      new_response.set_is_done(true);
       closed = true;
     }
    

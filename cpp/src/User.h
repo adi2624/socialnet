@@ -4,6 +4,7 @@
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include "Post.h"
+#include <map>
 class User
 {
 public:
@@ -17,12 +18,15 @@ public:
     void set_date(long birth) { birth_date = birth; }
     long get_birth_date() { return birth_date; }
 	//
-	
+    void set_post(std::vector<Post> post) { user_posts = post; }
+	void set_map(std::map<int, std::string>& user_post_map) { userPostMap = user_post_map; }
+    std::map<int, std::string> get_map() { return userPostMap; }
     void set_user_information();
     void write_to_file();
     void set_user_uuid(std::string uuid_string);
     char * return_uuid();
 private:
+    std::map<int, std::string> userPostMap;
 	std::vector<std::string> interests;
     std::string first_name;
     std::string last_name;

@@ -64,10 +64,6 @@ void User::write_to_file()
         }
 
         userFile << "\n";
-
-
-
-
         userFile.close();
     }
     else
