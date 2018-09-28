@@ -1,7 +1,7 @@
 // vim: set expandtab tabstop=3
 
 // to check syntax quickly
-// idlpp  -I${OSPL_HOME}/etc/idl -l c  tsn.idl
+// idlpp  -I${OSPL_HOME}/etc/idl -l cpp  tsn.idl
 
 
 
@@ -14,11 +14,12 @@
 module TSN 
 {
     typedef unsigned long serial_number;
+    const unsigned long UUID_SIZE=37; // 36 characters + C style NULL
     
     // Personal information of the user. Published on startup.
     struct user_information 
     {
-        char uuid[17];                  // 16 characters + C style NULL
+        char uuid[UUID_SIZE];                  // 36 characters + C style NULL
         string<70> first_name;
         string<70> last_name;
         long date_of_birth;             // Date of birth of user, seconds elapsed
@@ -36,7 +37,7 @@ module TSN
     // user_requests member of the Request struct.
     struct node_request 
     {
-        char fulfiller_uuid[17];  // the owner of the posts
+        char fulfiller_uuid[UUID_SIZE];  // the owner of the posts
         sequence<serial_number> requested_posts;
     };
 
@@ -48,7 +49,7 @@ module TSN
     // to verify that there is new content to collect.
     struct request 
     {
-        char uuid[17];  //  the uuid of the node making the request
+        char uuid[UUID_SIZE];  //  the uuid of the node making the request
         sequence<node_request> user_requests;
     };
     #pragma keylist request uuid
@@ -60,7 +61,7 @@ module TSN
     // Nodes shall not attempt to create Responses for data they do not own.
     struct response 
     {
-        char uuid[17];                       // uuid owner
+        char uuid[UUID_SIZE];                       // uuid owner
         serial_number post_id;
         string post_body;
         long date_of_creation;              // When post was made in seconds since 1/1/1970
@@ -68,8 +69,9 @@ module TSN
     #pragma keylist response uuid
     #pragma cats response uuid
 
-    /* The participant is "" */
-    /* Topic requirements:
+    /* The participant is "", like
+          mgr.createParticipant("");"
+      Topic requirements:
         1> the name of each topic will be the name of each structure.  
         2> the QOS settings will be :
                     reliability.kind = DDS_RELIABLE_RELIABILITY_QOS;
@@ -80,4 +82,3 @@ module TSN
         This is identical to the HelloWorld Example, it may change as we learn more
     */
 };
-

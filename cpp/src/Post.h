@@ -1,6 +1,6 @@
 #ifndef __POST_H
 #define __POST_H
-#endif
+
 #include<iostream>
 #include<string>
 #include<vector>
@@ -22,3 +22,5 @@ class Post
     std::string get_last_name();
     
 };
+
+#endif

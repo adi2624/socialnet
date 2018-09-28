@@ -1,3 +1,6 @@
+#ifndef _RESPONE_H
+#define _RESPONE_H
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -26,3 +29,5 @@ public:
 	bool get_is_done();
 	void add_uuid_to_vec(int element_to_add) { post_id_vec.push_back(element_to_add); }
 };
+
+#endif
