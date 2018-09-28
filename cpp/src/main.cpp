@@ -370,7 +370,7 @@ void show_user_data()
   }
   
   if(load_post(post_no++) == "Fail")
-    break;
+    return ;
 
 }
 /*////////////////////////////////////
