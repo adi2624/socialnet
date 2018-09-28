@@ -301,7 +301,7 @@ int user_informationSubscriber(int argc, char *argv[])
 /   
 /
 ////////////////////////////////////*/
-void make_post(char string[17], int sno)
+void make_post(char string[37], int sno)
 {
   std::ofstream myfile;
   myfile.open("hello.tsn",ios::app);
@@ -381,27 +381,11 @@ void show_user_data()
 ////////////////////////////////////*/
 void resync()
 {
-  if(remove("hello.tsn") != 0)
-    perror("Error Deleting File. Resync unsuccessfull");
-  else
-    cout << "File successfully deleted\n" << std::endl;
 
   if(remove("users.tsn") != 0)
     perror("Error Deleting File. Resync unsuccessfull");
   else
     cout << "File successfully deleted\n" << std::endl;
-
-  /* Remove the DataWriters */
- // mgr.deleteWriter();
-
-  /* Remove the Publisher. */
- // mgr.deletePublisher();
-  /* Remove the Topics. */
- // mgr.deleteTopic();
-
-  /* Remove Participant. */
-  //mgr.deleteParticipant();
-
 
 }
 /*////////////////////////////////////

@@ -78,7 +78,7 @@ void User::set_user_uuid(std::string uuid_string)
 void User::set_user_information()
 {
     // This method is self explanatory 
-    boost::uuids::string_generator gen;
+    //boost::uuids::string_generator gen;
     boost::uuids::uuid uuid = boost::uuids::random_generator()();
     std::string uuid_string = to_string(uuid);
     for(int i = 0; i <=37;i++)
