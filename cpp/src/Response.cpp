@@ -10,7 +10,7 @@ using namespace TSN;
 int responseSubsriber(int argc, char* argv[])
 {
   os_time delay_2ms = { 0, 2000000 };
-  os_time delay_200ms = { 0, 200000000 };
+  //os_time delay_200ms = { 0, 200000000 };
 	DDSEntityManager mgr;
 	mgr.createParticipant("Response example");
 	responseSeq resList;
