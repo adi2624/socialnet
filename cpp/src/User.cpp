@@ -113,7 +113,7 @@ void User::write_to_file()
         userFile << "UUID: ";
         return_uuid();
 
-        for(int i = 0; i < strlen(uuidCharArray); i++)
+        for(int i = 0; i < static_cast<int>(strlen(uuidCharArray)); i++)
         {
             userFile << uuidCharArray[i];
         }

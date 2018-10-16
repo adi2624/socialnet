@@ -3,7 +3,7 @@
 
 void Post::set_interest(std::vector<std::string> input_interests)
 {
-    for(int i=0;i<input_interests.size();i++)
+    for(int i=0;i< static_cast<int>(input_interests.size());i++)
     {
         interests.push_back(input_interests.at(i));
     }

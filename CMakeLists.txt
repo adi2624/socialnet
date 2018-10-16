@@ -9,8 +9,6 @@ add_executable(socialnet
         cpp/src/main.cpp
         cpp/src/Post.cpp
         cpp/src/Post.h
-        cpp/src/Request.cpp
-        cpp/src/Request.h
         cpp/src/Response.cpp
         cpp/src/Response.h
         cpp/src/User.cpp

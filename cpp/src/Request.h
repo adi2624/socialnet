@@ -1,18 +1,35 @@
-#ifndef _REQUEST_H
-#define _REQUEST_H
 
+#ifndef TEMP_REQUEST_H
+#define TEMP_REQUEST_H
 #include <iostream>
 #include <string>
 #include <sstream>
 #include <fstream>
+#include <vector>
 #include "DDSEntityManager.h"
 #include "ccpp_tsn.h"
 #include "os.h"
 #include "example_main.h"
 #include "User.h"
 
-std::vector<User> list_pub_users();
-int requestPublisher(int argc, char* argv[]);
-int requestSubscriber(int argc, char* argv[]);
+class Request
+{
+private:
+    DDSEntityManager mgr;
+    DataWriter_var dWriter;
+    TSN::requestDataWriter_var requestDataWriter;
+    InstanceHandle_t userHandle;
+    TSN::request * m_instance;
+    ReturnCode_t status;
+    void initPublisher(char uuid[], TSN::node_request& requests);
 
-#endif
+public:
+    Request(char uuid[], TSN::node_request& requests);
+    void publishEvent(char uuid[] , TSN::node_request& requests);
+    void dispose();
+};
+
+
+
+
+#endif //TEMP_REQUEST_H
