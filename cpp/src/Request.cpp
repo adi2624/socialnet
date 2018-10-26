@@ -36,24 +36,36 @@ std::string load_post(int post_no) {
     return "Fail";
 }
 
-std::vector<User> list_pub_users() {
+std::vector<User> list_pub_users() 
+{
 
     std::vector<User> name_user;        //EXPORT A VECTOR OF USERS AFTER LOADING ALL USERS FROM USERS.TSN
     std::string temp_line;
     std::ifstream file("users.tsn");
-    while (!file.eof()) {
+    while (!file.eof()) 
+    {
         User my_user;
         std::getline(file, temp_line);
+        std::cout << temp_line << std::endl;
         if (temp_line != "")        //Don't run loop on empty newline.
         {
-            std::size_t pos_lname = temp_line.find("LNAME:");
-            std::size_t pos_fname = temp_line.find("FNAME:");
+           std::size_t pos_lname = temp_line.find("LNAME");
+           std::size_t pos_fname = temp_line.find("FNAME");
+           std::size_t pos_interests = temp_line.find("Inter");
+           std::size_t pos_uuid = temp_line.find("UUID:");
+           std::string temp_fname;
+           std::string temp_lname;
+           std::string temp_uuid;
+
+           temp_fname = temp_line.substr(pos_fname + 6, pos_lname - 7);
+           temp_lname = temp_line.substr(pos_lname + 6, pos_interests - 19);
+           temp_uuid = temp_line.substr(pos_uuid + 6);
+           
             //std::cout<<"Space found at "<<pos_fname<<std::endl;
-            std::size_t pos_uuid = temp_line.find("UUID:");
-            std::size_t pos_interests = temp_line.find("Interests:");
-            my_user.set_first_name(temp_line.substr((pos_fname + 6), pos_lname - (pos_fname + 6)));
-            my_user.set_last_name(temp_line.substr((pos_lname + 6), (pos_interests - 1) - (pos_lname + 5)));
-            my_user.set_user_uuid(temp_line.substr(pos_uuid + 5));
+         
+            my_user.set_first_name(temp_fname);
+            my_user.set_last_name(temp_lname);
+            my_user.set_user_uuid(temp_uuid);
             name_user.push_back(my_user);
             //std::cout<<"Name: "<<temp_line.substr(pos+1,pos_name-1)<<"UUID: "<<temp_line.substr(pos_uuid+5);
             //name_user.push_back(temp_line.substr(pos+1,pos_name-1)+temp_line.substr(pos_uuid+5));
@@ -131,6 +143,7 @@ int OSPL_MAIN(int argc, char *argv[]) {
         std::cout << "FNAME: " << name_user.at(i).get_first_name() << std::endl;
         std::cout << "LNAME: " << name_user.at(i).get_last_name() << std::endl;
         std::cout << "UUID: " << name_user.at(i).return_uuid() << std::endl;
+        std::cout << std::endl;
     }
     std::cout << "Enter the user number" << std::endl;    //ENTER THE USER NUMBER.
     std::cin >> input;

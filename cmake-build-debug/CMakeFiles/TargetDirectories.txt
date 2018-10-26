@@ -1,3 +1,0 @@
-/home/edgar/Desktop/socialnet/socialnet/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/edgar/Desktop/socialnet/socialnet/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/edgar/Desktop/socialnet/socialnet/cmake-build-debug/CMakeFiles/socialnet.dir

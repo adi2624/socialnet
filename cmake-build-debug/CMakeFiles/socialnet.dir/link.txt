@@ -1,1 +1,0 @@
-/usr/bin/c++  -g   CMakeFiles/socialnet.dir/cpp/src/main.cpp.o CMakeFiles/socialnet.dir/cpp/src/Post.cpp.o CMakeFiles/socialnet.dir/cpp/src/Request.cpp.o CMakeFiles/socialnet.dir/cpp/src/Response.cpp.o CMakeFiles/socialnet.dir/cpp/src/User.cpp.o  -o socialnet 

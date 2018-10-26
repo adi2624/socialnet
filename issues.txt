@@ -1,3 +1,0 @@
-1. If 10 users send messages over DDS and program sleeps for 10 seconds, only the 10th message is displayed, everything else is lost.
-2. UUID is still 17 char
-3. UUID is not printing out fully
