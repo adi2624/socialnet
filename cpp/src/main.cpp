@@ -236,7 +236,7 @@ int user_informationSubscriber(int argc, char *argv[]) {
     user_informationDataReader_var HelloWorldReader = user_informationDataReader::_narrow(dreader.in());
     checkHandle(HelloWorldReader.in(), "user_informationDataReader::_narrow");
 
-    cout << "=== [Subscriber] Ready ..." << endl;
+    cout << "=== [UserInformation Subscriber] Ready ..." << endl;
 
     bool closed = false;
     bool flag = false;
@@ -352,12 +352,12 @@ std::vector<std::string> list_all_users() {
 void show_user_data() {
     //THIS IS THE REQUEST PUBLISHER
    
-   Request*pub = start_request_publisher();
+   Request* pub = start_request_publisher();
 
 //THIS IS THE REQUEST SUBSCRIBER PART OF THE CODE
 
     start_request_subscriber();
-    pub->dispose();
+    pub->dispose();         //ISSUE HERE STARTING DELETING PUB BFORE SUBSCRIBER
     delete pub;
 }
 std::vector<User> list_pub_users() 
@@ -468,103 +468,7 @@ void run_subscriber(int argc, char *argv[]) {
     }
 }
 
-/*////////////////////////////////////
-/
-/       MAIN
-/   
-/
-////////////////////////////////////*/
-int OSPL_MAIN(int argc, char *argv[]) {
-    User externPost;
-    std::vector<std::string> topic_names;
-    std::string user_info("\"user_information\"");
-    std::cout << "Welcome to the Social Network!" << std::endl;
-    std::cout << "The program is listening for UserInformation published on the " << user_info << " topic" << std::endl;
-    std::cout << "Starting Subscriber ........ " << std::endl;
-    std::cout << "Lets setup your profile! " << std::endl;
-    int is_user_found = user_informationPublisher(argc, argv);
-    //std::thread second(run_subscriber,argc,argv);
-    char uuidCharArray[17];
-    if (is_user_found) {
-        std::cout << "UUID FOUND. Loading from file" << std::endl;
-        std::ifstream input;
-        input.open("hello.tsn", ios::in);
-        //LOAD GENERATED UUID AND COUNT THE NO OF POSTS IN THE DISK.
-        input.getline(uuidCharArray, 42);
-        std::cout << "Loaded: " << uuidCharArray << std::endl;
-        while (input) {
-            std::string garbage_value;
-            std::getline(input, garbage_value);
-            sno++;
-        }
-        input.close();
-    }
-    //user_informationPublisher(argc,argv);
-    //std::thread second(run_subscriber,argc,argv);    //PROGRAM SEG FAULTS UPON LAUNCHING THREAD. RUN SUBSCRIBER SHOULD USE THREAD TO CHECK CONTINUOSLY BUT DISABLED FOR NOW.
 
-    while (1) {
-        int user_action_num;
-        std::string user_action;
-        std::cout << "What would you like to do?" << std::endl;
-        std::cout << "1. List users" << std::endl;
-        std::cout << "2. Show 'user'" << std::endl;
-        std::cout << "3. Edit" << std::endl;
-        std::cout << "4. Resync" << std::endl;
-        std::cout << "5. Post" << std::endl;
-        std::cout << "6. Show statistics" << std::endl;
-        std::cout << "7. Exit" << std::endl;
-        std::cout << "Enter your choice: ";
-        std::cin >> user_action;
-        user_action_num = stoi(user_action);
-        switch (user_action_num) {
-            case 1:
-                list_all_users();
-                break; //action for list user
-            case 2:
-                show_user_data();
-                break; //action for show user
-            case 3:
-                edit_user_data();
-                break; //action for edit
-            case 4:
-                resync();
-                break; //action for resync
-            case 5:
-                make_post(uuidCharArray, sno);
-                break;
-            case 6:
-                break; //action for statistics
-        }
-        externPost.set_map(userPostMap);
-        if (user_action_num == 7) break;
-
-    }
-
-
-
-    //first.join();   IMPORTANT! THIS NEEDS TO BE JOINED LATER.
-
-
-    //std::cout<<"Joining has finished"<<std::endl;
-
-
-    /*
-
-    TESTING FOR LIST ALL USERS. WRITE_TO_FILE() HAS BEEN DEACTIVATED HERE.
-
-   std::string temp;
-   temp=load_post(1); //Make sure to change the number of the post that you want to find.
-   std::cout<<"Found :"<<temp<<std::endl;
-   std::vector<std::string> users_list = list_all_users();
-   for(int i=0;i<users_list.size();i++)
-   {
-     std::cout<<users_list.at(i)<<std::endl;
-   }
-   */
-    // second.join();
-    return 0;
-
-}
 
 void start_response_publisher(int post_no)
 {
@@ -585,7 +489,7 @@ void start_response_publisher(int post_no)
 }
 void start_response_subscriber()
 {
-    std::cout << "[Starting subscriber...]" << std::endl;
+    std::cout << "[Starting Response subscriber...]" << std::endl;
    // os_time delay_2ms = { 0, 2000000 };
     responseSeq msgList;
     SampleInfoSeq infoSeq;
@@ -747,9 +651,10 @@ void start_request_subscriber()
     SampleInfoSeq infoSeq;
 
     //Subscriber code
-    std::cout << "Starting Subscriber" << std::endl;
+    std::cout << "Starting Request Subscriber" << std::endl;
     DDSEntityManager mgr;
     mgr.createParticipant("Request Publisher");
+   
     requestTypeSupport_var mt = new requestTypeSupport();
     mgr.registerType(mt.in());
     char topic_name[] = "Request_msg";
@@ -759,7 +664,7 @@ void start_request_subscriber()
     DataReader_var dreader = mgr.getReader();
     requestDataReader_var PublisherReader = requestDataReader::_narrow(dreader.in());
     checkHandle(PublisherReader.in(), "requestDataReader::_narrow");
-    cout << "=== [Subscriber] Ready ..." << endl;
+    cout << "=== [Request Subscriber] Ready ..." << endl;
     ReturnCode_t status = -1;
     int count = 0;
     // same deal, we want this user uuid
@@ -778,7 +683,7 @@ void start_request_subscriber()
         checkStatus(status, "requestDataReader::take");
         for (DDS::ULong j = 0; j < reqList.length(); j++) {
             //CODE TO CHECK THE CORRECT UUID's ARE BEING SENT AND RECEIVED.
-            cout << "=== [Subscriber] message received :" << endl;
+            cout << "=== [Request Subscriber] message received :" << endl;
             cout << "    Sender userID  : " << reqList[j].uuid << endl;
             cout << "    IS THIS MY UUID? : \"" << reqList[j].user_requests[0].fulfiller_uuid << " and post_no "
                  << reqList[j].user_requests[0].requested_posts[0] << std::endl;
@@ -814,4 +719,108 @@ void start_request_subscriber()
     }
     
     
+}
+
+/*////////////////////////////////////
+/
+/       MAIN
+/   
+/
+////////////////////////////////////*/
+int OSPL_MAIN(int argc, char *argv[]) {
+    User externPost;
+    std::vector<std::string> topic_names;
+    std::string user_info("\"user_information\"");
+    std::cout << "Welcome to the Social Network!" << std::endl;
+    std::cout << "The program is listening for UserInformation published on the " << user_info << " topic" << std::endl;
+    std::cout << "Starting Subscriber ........ " << std::endl;
+    std::cout << "Lets setup your profile! " << std::endl;
+    int is_user_found = user_informationPublisher(argc, argv);
+    //std::thread second(run_subscriber,argc,argv);
+    char uuidCharArray[17];
+    if (is_user_found) {
+        std::cout << "UUID FOUND. Loading from file" << std::endl;
+        std::ifstream input;
+        input.open("hello.tsn", ios::in);
+        //LOAD GENERATED UUID AND COUNT THE NO OF POSTS IN THE DISK.
+        input.getline(uuidCharArray, 42);
+        std::cout << "Loaded: " << uuidCharArray << std::endl;
+        while (input) {
+            std::string garbage_value;
+            std::getline(input, garbage_value);
+            sno++;
+        }
+        input.close();
+    }
+    //user_informationPublisher(argc,argv);
+    std::thread second(run_subscriber,argc,argv); 
+    std::cout<<"[UserInformation Subscriber Launched....]"<<std::endl; 
+    //PROGRAM SEG FAULTS UPON LAUNCHING THREAD. RUN SUBSCRIBER SHOULD USE THREAD TO CHECK CONTINUOSLY BUT DISABLED FOR NOW.
+    std::thread requestsub(start_request_subscriber);
+     second.join(); 
+   // std::thread responsesub(start_response_subscriber);
+    while (1) {
+        int user_action_num;
+        std::string user_action;
+        std::cout << "What would you like to do?" << std::endl;
+        std::cout << "1. List users" << std::endl;
+        std::cout << "2. Show 'user'" << std::endl;
+        std::cout << "3. Edit" << std::endl;
+        std::cout << "4. Resync" << std::endl;
+        std::cout << "5. Post" << std::endl;
+        std::cout << "6. Show statistics" << std::endl;
+        std::cout << "7. Exit" << std::endl;
+        std::cout << "Enter your choice: ";
+        std::cin >> user_action;
+        user_action_num = stoi(user_action);
+        switch (user_action_num) {
+            case 1:
+                list_all_users();
+                break; //action for list user
+            case 2:
+                show_user_data();
+                break; //action for show user
+            case 3:
+                edit_user_data();
+                break; //action for edit
+            case 4:
+                resync();
+                break; //action for resync
+            case 5:
+                make_post(uuidCharArray, sno);
+                break;
+            case 6:
+                break; //action for statistics
+        }
+        externPost.set_map(userPostMap);
+        if (user_action_num == 7) break;
+
+    }
+
+
+
+    //first.join();   IMPORTANT! THIS NEEDS TO BE JOINED LATER.
+
+
+    //std::cout<<"Joining has finished"<<std::endl;
+
+
+    /*
+
+    TESTING FOR LIST ALL USERS. WRITE_TO_FILE() HAS BEEN DEACTIVATED HERE.
+
+   std::string temp;
+   temp=load_post(1); //Make sure to change the number of the post that you want to find.
+   std::cout<<"Found :"<<temp<<std::endl;
+   std::vector<std::string> users_list = list_all_users();
+   for(int i=0;i<users_list.size();i++)
+   {
+     std::cout<<users_list.at(i)<<std::endl;
+   }
+   */
+    //second.join();
+    //responsesub.join();
+    //requestsub.join();
+    return 0;
+
 }

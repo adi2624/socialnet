@@ -48,8 +48,8 @@ Response: ${IDL_GENERATED_H} ${IDL_GENERATED_CPP} cpp/src/Response.cpp ${RESPONS
 Request: ${IDL_GENERATED_H} ${IDL_GENERATED_CPP} ${REQUEST_FILES} ${REQUEST_H_FILES} ${COMMON_H} ${COMMON_CPP}
 	g++ -o $@ ${CFLAGS} ${CXXFLAGS} $^ ${LIBS}
 
-main:   ${IDL_GENERATED_H} ${IDL_GENERATED_CPP} cpp/src/main.cpp cpp/src/Request.cpp cpp/src/Response.cpp
-	g++ -o $@ ${CFLAGS} ${CXXFLAGS} $^ ${LIBS} ${COMMON_CPP}
+main:   ${IDL_GENERATED_H} ${IDL_GENERATED_CPP} cpp/src/main.cpp cpp/src/Request.cpp cpp/src/Response.cpp 
+	g++ -o $@ ${CFLAGS} ${CXXFLAGS} $^ ${LIBS} ${COMMON_CPP} -pthread
 
 clean:
 	-rm -f UserInformation Response Request
