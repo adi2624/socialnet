@@ -125,7 +125,7 @@ int user_informationPublisher(int argc, char *argv[]) {
         // Empty File
         std::ofstream output;                                       //Generate a new UUID if file is empty.
         output.open("hello.tsn", ios::out);
-        std::cout << "The file is empty. Generating new UUID.....\n";
+        std::cout << "The file is empty. Generatin a UUID.....\n";
         boost::uuids::uuid uuid = boost::uuids::random_generator()();
         std::string uuid_string = to_string(uuid);
 
