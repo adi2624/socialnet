@@ -449,7 +449,7 @@ int OSPL_MAIN(int argc, char *argv[]) {
         //LOAD GENERATED UUID AND COUNT THE NO OF POSTS IN THE DISK.
         input.getline(uuidCharArray, 42);
         std::cout << "Loaded: " << uuidCharArray << std::endl;
-        while (!input.eof()) {
+        while (input) {
             std::string garbage_value;
             std::getline(input, garbage_value);
             sno++;
