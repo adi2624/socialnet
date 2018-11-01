@@ -57,6 +57,7 @@ void Response::dispose()
     /* Remove Participant. */
     mgr.deleteParticipant();
 }
+/*
 int OSPL_MAIN (int argc, char * argv[])
 {
     os_time delay_200ms = { 0, 200000000 };
@@ -126,3 +127,4 @@ int OSPL_MAIN (int argc, char * argv[])
     delete pub;
     return 0;
 }
+*/

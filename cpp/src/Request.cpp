@@ -2,7 +2,7 @@
 #include "Request.h"
 
 using namespace TSN;
-
+/*
 std::string load_post(int post_no) {
     int number = 0, i = 0;
     std::string line, post;
@@ -35,8 +35,8 @@ std::string load_post(int post_no) {
     }
     return "Fail";
 }
-
-std::vector<User> list_pub_users() 
+*/
+/*std::vector<User> list_pub_users() 
 {
 
     std::vector<User> name_user;        //EXPORT A VECTOR OF USERS AFTER LOADING ALL USERS FROM USERS.TSN
@@ -74,7 +74,7 @@ std::vector<User> list_pub_users()
     file.close();
     return name_user;
 }
-
+*/
 void Request::initPublisher(char uuid[], TSN::node_request &temp) {
     char partition_name[] = "Request Publisher";
     mgr.createParticipant(partition_name);
@@ -110,6 +110,7 @@ Request::Request(char uuid[], TSN::node_request &temp) {
 
 void Request::publishEvent(char uuid[], TSN::node_request &requests) {
     strncpy(m_instance->uuid, uuid, 42);
+    std::cout<<"wrote "<<m_instance->uuid<<std::endl;
     m_instance->user_requests.length(1);
     m_instance->user_requests[0] = requests;
     requestDataWriter->write(*m_instance, userHandle);
@@ -128,6 +129,7 @@ void Request::dispose() {
     /* Remove Participant. */
     mgr.deleteParticipant();
 }
+/*
 
 int OSPL_MAIN(int argc, char *argv[]) {
 
@@ -226,3 +228,4 @@ int OSPL_MAIN(int argc, char *argv[]) {
     std::cout << "The subscriber is ending" << std::endl;
 
 }
+*/

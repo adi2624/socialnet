@@ -13,12 +13,21 @@
 #include "example_main.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/regex.hpp>
+#include "Request.h"
+#include "Response.h"
 
 using namespace DDS;
 using namespace TSN;
 
 int sno = 0;        //KEEPS TRACK OF SERIAL NO: DO NOT REMOVE IT'S A GLOBAL VARIABLE
 void make_post(char string[37], int sno);
+std::vector<User> list_pub_users();
+void start_response_publisher(int post_no);
+void start_response_subscriber();
+Request* start_request_publisher();
+void start_request_subscriber();
+std::string load_post(int post_no);
+std::string load_uuid();
 
 std::map<int, std::string> userPostMap;
 Post my_post;
@@ -304,12 +313,12 @@ void make_post(char string[37], int sno) {
 /   
 /
 ////////////////////////////////////*/
-std::string load_post(int post_no) {
+/*std::string load_post(int post_no) {
     std::map<int, std::string>::iterator postIter = userPostMap.find(post_no);
     if (postIter == userPostMap.end()) return "Fail";
     return postIter->second;
 }
-
+*/
 /*////////////////////////////////////
 /
 /       LIST USERS
@@ -341,19 +350,53 @@ std::vector<std::string> list_all_users() {
 /
 ////////////////////////////////////*/
 void show_user_data() {
-    int post_no = 0;
-    std::vector<string> interests = my_post.get_interests();
-    cout << "    userID  : " << my_user.return_uuid() << std::endl;
-    cout << "    Name : \"" << my_post.get_first_name() << " " << my_post.get_last_name() << "\"" << std::endl;
-    cout << "The following are the User's interests " << std::endl;
+    //THIS IS THE REQUEST PUBLISHER
+   
+   Request*pub = start_request_publisher();
 
-    for (int i = 0; i < static_cast<int>(my_post.get_interests().size()); i++) {
-        cout << interests[i] << endl;
+//THIS IS THE REQUEST SUBSCRIBER PART OF THE CODE
+
+    start_request_subscriber();
+    pub->dispose();
+    delete pub;
+}
+std::vector<User> list_pub_users() 
+{
+
+    std::vector<User> name_user;        //EXPORT A VECTOR OF USERS AFTER LOADING ALL USERS FROM USERS.TSN
+    std::string temp_line;
+    std::ifstream file("users.tsn");
+    while (!file.eof()) 
+    {
+        User my_user;
+        std::getline(file, temp_line);
+        //std::cout << temp_line << std::endl;
+        if (temp_line != "")        //Don't run loop on empty newline.
+        {
+           std::size_t pos_lname = temp_line.find("LNAME");
+           std::size_t pos_fname = temp_line.find("FNAME");
+           std::size_t pos_interests = temp_line.find("Inter");
+           std::size_t pos_uuid = temp_line.find("UUID:");
+           std::string temp_fname;
+           std::string temp_lname;
+           std::string temp_uuid;
+
+           temp_fname = temp_line.substr(pos_fname + 6, pos_lname - 7);
+           temp_lname = temp_line.substr(pos_lname + 6, pos_interests - 19);
+           temp_uuid = temp_line.substr(pos_uuid + 6);
+           
+            //std::cout<<"Space found at "<<pos_fname<<std::endl;
+         
+            my_user.set_first_name(temp_fname);
+            my_user.set_last_name(temp_lname);
+            my_user.set_user_uuid(temp_uuid);
+            name_user.push_back(my_user);
+            //std::cout<<"Name: "<<temp_line.substr(pos+1,pos_name-1)<<"UUID: "<<temp_line.substr(pos_uuid+5);
+            //name_user.push_back(temp_line.substr(pos+1,pos_name-1)+temp_line.substr(pos_uuid+5));
+        }
     }
-
-    if (load_post(post_no++) == "Fail")
-        return;
-
+    file.close();
+    return name_user;
 }
 
 /*////////////////////////////////////
@@ -523,4 +566,252 @@ int OSPL_MAIN(int argc, char *argv[]) {
 
 }
 
+void start_response_publisher(int post_no)
+{
+    std::cout<< "[Starting Response Publisher]......"<<std::endl;
+    Response *response_pub;
+    std::string post = load_post(post_no);
+    std::cout<<"Found post: "<<post<<std::endl;
+    std::string uuid;
+    uuid = load_uuid();
+    int id = 1;
+    long date = 1000;
+    response_pub = new Response(uuid, id, date, post);
+    response_pub->publishEvent(uuid, id, date, post);
+    std::cout<<"[Publishing has finished]..."<<std::endl;
+    response_pub->dispose();
+    delete response_pub;
+
+}
+void start_response_subscriber()
+{
+    std::cout << "[Starting subscriber...]" << std::endl;
+   // os_time delay_2ms = { 0, 2000000 };
+    responseSeq msgList;
+    SampleInfoSeq infoSeq;
+
+    DDSEntityManager mgr;
+
+    char partition_name[] = "response Ownership";
+    mgr.createParticipant(partition_name);
+
+    responseTypeSupport_var st = new responseTypeSupport();
+    mgr.registerType(st.in());
+
+    char topic_name[] = "response";
+    mgr.createTopic(topic_name);
+
+    mgr.createSubscriber();
+    mgr.createReader();
+
+
+    DataReader_var dreader = mgr.getReader();
+    responseDataReader_var responseDataReader = responseDataReader::_narrow(dreader.in());
+    checkHandle(responseDataReader.in(), "responseDataReader::_narrow");
+
+    bool closed = false;
+    ReturnCode_t status = -1;
+    int count = 0;
+    while(!closed && count < 1500)
+    {
+        status = responseDataReader->take(msgList, infoSeq, LENGTH_UNLIMITED,
+                                          ANY_SAMPLE_STATE, ANY_VIEW_STATE, ANY_INSTANCE_STATE);
+        checkStatus(status, "responseDataReader::take");
+        for(DDS::ULong j = 0; j < msgList.length(); j++)
+        {
+            std::cout << "Recieved Response: " << std::endl;
+            std::cout << "Found post id: " << msgList[j].post_id << std::endl;
+            std::cout << "Found post body: " << msgList[j].post_body << std::endl;
+            std::cout << "Found date of creation: " << msgList[j].date_of_creation << std::endl;
+            closed = true;
+        }
+
+        status = responseDataReader->return_loan(msgList, infoSeq);
+        checkStatus(status, "responseDataReader::return_loan");
+        //os_nanoSleep(delay_2ms);
+        count++;
+        //os_nanoSleep(delay_200ms);
+    }
+
+    mgr.deleteReader();
+    mgr.deleteSubscriber();
+    mgr.deleteTopic();
+    mgr.deleteParticipant();
+   // pub->dispose();
+   // delete pub;
+    //return 0;
+
+}
+   std::string load_post(int post_no) {
+    int number = 0, i = 0;
+    std::string line, post;
+    std::ifstream get_post("hello.tsn");
+    if (!get_post.is_open())
+        perror("error while opening file");
+    //get_post.open("hello.tsn",ios::in);
+    if (get_post.bad())
+        perror("error while reading file");
+    while (std::getline(get_post, line)) {
+        std::istringstream iss(line);
+        std::string c;                          //GET LINE AND PUSH INTO STRINGSTREAM.
+        c = iss.str();
+        // std::cout<<"String received "<<c<<endl;  //Debugging string
+        std::size_t pos = c.find("SNO:");
+        std::size_t pos2 = c.find("POST:");           //FIND DATA after POST:
+        if (i != 0)      //IGNORE UUID AT TOP OF FILE
+        {
+            std::string number_string = c.substr(pos + 4, pos2 - 4);
+            // std::cout<<"Number String "<<number_string<<std::endl;   //please.ignore(#debug) FIND NUMBER BETWEEN SNO: and POST:
+            number = std::stoi(number_string);
+        }
+        i++;
+        if (number == post_no) {
+            std::string final_post_text = c.substr(pos2 + 4);
+           // std::cout << "Final text:" << final_post_text << std::endl;   //RETURN FOUND POST DATA
+            return final_post_text;
+        }
+
+    }
+    return "Fail";
+}
+
+std::string load_uuid()
+{
+    std::ifstream input_uuid;
+    input_uuid.open("hello.tsn", ios::in);
+     
+    if (input_uuid.bad())
+        perror("error while reading file");
+    char uuidCharArray2[42];
+    input_uuid.getline(uuidCharArray2, 42);
+    char uuid[37];
+    strncpy(uuid, uuidCharArray2+5, 37);
+    std::string final_uuid (uuid);
+    return final_uuid;
+}
+
+Request* start_request_publisher()
+{
+    
+    
+     Request *pub;
+    std::cout << "Please select user from below to send a request to :" << std::endl;
+    std::vector<User> name_user;
+    name_user = list_pub_users();        //LIST ALL THE USERS TO CHOOSE FROM.
+    int input;
+    for (int i = 0; i < static_cast<int>(name_user.size()); i++) {
+        std::cout << "USER " << i + 1 << std::endl;
+        std::cout << "FNAME: " << name_user.at(i).get_first_name() << std::endl;
+        std::cout << "LNAME: " << name_user.at(i).get_last_name() << std::endl;
+        std::cout << "UUID: " << name_user.at(i).return_uuid() << std::endl;
+        std::cout << std::endl;
+    }
+    std::cout << "Enter the user number" << std::endl;    //ENTER THE USER NUMBER.
+    std::cin >> input;
+    node_request user_request;
+    strcpy(user_request.fulfiller_uuid, name_user.at(input - 1).return_uuid());
+    std::cout << "The received request was for UUID:" << user_request.fulfiller_uuid
+              << std::endl; //OUTPUT THE UUID of the Intended Receiver.
+    std::cout << "Enter the serial no of the post that you want from this user" << std::endl;
+    std::cin >> input;
+    user_request.requested_posts.length(1);
+    user_request.requested_posts[0] = input;
+   // std::cout << user_request.requested_posts[0];
+    //LOAD LOCAL USER'S UUID FROM HELLO.TSN
+    std::ifstream input_file;
+    input_file.open("hello.tsn", ios::in);
+    char uuidCharArray2[42];                //user.request.uuid is the UUID of the user we want the post from. user_request2.uuid is our UUID.
+    input_file.getline(uuidCharArray2, 42);
+    //std::cout<<uuidCharArray2<<std::endl;
+    request this_user_request2;
+    strncpy(this_user_request2.uuid, uuidCharArray2+5, 37);
+    //std::cout<<"UUIDend of aeeay: "<<this_user_request2.uuid<<std::endl;
+    this_user_request2.user_requests.length(1);
+    this_user_request2.user_requests[0] = user_request;        //COPY NODE REQUEST INTO THE FINAL REQUEST SEQUENCE.
+    pub = new Request(this_user_request2.uuid, user_request);       //Send our UUID and request instance to constructor.
+    pub->publishEvent(this_user_request2.uuid, user_request);
+    std::cout<<"Request has been published"<<std::endl;
+   // os_nanoSleep(delay_200ms);
    
+    input_file.close();
+    return pub;
+    
+}
+
+void start_request_subscriber()
+{
+    bool send_response=false;
+    bool closed = false;
+    int requested_post_no=0;
+    requestSeq reqList;
+    SampleInfoSeq infoSeq;
+
+    //Subscriber code
+    std::cout << "Starting Subscriber" << std::endl;
+    DDSEntityManager mgr;
+    mgr.createParticipant("Request Publisher");
+    requestTypeSupport_var mt = new requestTypeSupport();
+    mgr.registerType(mt.in());
+    char topic_name[] = "Request_msg";
+    mgr.createTopic(topic_name);
+    mgr.createSubscriber();
+    mgr.createReader();
+    DataReader_var dreader = mgr.getReader();
+    requestDataReader_var PublisherReader = requestDataReader::_narrow(dreader.in());
+    checkHandle(PublisherReader.in(), "requestDataReader::_narrow");
+    cout << "=== [Subscriber] Ready ..." << endl;
+    ReturnCode_t status = -1;
+    int count = 0;
+    // same deal, we want this user uuid
+    std::ifstream read_uuid;
+    read_uuid.open("hello.tsn", ios::in);
+    char uuidCharArray[42];
+    read_uuid.getline(uuidCharArray, 42);
+    //std::cout<<uuidCharArray<<std::endl;
+    request this_user_request;
+    strncpy(this_user_request.uuid, uuidCharArray + 5, 37);
+    std::cout<<"MY UUID = "<<this_user_request.uuid<<std::endl;
+    while (!closed && count < 1500) // We dont want the example to run indefinitely
+    {
+        status = PublisherReader->take(reqList, infoSeq, LENGTH_UNLIMITED,
+                                       ANY_SAMPLE_STATE, ANY_VIEW_STATE, ANY_INSTANCE_STATE);
+        checkStatus(status, "requestDataReader::take");
+        for (DDS::ULong j = 0; j < reqList.length(); j++) {
+            //CODE TO CHECK THE CORRECT UUID's ARE BEING SENT AND RECEIVED.
+            cout << "=== [Subscriber] message received :" << endl;
+            cout << "    Sender userID  : " << reqList[j].uuid << endl;
+            cout << "    IS THIS MY UUID? : \"" << reqList[j].user_requests[0].fulfiller_uuid << " and post_no "
+                 << reqList[j].user_requests[0].requested_posts[0] << std::endl;
+            if(strcmp(reqList[j].user_requests[0].fulfiller_uuid,this_user_request.uuid)==0)
+            {
+                std::cout<< " Posts have been requested from me!"<<std::endl;
+                send_response=true;
+                requested_post_no=reqList[j].user_requests[0].requested_posts[0];
+            }
+            
+            closed = true;
+        }
+
+        status = PublisherReader->return_loan(reqList, infoSeq);
+        checkStatus(status, "requestDataReader::return_loan");
+       // os_nanoSleep(delay_200ms);
+        ++count;
+    }
+
+    //cleanup
+    mgr.deleteReader();
+    mgr.deleteSubscriber();
+    mgr.deleteTopic();
+    mgr.deleteParticipant();
+    std::cout << "The subscriber is ending" << std::endl;
+
+    if(send_response==true)
+    {
+        //SEND RESPONSE;
+
+        start_response_publisher(requested_post_no);
+        start_response_subscriber();
+    }
+    
+    
+}
