@@ -438,7 +438,6 @@ int OSPL_MAIN(int argc, char *argv[]) {
     std::cout << "Welcome to the Social Network!" << std::endl;
     std::cout << "The program is listening for UserInformation published on the " << user_info << " topic" << std::endl;
     std::cout << "Starting Subscriber ........ " << std::endl;
-    std::string input = "N";
     std::cout << "Lets setup your profile! " << std::endl;
     int is_user_found = user_informationPublisher(argc, argv);
     //std::thread second(run_subscriber,argc,argv);
@@ -448,7 +447,7 @@ int OSPL_MAIN(int argc, char *argv[]) {
         std::ifstream input;
         input.open("hello.tsn", ios::in);
         //LOAD GENERATED UUID AND COUNT THE NO OF POSTS IN THE DISK.
-        input.getline(uuidCharArray, 25);
+        input.getline(uuidCharArray, 42);
         std::cout << "Loaded: " << uuidCharArray << std::endl;
         while (!input.eof()) {
             std::string garbage_value;
