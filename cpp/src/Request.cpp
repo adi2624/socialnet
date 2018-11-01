@@ -46,7 +46,7 @@ std::vector<User> list_pub_users()
     {
         User my_user;
         std::getline(file, temp_line);
-        std::cout << temp_line << std::endl;
+        //std::cout << temp_line << std::endl;
         if (temp_line != "")        //Don't run loop on empty newline.
         {
            std::size_t pos_lname = temp_line.find("LNAME");
@@ -109,7 +109,7 @@ Request::Request(char uuid[], TSN::node_request &temp) {
 }
 
 void Request::publishEvent(char uuid[], TSN::node_request &requests) {
-    strncpy(m_instance->uuid, uuid, 37);
+    strncpy(m_instance->uuid, uuid, 42);
     m_instance->user_requests.length(1);
     m_instance->user_requests[0] = requests;
     requestDataWriter->write(*m_instance, userHandle);
@@ -159,14 +159,16 @@ int OSPL_MAIN(int argc, char *argv[]) {
     //LOAD LOCAL USER'S UUID FROM HELLO.TSN
     std::ifstream input_file;
     input_file.open("hello.tsn", ios::in);
-    char uuidCharArray2[37];
-    input_file.getline(uuidCharArray2, 25);
+    char uuidCharArray2[42];
+    input_file.getline(uuidCharArray2, 42);
+    
     request this_user_request2;
-    strncpy(this_user_request2.uuid, uuidCharArray2 + 5, 22);
+    strncpy(this_user_request2.uuid, uuidCharArray2+5, 37);
+  //  std::cout<<"UUIDend of aeeay: "<<this_user_request2.uuid<<std::endl;
     this_user_request2.user_requests.length(1);
     this_user_request2.user_requests[0] = user_request;        //COPY NODE REQUEST INTO THE FINAL REQUEST SEQUENCE.
-    pub = new Request(uuidCharArray2, user_request);
-    pub->publishEvent(uuidCharArray2, user_request);
+    pub = new Request(this_user_request2.uuid, user_request);
+    pub->publishEvent(this_user_request2.uuid, user_request);
     os_nanoSleep(delay_200ms);
     requestSeq reqList;
     SampleInfoSeq infoSeq;
