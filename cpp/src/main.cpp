@@ -8,13 +8,14 @@
 #include <fstream>
 #include "DDSEntityManager.h"
 #include "ccpp_tsn.h"
-#include "os.h"
 #include "User.h"
 #include "example_main.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/regex.hpp>
 #include "Request.h"
 #include "Response.h"
+#include "dds_io.h"
+
 
 using namespace DDS;
 using namespace TSN;
@@ -24,7 +25,9 @@ void make_post(char string[37], int sno);
 std::vector<User> list_pub_users();
 void start_response_publisher(int post_no);
 void start_response_subscriber();
+void print ( TSN::request D );
 Request* start_request_publisher();
+TSN::request test_data_request ();
 void start_request_subscriber();
 std::string load_post(int post_no);
 std::string load_uuid();
@@ -138,10 +141,13 @@ int user_informationPublisher(int argc, char *argv[]) {
         boost::uuids::uuid uuid = boost::uuids::random_generator()();
         std::string uuid_string = to_string(uuid);
 
-        for (int i = 0; i <= 37; i++) {
-            uuidCharArray[i] = uuid_string[i];
+        std::cout << sizeof(uuidCharArray) << "  " << uuid_string.size() << std::endl;
+        for (long unsigned int i = 0; i <= sizeof(uuidCharArray);i++) {
             if (i == 37) {                                       //COPY GENERATED UUID TO uuidCharArray
                 uuidCharArray[i] = '\0';
+            }
+            else {
+                uuidCharArray[i] = uuid_string[i];
             }
         }
 
@@ -208,6 +214,11 @@ int user_informationPublisher(int argc, char *argv[]) {
 /
 ////////////////////////////////////*/
 int user_informationSubscriber(int argc, char *argv[]) {
+
+//  this thread needs to run continuously, as it will not work to continously
+//  create and delete these objects.  
+//
+//
     os_time delay_2ms = {0, 2000000};
     os_time delay_200ms = {0, 200000000};
     user_informationSeq msgList;    //DATA STRUCTURE THAT RECEIVES MSGS.
@@ -216,13 +227,17 @@ int user_informationSubscriber(int argc, char *argv[]) {
     DDSEntityManager mgr;
 
     // create domain participant
-    mgr.createParticipant("TSN example");
+    //
+
+// Please look in the tsn.idl file, this name is not correct
+    mgr.createParticipant("TSN example"); 
 
     //create type
     user_informationTypeSupport_var mt = new user_informationTypeSupport();
     mgr.registerType(mt.in());
 
     //create Topic
+// Please look in the tsn.idl file, this name is not correct
     char topic_name[] = "tsn_Msg";
     mgr.createTopic(topic_name);
 
@@ -244,7 +259,11 @@ int user_informationSubscriber(int argc, char *argv[]) {
     int count = 0;
     User static_user; //USER OBJECT TO WRITE PARAMETERS TO USERS.TSN
     std::vector<std::string> user_interests;
-    while (!closed && count < 1500) // We dont want the example to run indefinitely
+    //while (!closed && count < 1500) // We dont want the example to run indefinitely
+
+// need to have some communications path (global variable) that will cleanly exit this
+// while loop when the program exits.  for now, let it run.
+    while(1)
     {
         status = HelloWorldReader->take(msgList, infoSeq, LENGTH_UNLIMITED,
                                         ANY_SAMPLE_STATE, ANY_VIEW_STATE, ANY_INSTANCE_STATE);
@@ -278,8 +297,11 @@ int user_informationSubscriber(int argc, char *argv[]) {
         ++count;
     }
 
+
+    
     os_nanoSleep(delay_2ms);
 
+// you only want to cleanup when the program / thread exits
     //cleanup
     mgr.deleteReader();
     mgr.deleteSubscriber();
@@ -354,11 +376,14 @@ void show_user_data() {
    
    Request* pub = start_request_publisher();
 
+   //start_request_subscriber();
+   //pub->dispose();
+   //delete pub;
+
 //THIS IS THE REQUEST SUBSCRIBER PART OF THE CODE
 
-    start_request_subscriber();
-    pub->dispose();         //ISSUE HERE STARTING DELETING PUB BFORE SUBSCRIBER
-    delete pub;
+    
+   
 }
 std::vector<User> list_pub_users() 
 {
@@ -462,10 +487,7 @@ void edit_user_data() {
 /
 ////////////////////////////////////*/
 void run_subscriber(int argc, char *argv[]) {
-    while (1) {
-        user_informationSubscriber(argc, argv);
-        sleep(10);
-    }
+   user_informationSubscriber(argc, argv);
 }
 
 
@@ -721,6 +743,8 @@ void start_request_subscriber()
     
 }
 
+
+
 /*////////////////////////////////////
 /
 /       MAIN
@@ -728,6 +752,20 @@ void start_request_subscriber()
 /
 ////////////////////////////////////*/
 int OSPL_MAIN(int argc, char *argv[]) {
+     auto Request = 
+                   dds_io<request,
+                          requestSeq,
+                          requestTypeSupport_var,
+                          requestTypeSupport,
+                          requestDataWriter_var,
+                          requestDataWriter,
+                          requestDataReader_var,
+                          requestDataReader>
+
+
+                          ( (char*) "request", true     , true );
+
+
     User externPost;
     std::vector<std::string> topic_names;
     std::string user_info("\"user_information\"");
@@ -736,8 +774,7 @@ int OSPL_MAIN(int argc, char *argv[]) {
     std::cout << "Starting Subscriber ........ " << std::endl;
     std::cout << "Lets setup your profile! " << std::endl;
     int is_user_found = user_informationPublisher(argc, argv);
-    //std::thread second(run_subscriber,argc,argv);
-    char uuidCharArray[17];
+    char uuidCharArray[TSN::UUID_SIZE];
     if (is_user_found) {
         std::cout << "UUID FOUND. Loading from file" << std::endl;
         std::ifstream input;
@@ -752,16 +789,13 @@ int OSPL_MAIN(int argc, char *argv[]) {
         }
         input.close();
     }
-    //user_informationPublisher(argc,argv);
-    std::thread second(run_subscriber,argc,argv); 
-    std::cout<<"[UserInformation Subscriber Launched....]"<<std::endl; 
-    //PROGRAM SEG FAULTS UPON LAUNCHING THREAD. RUN SUBSCRIBER SHOULD USE THREAD TO CHECK CONTINUOSLY BUT DISABLED FOR NOW.
-    std::thread requestsub(start_request_subscriber);
-     second.join(); 
-   // std::thread responsesub(start_response_subscriber);
+   
+    
+   
     while (1) {
         int user_action_num;
         std::string user_action;
+        std::vector<TSN::request> V ;
         std::cout << "What would you like to do?" << std::endl;
         std::cout << "1. List users" << std::endl;
         std::cout << "2. Show 'user'" << std::endl;
@@ -779,6 +813,12 @@ int OSPL_MAIN(int argc, char *argv[]) {
                 break; //action for list user
             case 2:
                 show_user_data();
+                 V = Request.recv ();
+                 std::cout<<V.size()<<std::endl;
+                for (unsigned int i=0;i<V.size();i++)
+                {
+                    print ( V[i] );
+                }
                 break; //action for show user
             case 3:
                 edit_user_data();
@@ -794,33 +834,46 @@ int OSPL_MAIN(int argc, char *argv[]) {
         }
         externPost.set_map(userPostMap);
         if (user_action_num == 7) break;
+        
 
     }
 
 
 
-    //first.join();   IMPORTANT! THIS NEEDS TO BE JOINED LATER.
-
-
-    //std::cout<<"Joining has finished"<<std::endl;
-
-
-    /*
-
-    TESTING FOR LIST ALL USERS. WRITE_TO_FILE() HAS BEEN DEACTIVATED HERE.
-
-   std::string temp;
-   temp=load_post(1); //Make sure to change the number of the post that you want to find.
-   std::cout<<"Found :"<<temp<<std::endl;
-   std::vector<std::string> users_list = list_all_users();
-   for(int i=0;i<users_list.size();i++)
-   {
-     std::cout<<users_list.at(i)<<std::endl;
-   }
-   */
-    //second.join();
-    //responsesub.join();
-    //requestsub.join();
     return 0;
 
+}
+void print ( TSN::request D )
+{
+   //print_time ();
+   std::cout << "Received : request" << std::endl;
+   std::cout << "               " << D.uuid  << std::endl;
+   for (unsigned int i=0;i<D.user_requests.length ();i++)
+   {
+      std::cout << "                 uuid    " << D.user_requests[i].fulfiller_uuid << std::endl;
+      for (unsigned int j=0;j<D.user_requests[i].requested_posts.length ();j++)
+      {
+          std::cout << "                 posts   " << D.user_requests[i].requested_posts[j] << std::endl;
+      }
+   }
+   std::cout << std::endl;
+}
+TSN::request test_data_request ()
+{
+   TSN::request D;
+   std::string  uuid = "d21633d5-12fb-4c93-a4a4-a56f06b7ba24";
+   strncpy (D.uuid,uuid.c_str(),sizeof(D.uuid));
+   D.uuid[sizeof(D.uuid)-1] = '\0';
+
+   D.user_requests.length(1);
+
+   std::string uuid2 = "924741ba-5eee-4db9-90fc-ea0175fd5686";
+   strncpy(D.user_requests[0].fulfiller_uuid,uuid2.c_str(),sizeof(D.user_requests[0].fulfiller_uuid));
+   D.user_requests[0].fulfiller_uuid[sizeof(D.user_requests[0].fulfiller_uuid)-1] = '\0';
+
+   D.user_requests[0].requested_posts.length(2);
+   D.user_requests[0].requested_posts[0]=600;
+   D.user_requests[0].requested_posts[1]=700;
+
+   return D;
 }

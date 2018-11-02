@@ -17,7 +17,7 @@ class Request
 private:
     DDSEntityManager mgr;
     DataWriter_var dWriter;
-    TSN::requestDataWriter_var requestDataWriter;
+    TSN::requestDataWriter_var _requestDataWriter;
     InstanceHandle_t userHandle;
     TSN::request * m_instance;
     ReturnCode_t status;

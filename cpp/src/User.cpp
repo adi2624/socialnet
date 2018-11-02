@@ -67,10 +67,13 @@ void User::set_user_uuid(std::string uuid_string)
 {
     for(int i = 0; i <=37;i++)
     {
-        this->uuidCharArray[i] = uuid_string[i];
+        
         if(i == 37)
         {
             this->uuidCharArray[i] = '\0';
+        }
+        else {
+            this->uuidCharArray[i] = uuid_string[i];
         }
     }
 }

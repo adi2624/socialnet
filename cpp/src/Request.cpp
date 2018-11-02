@@ -1,5 +1,6 @@
 
 #include "Request.h"
+#include "dds_io.h"
 
 using namespace TSN;
 /*
@@ -83,7 +84,7 @@ void Request::initPublisher(char uuid[], TSN::node_request &temp) {
     mgr.registerType(st.in());
 
 
-    char topic_name[] = "Request_msg";
+    char topic_name[] = "request";
     mgr.createTopic(topic_name);
 
     mgr.createPublisher();
@@ -92,14 +93,14 @@ void Request::initPublisher(char uuid[], TSN::node_request &temp) {
     mgr.createWriter(auto_dispose_unregistered_instances);
 
     dWriter = mgr.getWriter();
-    requestDataWriter = requestDataWriter::_narrow(dWriter.in());
+    _requestDataWriter = requestDataWriter::_narrow(dWriter.in());
 
     m_instance = new request();
     strncpy(m_instance->uuid, uuid, 37);
     m_instance->user_requests.length(1);
     m_instance->user_requests[0] = temp;
 
-    userHandle = requestDataWriter->register_instance(*m_instance);
+    userHandle = _requestDataWriter->register_instance(*m_instance);
 
 
 }
@@ -113,7 +114,28 @@ void Request::publishEvent(char uuid[], TSN::node_request &requests) {
     std::cout<<"wrote "<<m_instance->uuid<<std::endl;
     m_instance->user_requests.length(1);
     m_instance->user_requests[0] = requests;
-    requestDataWriter->write(*m_instance, userHandle);
+    _requestDataWriter->write(*m_instance, userHandle);
+      dds_io<request,
+                          requestSeq,
+                          requestTypeSupport_var,
+                          requestTypeSupport,
+                          requestDataWriter_var,
+                          requestDataWriter,
+                          requestDataReader_var,
+                          requestDataReader> req =
+                          dds_io<request,
+                          requestSeq,
+                          requestTypeSupport_var,
+                          requestTypeSupport,
+                          requestDataWriter_var,
+                          requestDataWriter,
+                          requestDataReader_var,
+                          requestDataReader>
+
+                          ( (char*) "request", true , true );
+                //        topic name,         publish, subscribe
+                cout<<"Debug"<<std::endl;
+req.publish(*m_instance);
 }
 
 void Request::dispose() {
