@@ -22,10 +22,12 @@ using namespace TSN;
 
 int sno = 0;        //KEEPS TRACK OF SERIAL NO: DO NOT REMOVE IT'S A GLOBAL VARIABLE
 void make_post(char string[37], int sno);
+void receive_request();
 std::vector<User> list_pub_users();
 void start_response_publisher(int post_no);
 void start_response_subscriber();
 void print ( TSN::request D );
+Request* pub;
 Request* start_request_publisher();
 TSN::request test_data_request ();
 void start_request_subscriber();
@@ -35,6 +37,20 @@ std::string load_uuid();
 std::map<int, std::string> userPostMap;
 Post my_post;
 User my_user;
+ std::vector<TSN::request> V ;
+ auto req = 
+                            dds_io<request,
+                                    requestSeq,
+                                    requestTypeSupport_var,
+                                    requestTypeSupport,
+                                    requestDataWriter_var,
+                                    requestDataWriter,
+                                    requestDataReader_var,
+                                    requestDataReader>
+
+
+                                    ( (char*) "request", true     , true );
+
 
 //long calculate_seconds(int month, unsigned day, unsigned year)
 //{
@@ -374,7 +390,7 @@ std::vector<std::string> list_all_users() {
 void show_user_data() {
     //THIS IS THE REQUEST PUBLISHER
    
-   Request* pub = start_request_publisher();
+   pub = start_request_publisher();
 
    //start_request_subscriber();
    //pub->dispose();
@@ -752,20 +768,8 @@ void start_request_subscriber()
 /
 ////////////////////////////////////*/
 int OSPL_MAIN(int argc, char *argv[]) {
-     auto Request = 
-                   dds_io<request,
-                          requestSeq,
-                          requestTypeSupport_var,
-                          requestTypeSupport,
-                          requestDataWriter_var,
-                          requestDataWriter,
-                          requestDataReader_var,
-                          requestDataReader>
-
-
-                          ( (char*) "request", true     , true );
-
-
+   
+  
     User externPost;
     std::vector<std::string> topic_names;
     std::string user_info("\"user_information\"");
@@ -813,12 +817,12 @@ int OSPL_MAIN(int argc, char *argv[]) {
                 break; //action for list user
             case 2:
                 show_user_data();
-                 V = Request.recv ();
-                 std::cout<<V.size()<<std::endl;
-                for (unsigned int i=0;i<V.size();i++)
-                {
-                    print ( V[i] );
-                }
+                receive_request();
+                
+
+
+                            
+                 
                 break; //action for show user
             case 3:
                 edit_user_data();
@@ -876,4 +880,14 @@ TSN::request test_data_request ()
    D.user_requests[0].requested_posts[1]=700;
 
    return D;
+}
+void receive_request()
+{
+      
+V = req.recv ();
+                            std::cout<<V.size()<<std::endl;
+                            for (unsigned int i=0;i<V.size();i++)
+                            {
+                                print ( V[i] );
+                            }
 }
