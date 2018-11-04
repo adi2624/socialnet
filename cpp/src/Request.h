@@ -10,7 +10,6 @@
 #include "ccpp_tsn.h"
 #include "os.h"
 #include "example_main.h"
-#include "User.h"
 
 class Request
 {

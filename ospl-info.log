@@ -359,3 +359,58 @@ Node        : ubuntu
 Process     : main <19678>
 Thread      : signalHandler 7f0376520700
 Internals   : 6.7.180404OSS/de8c6f4/de8c6f4/signalHandlerThread/os_signalHandler.c/583/0/1541301536.650282328/0
+========================================================================================
+Report      : INFO
+Date        : Sun Nov 04 12:31:52 CST 2018
+Description : ---------------------------------------------------------------
+              -- The service is using the following configuration settings --
+              ---------------------------------------------------------------
+              Domain (id)          : ospl_sp_ddsi (0)
+              Storage              : 0 Kbytes
+              Storage threshold    : 1024 Kbytes
+              Storage address      : Not available
+              Locking              : default
+              Memory mode          : Heap memory
+              Builtin topics       : true
+              Priority inheritance : false
+              SystemId             : 1299881164 from [1,2147483647]
+Node        : aditya-Inspiron-3537
+Process     : main <5200>
+Thread      : spliced 7fa257887700
+Internals   : 6.7.180404OSS/de8c6f4/de8c6f4/The OpenSplice domain service/u_domain.c/659/0/1541356312.048086176/0
+========================================================================================
+Report      : INFO
+Date        : Sun Nov 04 12:31:52 CST 2018
+Description : Service cmsoap disabled
+Node        : aditya-Inspiron-3537
+Process     : main <5200>
+Thread      : spliced 7fa257887700
+Internals   : 6.7.180404OSS/de8c6f4/de8c6f4/OpenSplice domain service/sr_componentInfo.c/447/0/1541356312.058909029/0
+========================================================================================
+Report      : INFO
+Date        : Sun Nov 04 12:31:52 CST 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'splicedaemon' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : aditya-Inspiron-3537
+Process     : main <5200>
+Thread      : spliced 7fa257887700
+Internals   : 6.7.180404OSS/de8c6f4/de8c6f4/v_serviceChangeState/v_service.c/295/0/1541356312.061077021/0
+========================================================================================
+Report      : INFO
+Date        : Sun Nov 04 12:31:52 CST 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'ddsi2' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : aditya-Inspiron-3537
+Process     : main <5200>
+Thread      : ddsi2 7fa255227700
+Internals   : 6.7.180404OSS/de8c6f4/de8c6f4/v_serviceChangeState/v_service.c/295/0/1541356312.089478710/0
+========================================================================================
+Report      : INFO
+Date        : Sun Nov 04 12:32:01 CST 2018
+Description : Termination request (signal 2) received from PID 5200 (self), UID 1000
+Node        : aditya-Inspiron-3537
+Process     : main <5200>
+Thread      : signalHandler 7fa255c58700
+Internals   : 6.7.180404OSS/de8c6f4/de8c6f4/signalHandlerThread/os_signalHandler.c/583/0/1541356321.915047563/0

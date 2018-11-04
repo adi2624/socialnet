@@ -5,6 +5,9 @@
 #include <boost/uuid/uuid_io.hpp>
 #include "Post.h"
 #include <map>
+#include "DDSEntityManager.h"
+#include "ccpp_tsn.h"
+#include "dds_io.h"
 class User
 {
 public:
@@ -23,6 +26,8 @@ public:
     void write_to_file();
     void set_user_uuid(std::string uuid_string);
     char * return_uuid();
+    TSN::user_information initialize();
+    void publishEvent(TSN::user_information msgInstance);
 private:
     std::map<int, std::string> userPostMap;
 	std::vector<std::string> interests;

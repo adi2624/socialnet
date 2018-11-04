@@ -2,7 +2,6 @@
 #include<fstream>
 #include<iostream>
 
-
 void User::set_interests(std::vector<std::string> input_interests) 
 { 
     interests = input_interests; 
@@ -129,3 +128,27 @@ void User::write_to_file()
         throw std::runtime_error("Could not open file");
     } 
 }
+
+void User::publishEvent(TSN::user_information msgInstance)
+{
+     auto UserInfo = 
+                   dds_io<user_information,
+                          user_informationSeq,
+                          user_informationTypeSupport_var,
+                          user_informationTypeSupport,
+                          user_informationDataWriter_var,
+                          user_informationDataWriter,
+                          user_informationDataReader_var,
+                          user_informationDataReader>
+
+                          ( (char*) "user_information", true     , true );
+                          cout << "=== [Publisher] writing a message containing :" << endl;
+    cout << "    userID  : " << msgInstance.uuid << endl;
+    cout << "    Name : \"" << msgInstance.first_name << " " << msgInstance.last_name << "\"" << endl;
+    
+
+     UserInfo.publish(msgInstance);
+
+//        topic name,         publish, subscribe
+}
+
