@@ -76,21 +76,19 @@ int OSPL_MAIN(int argc, char *argv[]) {
         int user_action_num;
         std::string user_action;
         std::string answer="Y";
-        
+         std::thread req_thread(receive_request);
          while(answer=="Y")
        {
         TSN::request instance=test_data_request();
         pub = new Request(instance.uuid,instance.user_requests[0]);
         pub->publishEvent(instance.uuid,instance.user_requests[0]);
-        std::thread req_thread(receive_request);
+       
         std::cout<<"Do you want to continue?--------------------------------------------------------------------------------------------------------------------------"<<std::endl;
         std::cin>> answer;
-        if(answer!="Y")
-        {
-            
-        req_thread.join();
-        }
+        
        }
+       req_thread.join();
+       std::cout<<"Program Terminated"<<std::endl;
        // externPost.set_map(userPostMap);
       
         //pub->dispose();
@@ -140,10 +138,10 @@ TSN::request test_data_request ()
 void receive_request()
 {
     int i=0;
-                        while(i<20)
+                        while(1)
                         {
                                                     V = req.recv ();
-                                                std::cout<<"SIZE: "<<V.size()<<std::endl;
+                                               // std::cout<<"SIZE: "<<V.size()<<std::endl;
                                                 for (unsigned int i=0;i<V.size();i++)
                                                 {
                                                     print ( V[i] );
