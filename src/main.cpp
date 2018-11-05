@@ -29,7 +29,9 @@ using namespace TSN;
  */
 int sno = 0;    
 Request *pub;         // *****************************************
-Response *res_pub;   // <-------------- DONT FORGET TO FREE THESE
+Response *res_pub; 
+Request req_to_send;
+TSN::request reqsend_instance;  // <-------------- DONT FORGET TO FREE THESE
 std::map<int, std::string> userPostMap;
 Post my_post;
 User my_user;
@@ -137,10 +139,12 @@ int OSPL_MAIN(int argc, char *argv[]) {
         user_action_num = stoi(user_action);
         switch (user_action_num) {
             case 1:
-                list_all_users();
+               // list_all_users();
                 break; //action for list user
             case 2:
                 //show_user_data();
+                reqsend_instance=req_to_send.draft_request();
+                req_to_send.publishEvent(reqsend_instance);
                 break; //action for show user
             case 3:
                 edit_user_data();
@@ -217,7 +221,18 @@ void receive_request() {
         V = req.recv();
         // std::cout<<"SIZE: "<<V.size()<<std::endl;
         for (unsigned int i = 0; i < V.size(); i++) {
-            //print(V[i]);
+            print(V[i]);
+           for(int j=0;j<V[i].user_requests.length();j++)
+           {
+               std::cout<<"entered loop"<<std::endl;
+               char *uuidArray;
+               uuidArray=my_user.return_uuid();
+               if(strcmp(V[i].user_requests[j].fulfiller_uuid,uuidArray)==0)
+               {
+                   std::cout<<"I've been asked to respond to a request"<<std::endl;
+               }
+              
+           }
         }
         i++;
     }
@@ -343,6 +358,7 @@ TSN::user_information initialize_user() {
             }
             input.close();
             strncpy(msgInstance.uuid, uuidCharArray + 5, 42 - 5);
+            my_user.set_user_uuid(msgInstance.uuid);
         }
     }
 
@@ -439,8 +455,9 @@ void edit_user_data() {
     my_user.set_date(seconds_birthday);
 
 }
+/*
 std::vector<std::string> list_all_users() {
-}
+}*/
 void make_post(char string[37], int sno) {
     std::ofstream myfile;
     myfile.open("hello.tsn", ios::app);

@@ -10,6 +10,9 @@
 #include "ccpp_tsn.h"
 #include "os.h"
 #include "example_main.h"
+#include "User.h"
+
+//dds_io.h has been included from User.h
 
 class Request
 {
@@ -23,8 +26,10 @@ private:
     void initPublisher(char uuid[], TSN::node_request& requests);
 
 public:
-    Request(char uuid[], TSN::node_request& requests);
-    void publishEvent(char uuid[] , TSN::node_request& requests);
+    Request();
+    void publishEvent(TSN::request reqsend_instance);
+    std::vector<User> list_pub_users() ;
+    TSN::request draft_request();
     void dispose();
 };
 
