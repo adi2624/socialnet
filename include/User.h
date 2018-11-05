@@ -18,7 +18,7 @@ public:
     void set_last_name(std::string lname);
     std::string get_last_name();
     void set_date(long birth);
-    long get_birth_date();
+    long get_date();
     void set_post(std::vector<Post> post);
 	void set_map(std::map<int, std::string>& user_post_map);
     std::map<int, std::string> get_map();

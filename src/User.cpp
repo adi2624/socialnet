@@ -37,7 +37,7 @@ void User::set_date(long birth)
     birth_date = birth; 
 }
 
-long User::get_birth_date() 
+long User::get_date() 
 { 
     return birth_date; 
 }
