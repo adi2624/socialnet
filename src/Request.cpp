@@ -3,40 +3,8 @@
 
 
 using namespace TSN;
-/*
-std::string load_post(int post_no) {
-    int number = 0, i = 0;
-    std::string line, post;
-    std::ifstream get_post("hello.tsn");
-    if (!get_post.is_open())
-        perror("error while opening file");
-    //get_post.open("hello.tsn",ios::in);
-    if (get_post.bad())
-        perror("error while reading file");
-    while (std::getline(get_post, line)) {
-        std::istringstream iss(line);
-        std::string c;                          //GET LINE AND PUSH INTO STRINGSTREAM.
-        c = iss.str();
-        // std::cout<<"String received "<<c<<endl;  //Debugging string
-        std::size_t pos = c.find("SNO:");
-        std::size_t pos2 = c.find("POST:");           //FIND DATA after POST:
-        if (i != 0)      //IGNORE UUID AT TOP OF FILE
-        {
-            std::string number_string = c.substr(pos + 4, pos2 - 4);
-            // std::cout<<"Number String "<<number_string<<std::endl;   //please.ignore(#debug) FIND NUMBER BETWEEN SNO: and POST:
-            number = std::stoi(number_string);
-        }
-        i++;
-        if (number == post_no) {
-            std::string final_post_text = c.substr(pos2 + 4);
-            std::cout << "Final text:" << final_post_text << std::endl;   //RETURN FOUND POST DATA
-            return final_post_text;
-        }
 
-    }
-    return "Fail";
-}
-*/
+
 std::vector<User> Request::list_pub_users() 
 {
 

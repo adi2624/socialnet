@@ -230,6 +230,12 @@ void receive_request() {
                if(strcmp(V[i].user_requests[j].fulfiller_uuid,uuidArray)==0)
                {
                    std::cout<<"I've been asked to respond to a request"<<std::endl;
+                   Response my_response;
+                   TSN::response response_instance;
+                   std::string post = my_response.load_post(V[i].user_requests[j].requested_posts[0]);
+                   response_instance = my_response.draft_response(uuidArray,V[i].user_requests[j].requested_posts[0],post,20); //Change date of creation later
+                   my_response.publishEvent(response_instance);
+                   
                }
               
            }
