@@ -1,6 +1,8 @@
 #include "Response.h"
+#include "dds_io.h"
+
 using namespace TSN;
-void Response::initPublisher(std::string uuid, int  post_id, long date, std::string post)
+void Response::initPublisher(std::string uuid, response& res_instance)
 {
     char partition_name[] = "response Ownership";
     mgr.createParticipant(partition_name);
@@ -18,31 +20,49 @@ void Response::initPublisher(std::string uuid, int  post_id, long date, std::str
     mgr.createWriter(auto_dispose_unregistered_instances);
 
     dWriter = mgr.getWriter();
-    responseDataWriter = responseDataWriter::_narrow(dWriter.in());
+    _responseDataWriter = responseDataWriter::_narrow(dWriter.in());
 
 
     m_instance = new response();
-    m_instance->post_id = post_id;
-    m_instance->date_of_creation = date;
-    m_instance->post_body = DDS::string_dup(post.c_str());
-    strncpy(m_instance->uuid, uuid.c_str(), 37);
+    m_instance->post_id = res_instance.post_id;
+    m_instance->date_of_creation = res_instance.date_of_creation;
+    m_instance->post_body = res_instance.post_body;
+    strncpy(m_instance->uuid, uuid.c_str(), 37); // <-------------- REVISIT num 37
 
-    userHandle = responseDataWriter->register_instance(*m_instance);
+    userHandle = _responseDataWriter->register_instance(*m_instance);
 
 }
-Response::Response(std::string uuid, int post_id, long date, std::string post)
+Response::Response(std::string uuid, response& res_instance)
 {
-    initPublisher(uuid, post_id, date, post);
+    initPublisher(uuid, res_instance);
 }
-void Response::publishEvent(std::string uuid, int post_id, long date, std::string post)
+void Response::publishEvent(std::string uuid, response& res_instance)
 {
-    m_instance->post_body = DDS::string_dup(post.c_str());
-    m_instance->post_id = post_id;
-    m_instance->date_of_creation = date;
-    strncpy(m_instance->uuid, uuid.c_str(), 37);
-    responseDataWriter->write(*m_instance, userHandle);
+    std::cout << "We are here!" <<std::endl;
+    m_instance->post_body = res_instance.post_body;
+    m_instance->post_id = res_instance.post_id;
+    m_instance->date_of_creation = res_instance.date_of_creation;
+    strncpy(m_instance->uuid, uuid.c_str(), 37); // <---------------- REVISIT 37
+    _responseDataWriter->write(*m_instance, userHandle);
+    dds_io<response,
+            responseSeq,
+            responseTypeSupport_var,
+            responseTypeSupport,
+            responseDataWriter_var,
+            responseDataWriter,
+            responseDataReader_var,
+            responseDataReader> res =
+            dds_io<response,
+            responseSeq,
+            responseTypeSupport_var,
+            responseTypeSupport,
+            responseDataWriter_var,
+            responseDataWriter,
+            responseDataReader_var,
+            responseDataReader>
+            ( (char*) "response", true , true );
+    res.publish(*m_instance);
 }
-
 void Response::dispose()
 {
     /* Remove the DataWriters */
@@ -57,74 +77,4 @@ void Response::dispose()
     /* Remove Participant. */
     mgr.deleteParticipant();
 }
-/*
-int OSPL_MAIN (int argc, char * argv[])
-{
-    os_time delay_200ms = { 0, 200000000 };
-    std::cout << "Starting Publisher.." << std::endl;
-    Response * pub;
-    std::string post = "This is a test post";
-    std::string uuid = "asasasasasasssssssssss-sss-s-s-ssss";
-    int id = 1;
-    long date = 1000;
-    pub = new Response(uuid, id, date, post);
-    pub->publishEvent(uuid, id, date, post);
-    os_nanoSleep(delay_200ms);
 
-    std::cout << "Starting subscriber..." << std::endl;
-    os_time delay_2ms = { 0, 2000000 };
-    responseSeq msgList;
-    SampleInfoSeq infoSeq;
-
-    DDSEntityManager mgr;
-
-    char partition_name[] = "response Ownership";
-    mgr.createParticipant(partition_name);
-
-    responseTypeSupport_var st = new responseTypeSupport();
-    mgr.registerType(st.in());
-
-    char topic_name[] = "response";
-    mgr.createTopic(topic_name);
-
-    mgr.createSubscriber();
-    mgr.createReader();
-
-
-    DataReader_var dreader = mgr.getReader();
-    responseDataReader_var responseDataReader = responseDataReader::_narrow(dreader.in());
-    checkHandle(responseDataReader.in(), "responseDataReader::_narrow");
-
-    bool closed = false;
-    ReturnCode_t status = -1;
-    int count = 0;
-    while(!closed && count < 1500)
-    {
-        status = responseDataReader->take(msgList, infoSeq, LENGTH_UNLIMITED,
-                                          ANY_SAMPLE_STATE, ANY_VIEW_STATE, ANY_INSTANCE_STATE);
-        checkStatus(status, "responseDataReader::take");
-        for(DDS::ULong j = 0; j < msgList.length(); j++)
-        {
-            std::cout << "Recieved Response: " << std::endl;
-            std::cout << "Found post id: " << msgList[j].post_id << std::endl;
-            std::cout << "Found post body: " << msgList[j].post_body << std::endl;
-            std::cout << "Found date of creation: " << msgList[j].date_of_creation << std::endl;
-            closed = true;
-        }
-
-        status = responseDataReader->return_loan(msgList, infoSeq);
-        checkStatus(status, "responseDataReader::return_loan");
-        os_nanoSleep(delay_2ms);
-        count++;
-        os_nanoSleep(delay_200ms);
-    }
-
-    mgr.deleteReader();
-    mgr.deleteSubscriber();
-    mgr.deleteTopic();
-    mgr.deleteParticipant();
-    pub->dispose();
-    delete pub;
-    return 0;
-}
-*/

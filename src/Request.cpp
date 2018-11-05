@@ -77,6 +77,7 @@ std::string load_post(int post_no) {
 }
 */
 void Request::initPublisher(char uuid[], TSN::node_request &temp) {
+    
     char partition_name[] = "Request Publisher";
     mgr.createParticipant(partition_name);
 

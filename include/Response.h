@@ -1,35 +1,24 @@
-#ifndef _RESPONSE_H
-#define _RESPONSE_H
-
+#ifndef SOCIALNET_RESPONSE_H
+#define SOCIALNET_RESPONSE_H
 #include <iostream>
 #include <string>
-#include <sstream>
-#include <fstream>
 #include "DDSEntityManager.h"
 #include "ccpp_tsn.h"
 #include "os.h"
 #include "example_main.h"
-#include "User.h"
-
-using namespace TSN;
-
-class Response 
+class Response
 {
 private:
-	DDSEntityManager mgr;
-	DataWriter_var dWriter;
-	responseDataWriter_var responseDataWriter;
-	InstanceHandle_t userHandle;
-	response * m_instance;
-	ReturnCode_t status;
-	void initPublisher(std::string uuid, int post_id, long date, std::string post);
-
-
+    DDSEntityManager mgr;
+    DataWriter_var dWriter;
+    TSN::responseDataWriter_var _responseDataWriter;
+    InstanceHandle_t userHandle;
+    TSN::response * m_instance;
+    ReturnCode_t status;
+    void initPublisher(std::string uuid, TSN::response& res_instance);
 public:
-	Response(std::string uuid, int post_id, long date, std::string post);
-	void publishEvent(std::string uuid, int post_id, long date, std::string post);
-	void dispose();
-
+    Response(std::string uuid, TSN::response& res_instance);
+    void publishEvent(std::string uuid,TSN::response& res_instance);
+    void dispose();
 };
-
-#endif
+#endif //SOCIALNET_RESPONSE_H

@@ -15,17 +15,20 @@
 #include "Request.h"
 #include "Response.h"
 #include "Post.h"
-
-
 using namespace DDS;
 using namespace TSN;
 
 int sno = 0;        //KEEPS TRACK OF SERIAL NO: DO NOT REMOVE IT'S A GLOBAL VARIABLE
 void receive_request();
+void print ( TSN::response D );
+
 void print ( TSN::request D );
 void receive_userinfo();
-Request* pub;
+void receive_response();
+Request* pub;         // *****************************************
+Response * res_pub;   // <-------------- DONT FORGET TO FREE THESE
 TSN::request test_data_request ();
+TSN::response test_data_response ();
 TSN::user_information initialize_user();
 void print ( TSN::user_information D );
 
@@ -34,7 +37,8 @@ Post my_post;
 User my_user;
 std::vector<TSN::request> V ;
 std::vector<TSN::user_information> userinfo_vector;
- auto req = 
+std::vector<TSN::response> response_vec;
+auto req = 
                             dds_io<request,
                                     requestSeq,
                                     requestTypeSupport_var,
@@ -58,6 +62,17 @@ auto UserInfo =
                           user_informationDataReader>
 
                           ( (char*) "user_information", false     , true );
+auto res =
+            dds_io<response,
+            responseSeq,
+            responseTypeSupport_var,
+            responseTypeSupport,
+            responseDataWriter_var,
+            responseDataWriter,
+            responseDataReader_var,
+            responseDataReader>
+            ( (char*) "response", false , true );
+
 
 
 //long calculate_seconds(int month, unsigned day, unsigned year)
@@ -92,14 +107,18 @@ int OSPL_MAIN(int argc, char *argv[]) {
         std::string answer="Y";
         user_information userinfo_instance = initialize_user();
         my_user.publishEvent(userinfo_instance);
-         std::thread req_thread(receive_request);
-         std::thread userinfo_thread(receive_userinfo);
-       while(answer=="Y")
+        std::thread req_thread(receive_request);
+        std::thread userinfo_thread(receive_userinfo);
+        std::thread res_thread(receive_response);
+        while(answer=="Y")
        {
+           TSN::response test_inst= test_data_response();
         TSN::request instance=test_data_request();
         pub = new Request(instance.uuid,instance.user_requests[0]);
         pub->publishEvent(instance.uuid,instance.user_requests[0]);
-       
+        string str(test_inst.uuid);
+        res_pub = new Response(str,test_inst);
+        res_pub->publishEvent(str, test_inst);
         std::cout<<"Do you want to continue?--------------------------------------------------------------------------------------------------------------------------"<<std::endl;
         std::cin>> answer;
         std::cout << "*" << answer << "*" << std::endl;
@@ -154,6 +173,17 @@ TSN::request test_data_request ()
    D.user_requests[0].requested_posts[1]=700;
 
    return D;
+}
+void receive_response()
+{
+    while(1)
+    {
+        response_vec = res.recv();
+        for(size_t i = 0; i < response_vec.size(); i++)
+        {
+            print(response_vec[i]);
+        }
+    }
 }
 void receive_request()
 {
@@ -318,4 +348,27 @@ void print ( TSN::user_information D )
    }
    std::cout << std::endl;
    std::cout << std::endl;
+}
+TSN::response test_data_response()
+{
+    TSN::response D;
+    static int count=0;
+    count++;
+    std::string  uuid = "d21633d5-12fb-4c93-a4a4-a56f06b7ba24";
+    strncpy (D.uuid,uuid.c_str(),sizeof(D.uuid));
+    D.uuid[sizeof(D.uuid)-1] = '\0';
+    D.post_id = count;
+    D.post_body = DDS::string_dup("this is a sample post....."); 
+    D.date_of_creation = 1000;
+    return D;
+}
+void print ( TSN::response D )
+{
+
+    std::cout << "Received : response" << std::endl;
+    std::cout << "               " << D.uuid  << " "
+                                  << D.post_id  << " "
+                                  << D.post_body << " "
+                                  << D.date_of_creation << std::endl;
+    std::cout << std::endl;
 }
