@@ -6,7 +6,7 @@
 WINDOW *display_menu(int height, int width, int starty, int startx);
 void destroy_win(WINDOW *local_win);
 static char* trim_whitespaces(char *str);
-static void driver(int ch);
+static void driver(int ch, bool*);
 int kbhit();
 void entry_point(void);
     
@@ -94,7 +94,7 @@ void entry_point()
             mvwprintw(menu ,++j, COLS / 2 - 10, logo[i].c_str());
             wrefresh(menu);
         }
-        win_form = derwin(menu, 18,78, 6, 5);
+        win_form = derwin(menu, LINES - 7 ,78, 6, COLS / 2 - 39);
         assert(win_form != NULL);
         box(win_form, 0, 0);
 
@@ -139,16 +139,17 @@ void entry_point()
         form = new_form(fields);
         assert(form != NULL);
         set_form_win(form, win_form);
-        set_form_sub(form, derwin(win_form, 15, 76, 1, 1));
+        set_form_sub(form, derwin(win_form, 15, 60, 2, 15));
         post_form(form);
-
+        mvwprintw(win_form, 10,15, "Press Enter to submit");
         refresh();
         wrefresh(menu);
         wrefresh(win_form);
         int ch;
-        while ((ch = getch()) != KEY_F(1))
-            driver(ch);
-
+        bool is_running = true;
+        while ((ch = getch()) != KEY_F(1) && is_running)
+            driver(ch, &is_running);
+        
         unpost_form(form);
         free_form(form);
         free_field(fields[0]);
@@ -160,12 +161,23 @@ void entry_point()
         free_field(fields[6]);
         free_field(fields[7]);
         free_field(fields[8]);
+        werase(win_form);
         delwin(win_form);
-        //delwin(win_body);
-
-
+        werase(menu);
+        delwin(menu);
+        wrefresh(win_form);
     }
-
+    WINDOW * menu_screen_lhs;
+    WINDOW * menu_screen_rhs;
+    menu_screen_lhs = newwin(LINES - 8,COLS / 2 - 20, 7,15);
+    menu_screen_rhs = newwin(LINES - 8,COLS / 2 - 20, 7,COLS / 2 + 1);
+    box(menu_screen_lhs, 0, 0);
+    box(menu_screen_rhs, 0, 0);
+	wborder(menu_screen_lhs, '|', '|', '=', '=', '+', '+', '+', '+');
+    wborder(menu_screen_rhs, '|', '|', '=', '=', '+', '+', '+', '+');
+    wrefresh(menu_screen_lhs);
+    wrefresh(menu_screen_rhs);
+    refresh();
     getchar();
     endwin();
 
@@ -226,26 +238,22 @@ static char* trim_whitespaces(char *str)
     return str;
 }
 
-static void driver(int ch)
+static void driver(int ch, bool * is_running)
 {
     int i;
 
     switch (ch) {
-        case KEY_F(2):
+        case 10: // This is supposed to be the enter key but the ncurses macro isnt working for some reason,
             // Or the current field buffer won't be sync with what is displayed
             form_driver(form, REQ_NEXT_FIELD);
             form_driver(form, REQ_PREV_FIELD);
             move(LINES-3, 2);
-
+            /* This is the code to retrieve the values
             for (i = 0; fields[i]; i++) {
                 printw("%s", trim_whitespaces(field_buffer(fields[i], 0)));
-
-                if (field_opts(fields[i]) & O_ACTIVE)
-                    printw("\"\t");
-                else
-                    printw(": \"");
             }
-
+            */
+            *(is_running) = false;
             refresh();
             pos_form_cursor(form);
             break;
