@@ -1,43 +1,11 @@
 
 #include "Request.h"
-#include "dds_io.h"
+
 
 using namespace TSN;
-/*
-std::string load_post(int post_no) {
-    int number = 0, i = 0;
-    std::string line, post;
-    std::ifstream get_post("hello.tsn");
-    if (!get_post.is_open())
-        perror("error while opening file");
-    //get_post.open("hello.tsn",ios::in);
-    if (get_post.bad())
-        perror("error while reading file");
-    while (std::getline(get_post, line)) {
-        std::istringstream iss(line);
-        std::string c;                          //GET LINE AND PUSH INTO STRINGSTREAM.
-        c = iss.str();
-        // std::cout<<"String received "<<c<<endl;  //Debugging string
-        std::size_t pos = c.find("SNO:");
-        std::size_t pos2 = c.find("POST:");           //FIND DATA after POST:
-        if (i != 0)      //IGNORE UUID AT TOP OF FILE
-        {
-            std::string number_string = c.substr(pos + 4, pos2 - 4);
-            // std::cout<<"Number String "<<number_string<<std::endl;   //please.ignore(#debug) FIND NUMBER BETWEEN SNO: and POST:
-            number = std::stoi(number_string);
-        }
-        i++;
-        if (number == post_no) {
-            std::string final_post_text = c.substr(pos2 + 4);
-            std::cout << "Final text:" << final_post_text << std::endl;   //RETURN FOUND POST DATA
-            return final_post_text;
-        }
 
-    }
-    return "Fail";
-}
-*/
-/*std::vector<User> list_pub_users() 
+
+std::vector<User> Request::list_pub_users() 
 {
 
     std::vector<User> name_user;        //EXPORT A VECTOR OF USERS AFTER LOADING ALL USERS FROM USERS.TSN
@@ -75,7 +43,7 @@ std::string load_post(int post_no) {
     file.close();
     return name_user;
 }
-*/
+
 void Request::initPublisher(char uuid[], TSN::node_request &temp) {
     
     char partition_name[] = "Request Publisher";
@@ -106,16 +74,11 @@ void Request::initPublisher(char uuid[], TSN::node_request &temp) {
 
 }
 
-Request::Request(char uuid[], TSN::node_request &temp) {
-    initPublisher(uuid, temp);
+Request::Request() {
+    
 }
 
-void Request::publishEvent(char uuid[], TSN::node_request &requests) {
-    strncpy(m_instance->uuid, uuid, 42);
-    std::cout<<"wrote "<<m_instance->uuid<<std::endl;
-    m_instance->user_requests.length(1);
-    m_instance->user_requests[0] = requests;
-    _requestDataWriter->write(*m_instance, userHandle);
+void Request::publishEvent(TSN::request reqsend_instance) {
       dds_io<request,
                           requestSeq,
                           requestTypeSupport_var,
@@ -136,7 +99,7 @@ void Request::publishEvent(char uuid[], TSN::node_request &requests) {
                           ( (char*) "request", true , true );
                 //        topic name,         publish, subscribe
                 cout<<"Debug"<<std::endl;
-req.publish(*m_instance);
+req.publish(reqsend_instance);
 }
 
 void Request::dispose() {
@@ -151,6 +114,45 @@ void Request::dispose() {
 
     /* Remove Participant. */
     mgr.deleteParticipant();
+}
+
+TSN::request Request::draft_request()
+{
+    std::vector<User> name_user = list_pub_users();
+    std::cout << "Please select user from below to send a request to :" << std::endl;
+    int input;
+    for (int i = 0; i < static_cast<int>(name_user.size()); i++) {
+        std::cout << "USER " << i + 1 << std::endl;
+        std::cout << "FNAME: " << name_user.at(i).get_first_name() << std::endl;
+        std::cout << "LNAME: " << name_user.at(i).get_last_name() << std::endl;
+        std::cout << "UUID: " << name_user.at(i).return_uuid() << std::endl;
+        std::cout << std::endl;
+    }
+    std::cout << "Enter the user number" << std::endl;    //ENTER THE USER NUMBER.
+    std::cin >> input;
+    node_request user_request;
+    strcpy(user_request.fulfiller_uuid, name_user.at(input - 1).return_uuid());
+    std::cout << "The received request was for UUID:" << user_request.fulfiller_uuid
+              << std::endl; //OUTPUT THE UUID of the Intended Receiver.
+    std::cout << "Enter the serial no of the post that you want from this user" << std::endl;
+    std::cin >> input;
+    user_request.requested_posts.length(1);
+    user_request.requested_posts[0] = input;
+   // std::cout << user_request.requested_posts[0];
+    //LOAD LOCAL USER'S UUID FROM HELLO.TSN
+    std::ifstream input_file;
+    input_file.open("hello.tsn", ios::in);
+    char uuidCharArray2[42];                //user.request.uuid is the UUID of the user we want the post from. user_request2.uuid is our UUID.
+    input_file.getline(uuidCharArray2, 42);
+    //std::cout<<uuidCharArray2<<std::endl;
+    request this_user_request2;
+    strncpy(this_user_request2.uuid, uuidCharArray2+5, 37);
+    //std::cout<<"UUIDend of aeeay: "<<this_user_request2.uuid<<std::endl;
+    this_user_request2.user_requests.length(1);
+    this_user_request2.user_requests[0] = user_request;   
+    input_file.close();
+    return this_user_request2;     
+
 }
 /*
 
