@@ -99,7 +99,7 @@ void Request::publishEvent(TSN::request reqsend_instance) {
                           ( (char*) "request", true , true );
                 //        topic name,         publish, subscribe
                 cout<<"Debug"<<std::endl;
-req.publish(reqsend_instance);
+		req.publish(reqsend_instance);
 }
 
 void Request::dispose() {
@@ -141,7 +141,7 @@ TSN::request Request::draft_request()
    // std::cout << user_request.requested_posts[0];
     //LOAD LOCAL USER'S UUID FROM HELLO.TSN
     std::ifstream input_file;
-    input_file.open("hello.tsn", ios::in);
+    input_file.open("my_user.tsn", ios::in);
     char uuidCharArray2[42];                //user.request.uuid is the UUID of the user we want the post from. user_request2.uuid is our UUID.
     input_file.getline(uuidCharArray2, 42);
     //std::cout<<uuidCharArray2<<std::endl;

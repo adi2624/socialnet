@@ -79,7 +79,7 @@ TSN::response Response::draft_response(char* uuid,unsigned long post_no,std::str
 std::string Response::load_post(int post_no) {
     int number = 0, i = 0;
     std::string line, post;
-    std::ifstream get_post("hello.tsn");
+    std::ifstream get_post("my_user.tsn");
     if (!get_post.is_open())
         perror("error while opening file");
     //get_post.open("hello.tsn",ios::in);
