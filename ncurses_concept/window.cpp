@@ -100,7 +100,8 @@ void entry_point()
         win_form = derwin(menu, LINES - 7 ,78, 6, COLS / 2 - 39);
         assert(win_form != NULL);
         box(win_form, 0, 0);
-
+        wborder(win_form, '|', '|', '=', '=', '+', '+', '+', '+');
+        
         fields[0] = new_field(1, 10, 0, 0, 0, 0);
         fields[1] = new_field(1, 30, 0, 15, 0, 0);
         fields[2] = new_field(1, 10, 2, 0, 0, 0);
@@ -170,34 +171,53 @@ void entry_point()
         delwin(menu);
         wrefresh(win_form);
     }
-    std::string choices[] = {
-                            "Choice 1",
-                           "Choice 2",
-                           "EXIT",
-                           (char *)NULL 
-                       }; 
-    ITEM **my_items;
-    MENU * my_menu;
-    int n_choices, ch, i;
-    n_choices = ARRAY_SIZE(choices);
-    my_items = (ITEM**)calloc(n_choices, sizeof(ITEM *));
-    for(i = 0; i < n_choices;i++)
-        my_items[i] = new_item(choices[i].c_str(),choices[i].c_str());
-    my_menu = new_menu((ITEM**)my_items);
+    std::string choices[] = {"List Users", "Show User", "Edit", "Resync", "Post", "Show Statistics", "Exit"};
+    int choice;
+    int highlight = 0;
     WINDOW * menu_screen_lhs;
     WINDOW * menu_screen_rhs;
     menu_screen_lhs = newwin(LINES - 8,COLS / 2 - 20, 7,15);
     menu_screen_rhs = newwin(LINES - 8,COLS / 2 - 20, 7,COLS / 2 + 1);
     keypad(menu_screen_lhs, TRUE);
-    set_menu_win(my_menu, menu_screen_lhs);
-    set_menu_sub(my_menu, derwin(menu_screen_lhs,5,15,2,2));
-    set_menu_mark(my_menu, " * ");
-    refresh();
-    post_menu(my_menu);
     box(menu_screen_lhs, 0, 0);
     box(menu_screen_rhs, 0, 0);
-	wborder(menu_screen_lhs, '|', '|', '=', '=', '+', '+', '+', '+');
+    wattron(menu_screen_lhs, COLOR_PAIR(1));
+    wattron(menu_screen_rhs, COLOR_PAIR(1));
+    wborder(menu_screen_lhs, '|', '|', '=', '=', '+', '+', '+', '+');
     wborder(menu_screen_rhs, '|', '|', '=', '=', '+', '+', '+', '+');
+    while(1)
+    {
+        wrefresh(menu_screen_rhs);
+        wrefresh(menu_screen_lhs);
+        int y,x;
+        getmaxyx(menu_screen_lhs,y,x);
+        for(size_t i = 0; i < 7; i++)
+        {
+            if(i == highlight)
+                wattron(menu_screen_lhs,A_REVERSE);
+
+            mvwprintw(menu_screen_lhs,i+1,x/2 - 7, choices[i].c_str());
+            wattroff(menu_screen_lhs, A_REVERSE);
+        }
+        choice = wgetch(menu_screen_lhs);
+
+        switch(choice)
+        {
+            case KEY_UP:
+                highlight--;
+                if(highlight == -1)
+                    highlight = 0;
+                break;
+            case KEY_DOWN:
+                highlight++;
+                if(highlight == 8)
+                    highlight = 7;
+                break;
+            default:
+                break;
+        }
+        if(highlight == 6 && choice == 10) break;
+    }
     wrefresh(menu_screen_lhs);
     wrefresh(menu_screen_rhs);
     refresh();
