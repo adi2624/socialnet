@@ -1,2 +1,2 @@
 main: window.cpp
-	g++ window.cpp -o window -lncurses -lform
+	g++ window.cpp -o window -lmenu -lform -lncurses

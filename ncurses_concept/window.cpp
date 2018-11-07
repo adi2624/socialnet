@@ -1,8 +1,11 @@
 #include <ncurses.h>
 #include <iostream>
 #include <form.h>
+#include <menu.h>
 #include <string.h>
 #include <cassert>
+#include <stdlib.h>
+#define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 WINDOW *display_menu(int height, int width, int starty, int startx);
 void destroy_win(WINDOW *local_win);
 static char* trim_whitespaces(char *str);
@@ -167,10 +170,30 @@ void entry_point()
         delwin(menu);
         wrefresh(win_form);
     }
+    std::string choices[] = {
+                            "Choice 1",
+                           "Choice 2",
+                           "EXIT",
+                           (char *)NULL 
+                       }; 
+    ITEM **my_items;
+    MENU * my_menu;
+    int n_choices, ch, i;
+    n_choices = ARRAY_SIZE(choices);
+    my_items = (ITEM**)calloc(n_choices, sizeof(ITEM *));
+    for(i = 0; i < n_choices;i++)
+        my_items[i] = new_item(choices[i].c_str(),choices[i].c_str());
+    my_menu = new_menu((ITEM**)my_items);
     WINDOW * menu_screen_lhs;
     WINDOW * menu_screen_rhs;
     menu_screen_lhs = newwin(LINES - 8,COLS / 2 - 20, 7,15);
     menu_screen_rhs = newwin(LINES - 8,COLS / 2 - 20, 7,COLS / 2 + 1);
+    keypad(menu_screen_lhs, TRUE);
+    set_menu_win(my_menu, menu_screen_lhs);
+    set_menu_sub(my_menu, derwin(menu_screen_lhs,5,15,2,2));
+    set_menu_mark(my_menu, " * ");
+    refresh();
+    post_menu(my_menu);
     box(menu_screen_lhs, 0, 0);
     box(menu_screen_rhs, 0, 0);
 	wborder(menu_screen_lhs, '|', '|', '=', '=', '+', '+', '+', '+');
