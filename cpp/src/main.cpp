@@ -156,52 +156,48 @@ TSN::request test_data_request ()
 void receive_request()
 {
     int i=0;
-                        while(1)
-                        {
-                                                    V = req.recv ();
-                                               // std::cout<<"SIZE: "<<V.size()<<std::endl;
-                                                for (unsigned int i=0;i<V.size();i++)
-                                                {
-                                                    print ( V[i] );
-                                                }
-                                                i++;
-                        }
+    while(1)
+    {
+        V = req.recv ();
+        // std::cout<<"SIZE: "<<V.size()<<std::endl;
+        for (unsigned int i=0;i<V.size();i++)
+        {
+            print ( V[i] );
+        }
+        i++;
+    }
 }
 
 void receive_userinfo()
 {
     while(1)
-                        {
-                                                    userinfo_vector = UserInfo.recv ();
-                                               // std::cout<<"SIZE: "<<V.size()<<std::endl;
-                                                for (unsigned int i=0;i<userinfo_vector.size();i++)
-                                                {
-                                                    print ( userinfo_vector[i] );
-                                                    User static_user;
-                                                    std::vector<std::string> user_interests;
-                                                    static_user.set_first_name(std::string(userinfo_vector[i].first_name));
-                                                    static_user.set_last_name(std::string(userinfo_vector[i].last_name));
-                                                    static_user.set_user_uuid(userinfo_vector[i].uuid);
-                                                      // std::cout<<"The size of interest vector is"<<userinfo_vector[i].interests.length()<<std::endl;
-                                                      /*----------------------------------------------------
-                                                      |
-                                                      |ISSUE: FOR LOOP DOES NOT RUN ACCORDING TO THE SIZE OF INTEREST VECTOR
-                                                      |
-                                                      |
-                                                      ----------------------------------------------------==*/
+    {
+        userinfo_vector = UserInfo.recv ();
+        // std::cout<<"SIZE: "<<V.size()<<std::endl;
+        for (unsigned int i=0;i<userinfo_vector.size();i++)
+        {
+            print ( userinfo_vector[i] );
+            User static_user;
+            std::vector<std::string> user_interests;
+            static_user.set_first_name(std::string(userinfo_vector[i].first_name));
+            static_user.set_last_name(std::string(userinfo_vector[i].last_name));
+            static_user.set_user_uuid(userinfo_vector[i].uuid);
+            // std::cout<<"The size of interest vector is"<<userinfo_vector[i].interests.length()<<std::endl;
+            /*----------------------------------------------------
+            ISSUE: FOR LOOP DOES NOT RUN ACCORDING TO THE SIZE OF INTEREST VECTOR*/
         
-                                                     for (unsigned int i=0;i<userinfo_vector[i].interests.length();i++)
-                                                        {
+            for (unsigned int i=0;i<userinfo_vector[i].interests.length();i++)
+            {
                                                           
-                                                            user_interests.push_back(std::string(userinfo_vector[i].interests[i]));
+                user_interests.push_back(std::string(userinfo_vector[i].interests[i]));
                                                             
-                                                        }
+            }
                                                      
-                                                    static_user.set_interests(user_interests);
-                                                    static_user.write_to_file();
-                                                }
+            static_user.set_interests(user_interests);
+            static_user.write_to_file();
+            }
                                                 
-                        }
+        }
 }
 
 TSN::user_information initialize_user()
