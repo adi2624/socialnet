@@ -39,6 +39,7 @@ User my_user;
 std::vector<TSN::request> V;
 std::vector<TSN::user_information> userinfo_vector;
 std::vector<TSN::response> response_vec;
+bool runFlag=true;
 auto req =
         dds_io<request,
                 requestSeq,
@@ -164,14 +165,20 @@ int OSPL_MAIN(int argc, char *argv[]) {
             case 6:
                 break; //action for statistics
         }
-        if (user_action_num == 7) break;
+        if (user_action_num == 7)
+        {
+            runFlag=false;
+            break;
+        } 
 
     }
     std::cout << "Test Thread Join" << std::endl;
     req_thread.join();
-    std::cout << "Did Thread Join" << std::endl;
+    std::cout << "Did Thread 1 Join" << std::endl;
     userinfo_thread.join();
+    std::cout << "Did Thread 2 Join" << std::endl;
     res_thread.join();
+    std::cout << "Did Thread 3 Join" << std::endl;
     //pub->dispose();
     //delete pub;
     //delete res_pub;
@@ -211,7 +218,7 @@ TSN::request test_data_request() {
 }
 
 void receive_response() {
-    while (1) {
+    while (runFlag) {
         response_vec = res.recv();
         for (size_t i = 0; i < response_vec.size(); i++) {
             print(response_vec[i]);
@@ -221,7 +228,7 @@ void receive_response() {
 
 void receive_request() {
     int i = 0;
-    while (1) {
+    while (runFlag) {
         V = req.recv();
         // std::cout<<"SIZE: "<<V.size()<<std::endl;
         for (unsigned int i = 0; i < V.size(); i++) {
@@ -249,7 +256,7 @@ void receive_request() {
 }
 
 void receive_userinfo() {
-    while (1) {
+    while (runFlag) {
         userinfo_vector = UserInfo.recv();
         // std::cout<<"SIZE: "<<V.size()<<std::endl;
         for (size_t i = 0; i < userinfo_vector.size(); i++) {
