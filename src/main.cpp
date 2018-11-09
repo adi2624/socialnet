@@ -172,13 +172,9 @@ int OSPL_MAIN(int argc, char *argv[]) {
         } 
 
     }
-    std::cout << "Test Thread Join" << std::endl;
     req_thread.join();
-    std::cout << "Did Thread 1 Join" << std::endl;
     userinfo_thread.join();
-    std::cout << "Did Thread 2 Join" << std::endl;
     res_thread.join();
-    std::cout << "Did Thread 3 Join" << std::endl;
     //pub->dispose();
     //delete pub;
     //delete res_pub;
