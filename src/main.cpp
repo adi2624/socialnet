@@ -74,6 +74,8 @@ auto res =
 
                 ((char *) "response", false, true);
 
+
+
 /*==============================
  *
  *      Function Prototypes
@@ -121,13 +123,9 @@ int OSPL_MAIN(int argc, char *argv[]) {
     std::string user_action;
     std::string answer = "Y";
     // we only need to initialize user once
-    std::ifstream file("my_user.tsn",std::ios::ate);
     user_information userinfo_instance;
-    if(file.tellg() == 0 || !file.good()) 
-    {
-        userinfo_instance = initialize_user();
-        my_user.publishEvent(userinfo_instance);
-    }
+    userinfo_instance = initialize_user();
+    my_user.publishEvent(userinfo_instance);
     std::thread req_thread(receive_request);
     std::thread userinfo_thread(receive_userinfo);
     std::thread res_thread(receive_response);
@@ -180,7 +178,6 @@ int OSPL_MAIN(int argc, char *argv[]) {
     //delete pub;
     //delete res_pub;
     return 0;
-
 }
 
 void print(TSN::request D) {
