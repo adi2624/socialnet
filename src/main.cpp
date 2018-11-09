@@ -129,8 +129,9 @@ int OSPL_MAIN(int argc, char *argv[]) {
     std::thread req_thread(receive_request);
     std::thread userinfo_thread(receive_userinfo);
     std::thread res_thread(receive_response);
-    while (1) {
-        int user_action_num;
+    user_action_num = -1;
+    while (user_action_num != 7) {
+        
         std::string user_action;
         std::cout << "What would you like to do?" << std::endl;
         std::cout << "1. List users" << std::endl;
@@ -139,8 +140,7 @@ int OSPL_MAIN(int argc, char *argv[]) {
         std::cout << "4. Resync" << std::endl;
         std::cout << "5. Post" << std::endl;
         std::cout << "6. Show statistics" << std::endl;
-        std::cout << "7. Make a Request" << std::endl;
-        std::cout << "8. Exit" << std::endl;
+        std::cout << "7. Exit" << std::endl;
         std::cout << "Enter your choice: ";
         std::cin >> user_action;
         user_action_num = stoi(user_action);
@@ -149,7 +149,8 @@ int OSPL_MAIN(int argc, char *argv[]) {
                 list_all_users();
                 break; 
             case 2:
-                //show_user_data();
+                reqsend_instance=req_to_send.draft_request();
+                req_to_send.publishEvent(reqsend_instance);
                 break; //action for show user
             case 3:
                 edit_user_data();
@@ -162,16 +163,13 @@ int OSPL_MAIN(int argc, char *argv[]) {
                 break;
             case 6:
                 break; //action for statistics
-            case 7:
-                reqsend_instance=req_to_send.draft_request();
-                req_to_send.publishEvent(reqsend_instance);
-                break;
         }
-        if (user_action_num == 8) break;
+        if (user_action_num == 7) break;
 
     }
-    
+    std::cout << "Test Thread Join" << std::endl;
     req_thread.join();
+    std::cout << "Did Thread Join" << std::endl;
     userinfo_thread.join();
     res_thread.join();
     //pub->dispose();

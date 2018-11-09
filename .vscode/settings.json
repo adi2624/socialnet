@@ -19,6 +19,7 @@
         "cinttypes": "cpp",
         "clocale": "cpp",
         "complex": "cpp",
+        "condition_variable": "cpp",
         "cstdint": "cpp",
         "deque": "cpp",
         "list": "cpp",
@@ -27,6 +28,7 @@
         "exception": "cpp",
         "fstream": "cpp",
         "functional": "cpp",
+        "future": "cpp",
         "initializer_list": "cpp",
         "iomanip": "cpp",
         "iosfwd": "cpp",
@@ -48,8 +50,6 @@
         "tuple": "cpp",
         "typeindex": "cpp",
         "typeinfo": "cpp",
-        "utility": "cpp",
-        "condition_variable": "cpp",
-        "future": "cpp"
+        "utility": "cpp"
     }
 }

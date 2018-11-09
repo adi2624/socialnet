@@ -35,4 +35,4 @@ clean:
 	-rm -f UserInformation Response Request
 	-rm -f ${IDL_GENERATED_H} ${IDL_GENERATED_CPP}
 	-rm -f ospl-error.log ospl-info.log
-	-rm UserInformationPublisher UserInformationSubscriber main hello.tsn
+	-rm  main my_user.tsn
