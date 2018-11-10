@@ -31,17 +31,6 @@ std::string User::get_last_name()
 { 
     return last_name; 
 }
-
-void User::set_date(long birth) 
-{ 
-    birth_date = birth; 
-}
-
-long User::get_date() 
-{ 
-    return birth_date; 
-}
-
  void User::set_post(std::vector<Post> post) 
 { 
     user_posts = post; 
@@ -119,7 +108,7 @@ void User::write_to_file()
         {
             userFile << uuidCharArray[i];
         }
-
+        userFile << " DATE: " << date_of_birth << " POST_NUM: " << number_of_highest_post;
         userFile << "\n";
         userFile.close();
     }
@@ -150,5 +139,31 @@ void User::publishEvent(TSN::user_information msgInstance)
      UserInfo.publish(msgInstance);
 
 //        topic name,         publish, subscribe
+}
+TSN::user_information User::make_instance_user_information(User new_user)
+{
+    TSN::user_information temp;
+    strncpy(temp.uuid, new_user.return_uuid(), 37);
+    temp.first_name = new_user.get_first_name().c_str();
+    temp.last_name = new_user.get_last_name().c_str();
+    temp.date_of_birth = new_user.get_date_of_birth();
+    temp.interests.length(new_user.get_interests().size());
+    for(size_t i = 0; i < new_user.get_interests().size(); i++)
+    {
+        temp.interests[i] = new_user.get_interests().at(i).c_str();
+    }
+    return temp;
+}
+void User::set_date_of_birth(std::string date)
+{
+    int month = stoi(date.substr(0,2));
+    int day = stoi(date.substr(3,5));
+    int year = stoi(date.substr(6,10));
+    struct tm t = {0};
+    t.tm_year = year-1900;
+    t.tm_mon = month;
+    t.tm_mday = day;
+    time_t time = mktime(&t);
+    date_of_birth = static_cast<long>(time);
 }
 

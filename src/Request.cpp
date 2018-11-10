@@ -22,22 +22,19 @@ std::vector<User> Request::list_pub_users()
            std::size_t pos_fname = temp_line.find("FNAME");
            std::size_t pos_interests = temp_line.find("Inter");
            std::size_t pos_uuid = temp_line.find("UUID:");
-           std::string temp_fname;
+	       std::string temp_fname;
            std::string temp_lname;
            std::string temp_uuid;
-
            temp_fname = temp_line.substr(pos_fname + 6, pos_lname - 7);
            temp_lname = temp_line.substr(pos_lname + 6, pos_interests - 19);
            temp_uuid = temp_line.substr(pos_uuid + 6);
-           
-            //std::cout<<"Space found at "<<pos_fname<<std::endl;
-         
-            my_user.set_first_name(temp_fname);
-            my_user.set_last_name(temp_lname);
-            my_user.set_user_uuid(temp_uuid);
-            name_user.push_back(my_user);
-            //std::cout<<"Name: "<<temp_line.substr(pos+1,pos_name-1)<<"UUID: "<<temp_line.substr(pos_uuid+5);
-            //name_user.push_back(temp_line.substr(pos+1,pos_name-1)+temp_line.substr(pos_uuid+5));
+           //my_user.set_date_of_birth(seconds); 
+           my_user.set_first_name(temp_fname);
+           my_user.set_last_name(temp_lname);
+           my_user.set_user_uuid(temp_uuid);
+           name_user.push_back(my_user);
+           //std::cout<<"Name: "<<temp_line.substr(pos+1,pos_name-1)<<"UUID: "<<temp_line.substr(pos_uuid+5);
+           //name_user.push_back(temp_line.substr(pos+1,pos_name-1)+temp_line.substr(pos_uuid+5));
         }
     }
     file.close();

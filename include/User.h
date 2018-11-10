@@ -11,14 +11,18 @@
 class User
 {
 public:
-	void set_interests(std::vector<std::string> input_interests);
-	std::vector<std::string> get_interests();
+    static TSN::user_information make_instance_user_information(User new_user);
+    void set_interests(std::vector<std::string> input_interests);
+    std::vector<std::string> get_interests();
     void set_first_name(std::string fname);
     std::string get_first_name();
     void set_last_name(std::string lname);
     std::string get_last_name();
-    void set_date(long birth);
-    long get_date();
+    void set_date_of_birth(std::string date);
+    void set_date_of_birth(long seconds) { date_of_birth = seconds; } 
+    long get_date_of_birth() { return date_of_birth; }
+    void set_number_of_highest_post(unsigned long long posts) { number_of_highest_post = posts; }
+    unsigned long long get_number_of_highest_post();
     void set_post(std::vector<Post> post);
 	void set_map(std::map<int, std::string>& user_post_map);
     std::map<int, std::string> get_map();
@@ -29,6 +33,8 @@ public:
     TSN::user_information initialize();
     void publishEvent(TSN::user_information msgInstance);
 private:
+    unsigned long long number_of_highest_post;
+    long date_of_birth;
     std::map<int, std::string> userPostMap;
 	std::vector<std::string> interests;
     std::string first_name;

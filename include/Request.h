@@ -28,7 +28,7 @@ private:
 public:
     Request();
     void publishEvent(TSN::request reqsend_instance);
-    std::vector<User> list_pub_users() ;
+    static std::vector<User> list_pub_users() ;
     TSN::request draft_request();
     void dispose();
 };
