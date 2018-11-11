@@ -118,6 +118,8 @@ void init_params();
 void set_params();
 
 void calculate_stats();
+
+void show_user();
 /*////////////////////////////////////
 /
 /       MAIN
@@ -141,6 +143,7 @@ int OSPL_MAIN(int argc, char *argv[]) {
     if(temp)
     {
         user_information msgInstance;
+        // get user information somehow
         User temp = Request::list_pub_users()[0];
         msgInstance = User::make_instance_user_information(temp);
         temp.publishEvent(msgInstance);
@@ -169,8 +172,8 @@ int OSPL_MAIN(int argc, char *argv[]) {
                 list_all_users();
                 break; 
             case 2:
-                reqsend_instance=req_to_send.draft_request();
-                req_to_send.publishEvent(reqsend_instance);
+                std::cout << "TEST OVERLOAD: " << my_user.get_first_name() << std::endl;
+		        show_user();
                 break; //action for show user
             case 3:
                 edit_user_data();
@@ -185,6 +188,8 @@ int OSPL_MAIN(int argc, char *argv[]) {
                 calculate_stats();
                 break; //action for statistics
             case 7:
+		reqsend_instance=req_to_send.draft_request();
+                req_to_send.publishEvent(reqsend_instance);
                 break;
         }
         if (user_action_num == 8)
@@ -526,4 +531,9 @@ void calculate_stats()
     int total = post_count / all_posts * 100;
     std::cout << "Total known nodes: " << known_nodes << std::endl;
     std::cout << total << "% of the content is in this node" << std::endl; 
+}
+
+void show_user()
+{
+    std::cout << my_user << std::endl;
 }

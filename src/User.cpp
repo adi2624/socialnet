@@ -36,15 +36,6 @@ std::string User::get_last_name()
     user_posts = post; 
 }
 
-void User::set_map(std::map<int, std::string>& user_post_map) 
-{ 
-    userPostMap = user_post_map; 
-}
-
-std::map<int, std::string> User::get_map() 
-{ 
-    return userPostMap;
-}
 
 char* User::return_uuid()
 {

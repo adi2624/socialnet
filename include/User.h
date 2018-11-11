@@ -4,7 +4,6 @@
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include "Post.h"
-#include <map>
 #include "DDSEntityManager.h"
 #include "ccpp_tsn.h"
 #include "dds_io.h"
@@ -24,18 +23,33 @@ public:
     void set_number_of_highest_post(unsigned long long posts) { number_of_highest_post = posts; }
     unsigned long long get_number_of_highest_post();
     void set_post(std::vector<Post> post);
-	void set_map(std::map<int, std::string>& user_post_map);
-    std::map<int, std::string> get_map();
+    std::vector<Post> get_post() { return user_posts; }
     void set_user_information();
     void write_to_file();
     void set_user_uuid(std::string uuid_string);
     char * return_uuid();
     TSN::user_information initialize();
     void publishEvent(TSN::user_information msgInstance);
+    friend ostream& operator << (ostream& out, User t)
+    {
+        std::string str(t.return_uuid());
+        out << str << std::endl;
+        out << t.get_first_name() << " " << t.get_last_name() << " " << t.get_date_of_birth() << std::endl;
+        out << "Interests: " << std::endl;
+        for(size_t i = 0; i < t.get_interests().size(); i++)
+        {
+            out << t.get_interests().at(i) << std::endl;
+        }
+        out << "Posts: " << std::endl;
+        for(size_t i = 0; i < t.get_post().size(); i++)
+        {
+            out << t.get_post().at(i).get_post_data() << std::endl;
+        }
+        return out;
+    }
 private:
     unsigned long long number_of_highest_post;
     long date_of_birth;
-    std::map<int, std::string> userPostMap;
 	std::vector<std::string> interests;
     std::string first_name;
     std::string last_name;
