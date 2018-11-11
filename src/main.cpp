@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <iostream>
 #include <time.h>
-#include <ctime>
 #include <vector>
 #include <map>
 #include <thread>
@@ -29,7 +28,11 @@ using namespace TSN;
  *
  *===============================
  */
+bool user_is_initiated = false;
 int sno = 0;    
+long post_count = 0;
+long known_nodes = 0;
+unsigned long long all_posts = 0;
 Request *pub;         // *****************************************
 Response *res_pub;    // <--- DONT FORGET TO FREE 
 Request req_to_send;
@@ -76,20 +79,6 @@ auto res =
 
                 ((char *) "response", false, true);
 
-auto send_message =
-        dds_io<send_message,
-                messageSeq,
-                messageTypeSupport_var,
-                messageTypeSupport,
-                messageDataWriter_var,
-                messageDataWriter,
-                messageDataReader_var,
-                messageDataReader>
-
-                ((char *) "send_message", false, true);
-
-
-
 
 
 /*==============================
@@ -102,10 +91,7 @@ TSN::request test_data_request();
 
 TSN::response test_data_response();
 
-TSN::user_information initialize_user();
-
-
-long convert_to_epoch(int, int, int);
+TSN::user_information initialize_user(bool *);
 
 std::vector<std::string> list_all_users();
 
@@ -127,6 +113,16 @@ void make_post(char string[37], int sno);
 
 void resync();
 
+void init_params();
+
+void set_params();
+
+void calculate_stats();
+
+void show_user();
+
+long make_time();
+
 void send_message();
 
 /*////////////////////////////////////
@@ -137,20 +133,31 @@ void send_message();
 ////////////////////////////////// */
 
 int OSPL_MAIN(int argc, char *argv[]) {
-
-
+    init_params();
+    bool temp = user_is_initiated;
     int user_action_num;
     std::string user_action;
     std::string answer = "Y";
     // we only need to initialize user once
     user_information userinfo_instance;
-    userinfo_instance = initialize_user();
-    my_user.publishEvent(userinfo_instance);
+    if(!user_is_initiated)
+    {
+        userinfo_instance = initialize_user(&user_is_initiated);
+        my_user.publishEvent(userinfo_instance);
+    }
+    if(temp)
+    {
+        user_information msgInstance;
+        // get user information somehow
+        User temp = Request::list_pub_users()[0];
+        msgInstance = User::make_instance_user_information(temp);
+        temp.publishEvent(msgInstance);
+    }
     std::thread req_thread(receive_request);
     std::thread userinfo_thread(receive_userinfo);
     std::thread res_thread(receive_response);
     user_action_num = -1;
-    while (user_action_num != 7) {
+    while (user_action_num != 9) {
         
         std::string user_action;
         std::cout << "What would you like to do?" << std::endl;
@@ -160,8 +167,9 @@ int OSPL_MAIN(int argc, char *argv[]) {
         std::cout << "4. Resync" << std::endl;
         std::cout << "5. Post" << std::endl;
         std::cout << "6. Show statistics" << std::endl;
-        std::cout << "7. Message" << std::endl;
-        std::cout << "8. Exit" << std::endl;
+        std::cout << "7. Request Post" << std::endl;
+        std::cout << "8. Message" << std::endl;
+        std::cout << "9. Exit" << std::endl;
         std::cout << "Enter your choice: ";
         std::cin >> user_action;
         user_action_num = stoi(user_action);
@@ -170,8 +178,8 @@ int OSPL_MAIN(int argc, char *argv[]) {
                 list_all_users();
                 break; 
             case 2:
-                reqsend_instance=req_to_send.draft_request();
-                req_to_send.publishEvent(reqsend_instance);
+                std::cout << "TEST OVERLOAD: " << my_user.get_first_name() << std::endl;
+		        show_user();
                 break; //action for show user
             case 3:
                 edit_user_data();
@@ -183,18 +191,26 @@ int OSPL_MAIN(int argc, char *argv[]) {
                 make_post(userinfo_instance.uuid, sno++);
                 break;
             case 6:
+                calculate_stats();
                 break; //action for statistics
             case 7:
-            	send_message();
-            	break;
+				reqsend_instance=req_to_send.draft_request();
+                req_to_send.publishEvent(reqsend_instance);
+                break;
+            case 8:
+               send_message();
+               break; //action for statistics
         }
-        if (user_action_num == 8)
+        if (user_action_num == 9)
         {
             runFlag=false;
             break;
         } 
 
     }
+    std::cout << "FLAG: " << user_is_initiated << std::endl;
+    post_count = sno + 1 ; // keep track of post count
+    set_params();
     req_thread.join();
     userinfo_thread.join();
     res_thread.join();
@@ -235,7 +251,6 @@ TSN::request test_data_request() {
 
     return D;
 }
-
 
 void receive_response() {
     while (runFlag) {
@@ -280,10 +295,12 @@ void receive_userinfo() {
         userinfo_vector = UserInfo.recv();
         // std::cout<<"SIZE: "<<V.size()<<std::endl;
         for (size_t i = 0; i < userinfo_vector.size(); i++) {
-            //:w
-            //print(userinfo_vector[i]);
             User static_user;
             std::vector<std::string> user_interests;
+            known_nodes++;
+            all_posts += userinfo_vector[i].number_of_highest_post;
+            static_user.set_number_of_highest_post(userinfo_vector[i].number_of_highest_post);
+            static_user.set_date_of_birth(userinfo_vector[i].date_of_birth);
             static_user.set_first_name(std::string(userinfo_vector[i].first_name));
             static_user.set_last_name(std::string(userinfo_vector[i].last_name));
             static_user.set_user_uuid(userinfo_vector[i].uuid);
@@ -304,42 +321,13 @@ void receive_userinfo() {
             static_user.set_interests(user_interests);
             static_user.write_to_file();
         }
-
     }
 }
 
-TSN::user_information initialize_user() {
-    int user_found = 0;
-    std::string temp_user;
-    cout << "Enter your first name: " << std::endl;
-    std::cin >> temp_user;
-    my_user.set_first_name(temp_user);
-    std::cout << "Enter your last name: " << std::endl;
-    std::cin >> temp_user;
-    my_user.set_last_name(temp_user);
-    std::vector<std::string> user_interests;
-    std::string user_answer_interest;
-    std::cout << "What are you interested in?" << std::endl << "Type end to finish" << std::endl;
-    std::cin >> user_answer_interest;
-    while (!(user_answer_interest == "end")) {
-        user_interests.push_back(user_answer_interest);
-        std::cin >> user_answer_interest;
-    }
-    my_user.set_interests(user_interests);
-    std::string date;
-    std::cout << std::endl << "When is your birthday?(mm/dd/yyyy)" << std::endl;
-    std::cin >> date;
-    int month = stoi(date.substr(0,2));
-    int day = stoi(date.substr(3,5));
-    int year = stoi(date.substr(6,10));
-    long seconds = convert_to_epoch(day, month, year);
-    std::cout << "BIRTHDATE: " << seconds << std::endl;
-    my_user.set_date(seconds);
-    user_information msgInstance;
-    std::cout << "The following is your complete USERID generated by BOOST :\n";
+TSN::user_information initialize_user(bool * is_initialized) {
+
     std::ifstream myfile;
     myfile.open("my_user.tsn", ios::in);
-    char uuidCharArray[42];
     bool is_empty = true;
     while (!myfile.eof()) {
         std::string data;
@@ -349,13 +337,36 @@ TSN::user_information initialize_user() {
             break;
         }
         is_empty = false;
+        std::cout << "ENTERED LOOP" << std::endl;
     }
+    *(is_initialized) = true;
     myfile.close();
 
     if (is_empty) {
-        // do your error handling
 
-        // Empty File
+        std::string temp_user;
+        cout << "Enter your first name: " << std::endl;
+        std::cin >> temp_user;
+        my_user.set_first_name(temp_user);
+        std::cout << "Enter your last name: " << std::endl;
+        std::cin >> temp_user;
+        my_user.set_last_name(temp_user);
+        std::vector<std::string> user_interests;
+        std::string user_answer_interest;
+        std::cout << "What are you interested in?" << std::endl << "Type end to finish" << std::endl;
+        std::cin >> user_answer_interest;
+        while (!(user_answer_interest == "end")) {
+            user_interests.push_back(user_answer_interest);
+            std::cin >> user_answer_interest;
+        }
+        my_user.set_interests(user_interests);
+        std::string date;
+        std::cout << std::endl << "When is your birthday?(mm/dd/yyyy)" << std::endl;
+        std::cin >> date;
+        my_user.set_date_of_birth(date);
+        user_information msgInstance;
+        std::cout << "The following is your complete USERID generated by BOOST :\n";
+        char uuidCharArray[42];
         std::ofstream output;                                       //Generate a new UUID if file is empty.
         output.open("my_user.tsn", ios::out);
         std::cout << "The file is empty. Generatin a UUID.....\n";
@@ -372,48 +383,24 @@ TSN::user_information initialize_user() {
         my_user.set_user_uuid(uuid_string);
         output << "UUID:" << uuidCharArray << std::endl;
         output.close();
-        sno++;    //INCREMENT SERIAL NO TO POST 1.
         strncpy(msgInstance.uuid, uuidCharArray, 42 - 5);
         std::vector<Post> temp_post_vec;
         my_post.enter_post_data("Test data.");
         temp_post_vec.push_back(my_post);
         my_user.set_post(temp_post_vec);
         //my_user.write_to_file();
-    } else {
-        user_found = 1;
-        if (user_found) {
-            std::cout << "UUID FOUND. Loading from file" << std::endl;
-            std::ifstream input;
-            input.open("my_user.tsn", ios::in);
-            //LOAD GENERATED UUID AND COUNT THE NO OF POSTS IN THE DISK.
-            input.getline(uuidCharArray, 42);
-            std::cout << "Loaded: " << uuidCharArray << std::endl;
-            while (input) {
-                std::string garbage_value;
-                std::getline(input, garbage_value);         //count the no of posts
-                sno++;
-            }
-            input.close();
-            strncpy(msgInstance.uuid, uuidCharArray + 5, 42 - 5);
-            my_user.set_user_uuid(msgInstance.uuid);
+         msgInstance.first_name = my_user.get_first_name().c_str();    //SET FNAME AND LNAME IS MSGINSTANCE
+        msgInstance.last_name = my_user.get_last_name().c_str();
+        msgInstance.date_of_birth = my_user.get_date_of_birth();
+        //std::cout<<msgInstance.uuid<<endl;
+        msgInstance.interests.length(
+        my_user.get_interests().size());       //SET UP VALUES IN user_information STRUCT FOR DDS.
+        for (auto i = 0; i < static_cast<int>(my_user.get_interests().size()); i++) {
+            msgInstance.interests[i] = my_user.get_interests().at(i).c_str();
         }
+        return msgInstance;
     }
 
-/*  End of Boost UUID  */
-    msgInstance.first_name = my_user.get_first_name().c_str();    //SET FNAME AND LNAME IS MSGINSTANCE
-    msgInstance.last_name = my_user.get_last_name().c_str();
-    msgInstance.date_of_birth = seconds;
-    //std::cout<<msgInstance.uuid<<endl;
-    msgInstance.interests.length(
-            my_user.get_interests().size());       //SET UP VALUES IN user_information STRUCT FOR DDS.
-    for (auto i = 0; i < static_cast<int>(my_user.get_interests().size()); i++) {
-        msgInstance.interests[i] = my_user.get_interests().at(i).c_str();
-    }
-
-    std::cout << my_user.get_interests().size() << endl;
-
-
-    return msgInstance;
 }
 
 void print(TSN::user_information D) {
@@ -450,15 +437,6 @@ void print(TSN::response D) {
               << D.date_of_creation << std::endl;
     std::cout << std::endl;
 }
-long convert_to_epoch(int day, int month, int year)
-{
-    struct tm t = {0};
-    t.tm_year = year-1900;
-    t.tm_mon = month;
-    t.tm_mday = day;
-    time_t time = mktime(&t);
-    return static_cast<long>(time);
-}
 
 void edit_user_data() {
 
@@ -487,12 +465,8 @@ void edit_user_data() {
 
     std::string date;  std::cout << std::endl << "When is your birthday?(mm/dd/yyyy)" << std::endl;
     std::cin >> date;
-    int month = stoi(date.substr(0,2));
-    int day = stoi(date.substr(3,5));
-    int year = stoi(date.substr(6,10));
-    long seconds_birthday = convert_to_epoch(month,day,year);
-    my_user.set_date(seconds_birthday);
-    
+    my_user.set_date_of_birth(date);
+    my_user.set_number_of_highest_post(post_count);
     std::ifstream in("users.tsn");
     if(in)
     {
@@ -542,6 +516,36 @@ void resync() {
         cout << "File successfully deleted\n" << std::endl;
 
 }
+void init_params()
+{
+    std::ifstream inputFile("params.tsn");
+    string line;
+
+    while(getline(inputFile,line))
+    {
+        istringstream ss(line);
+
+        ss >> sno >> user_is_initiated >> post_count >> known_nodes;
+    }
+}
+
+void set_params()
+{
+    std::ofstream file;
+    file.open("params.tsn", std::ios::trunc);
+    file << sno << " " << user_is_initiated << " " << post_count << " " << known_nodes;   
+}
+void calculate_stats()
+{
+    int total = post_count / all_posts * 100;
+    std::cout << "Total known nodes: " << known_nodes << std::endl;
+    std::cout << total << "% of the content is in this node" << std::endl; 
+}
+
+void show_user()
+{
+    std::cout << my_user << std::endl;
+}
 
 void send_message()
 {
@@ -552,26 +556,29 @@ void send_message()
 	if(user_num>0)
 	{
 		std::cout <<"Enter your message for user number "<<user_num<<std::endl;
+		getchar();
 		getline(std::cin,direct_message);
-		long cur_time=make_time();   //cur_time stores the time after post is made.
+		//long cur_time=make_time();   //cur_time stores the time after post is made.
 		
 	}
 	else
 	{
 		std::cout<<"Enter a valid user number to send message:"<<std::endl;
+		std:: cin>>user_num;
 	}
 
 }
 
 
 //helper function to return date and time
-long make_time()
+/*long make_time()
 {
 	std::time_t raw_time=std::time(0);  //REFERENCE::https://en.cppreference.com/w/cpp/chrono/c/mktime
-		struct tm*timeinfo;
-		time(&raw_time);
+		struct std::tm*timeinfo;
+		timeinfo=std::localtime(&rawtime);
 		timeinfo->tm_year=year-1900;
 		timeinfo->tm_mon=month-1;
 		timeinfo->tm_mday=day;
-		return (long)mktime(timeinfo)
+		return (long)mktime(timeinfo);
 }
+*/
