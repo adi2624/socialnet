@@ -157,4 +157,9 @@ void User::set_date_of_birth(std::string date)
     time_t time = mktime(&t);
     date_of_birth = static_cast<long>(time);
 }
-
+void User::set_post_singular(std::string data)
+{
+    Post temp;
+    temp.enter_post_data(data);
+    user_posts.push_back(temp);
+}

@@ -8,18 +8,12 @@
 class Post
 {
     public:
-    std::string first_name;
-    std::string last_name;
     std::string my_post_data;
-    std::vector<std::string> interests;
-    void set_interest(std::vector<std::string> interests);
-    std::vector<std::string> get_interests();
-    void set_first_name(std::string fname);
-    std::string get_first_name();
-    void set_last_name(std::string lname);
-    void  enter_post_data(std::string data);
-    std::string get_post_data();
-    std::string get_last_name();
+    long date_of_creation;
+    void set_date_of_creation(long time) { date_of_creation = time; }
+    long get_date_of_creation() { return date_of_creation; }
+    void  enter_post_data(std::string data) { my_post_data = data; }
+    std::string get_post_data() { return my_post_data; }
     
 };
 

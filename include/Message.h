@@ -20,7 +20,7 @@ class Message
         Message();
         void publishEvent(TSN::private_message& msg);
         void dispose();
-        TSN::private_message construct_message(char * reciever_uuid, char * sender_uuid, std::string message_body, long date_of_creation);
+        static TSN::private_message construct_message(char * reciever_uuid, char * sender_uuid, std::string message_body, long date_of_creation);
 };
 
 

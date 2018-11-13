@@ -18,7 +18,7 @@
 #include "Request.h"
 #include "Response.h"
 #include "Post.h"
-
+#include "Message.h"
 using namespace DDS;
 using namespace TSN;
 
@@ -438,13 +438,11 @@ void edit_user_data() {
     std::string temp_fname;
     cout << "Enter your first name: " << std::endl;
     std::cin >> temp_fname;
-    my_post.set_first_name(temp_fname);
     my_user.set_first_name(temp_fname);
     
     std::string temp_lname;
     std::cout << "Enter your last name: " << std::endl;
     std::cin >> temp_lname;
-    my_post.set_last_name(temp_lname);
     my_user.set_last_name(temp_lname);
 
     std::vector<std::string> user_interests;
@@ -456,7 +454,6 @@ void edit_user_data() {
         std::cin >> user_answer_interest;
     }
     my_user.set_interests(user_interests);
-    my_post.set_interest(user_interests);
 
     std::string date;  std::cout << std::endl << "When is your birthday?(mm/dd/yyyy)" << std::endl;
     std::cin >> date;
@@ -499,7 +496,6 @@ void make_post(char string[37], int sno) {
     std::cout << "Enter the post text" << std::endl;
     cin.ignore();
     getline(std::cin, post_text);
-    userPostMap[sno] = post_text;
     myfile << "SNO:" << sno << " POST:" << post_text << endl;
     myfile.close();
 }
@@ -567,9 +563,13 @@ void send_message()
     std::cout << std::endl << "What would you like to say to user " << answer << "?" << std::endl;
     std::cin >> message_data;
     int index = std::stoi(answer);
-    strncpy(msg.sender_uuid,my_user.return_uuid(), 37);
-    strncpy(msg.receiver_uuid, users[index].return_uuid(), 37);
-    msg.message_body = message_data.c_str();
+    /*
+    msg = Message::construct_message(users[index].return_uuid(), my_user.return_uuid(),users[index].get_post().at(0).get_post_data(), 100);
+    Message m(msg);
+    m.publishEvent(msg);
+    */
+    std::cout << users[index] << std::endl;
+    std::cout << users[index].get_post().size()<< std::endl;
     // TODO: IMPLEMENT TIME FUNCTION
     //msg.data_of_creation = ;
 

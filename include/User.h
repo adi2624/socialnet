@@ -23,6 +23,7 @@ public:
     void set_number_of_highest_post(unsigned long long posts) { number_of_highest_post = posts; }
     unsigned long long get_number_of_highest_post() { return number_of_highest_post; }
     void set_post(std::vector<Post> post);
+    void set_post_singular(std::string data);
     std::vector<Post> get_post() { return user_posts; }
     void set_user_information();
     void write_to_file();

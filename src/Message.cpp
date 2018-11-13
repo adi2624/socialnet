@@ -81,4 +81,5 @@ TSN::private_message Message::construct_message(char * reciever_uuid, char * sen
     strncpy(temp.sender_uuid, sender_uuid, 37);
     temp.message_body = message_body.c_str();
     temp.date_of_creation = date_of_creation;
+    return temp;
 }
