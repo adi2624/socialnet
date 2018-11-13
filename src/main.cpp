@@ -380,6 +380,8 @@ TSN::user_information initialize_user(bool * is_initialized) {
          msgInstance.first_name = my_user.get_first_name().c_str();    //SET FNAME AND LNAME IS MSGINSTANCE
         msgInstance.last_name = my_user.get_last_name().c_str();
         msgInstance.date_of_birth = my_user.get_date_of_birth();
+        my_user.set_number_of_highest_post(0);
+        msgInstance.number_of_highest_post = my_user.get_number_of_highest_post();
         //std::cout<<msgInstance.uuid<<endl;
         msgInstance.interests.length(
         my_user.get_interests().size());       //SET UP VALUES IN user_information STRUCT FOR DDS.

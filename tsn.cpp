@@ -4,7 +4,7 @@
 //  
 //  File name: tsn.cpp
 //  Source: src/idl/tsn.idl
-//  Generated: Mon Nov 12 18:00:43 2018
+//  Generated: Mon Nov 12 18:24:01 2018
 //  OpenSplice V6.4.140320OSS
 //  
 //******************************************************************

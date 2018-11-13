@@ -21,7 +21,7 @@ public:
     void set_date_of_birth(long seconds) { date_of_birth = seconds; } 
     long get_date_of_birth() { return date_of_birth; }
     void set_number_of_highest_post(unsigned long long posts) { number_of_highest_post = posts; }
-    unsigned long long get_number_of_highest_post();
+    unsigned long long get_number_of_highest_post() { return number_of_highest_post; }
     void set_post(std::vector<Post> post);
     std::vector<Post> get_post() { return user_posts; }
     void set_user_information();
