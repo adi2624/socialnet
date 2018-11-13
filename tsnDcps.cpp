@@ -4,13 +4,16 @@
 //  
 //  File name: tsnDcps.cpp
 //  Source: tsnDcps.idl
-//  Generated: Mon Nov 12 18:24:01 2018
-//  OpenSplice V6.4.140320OSS
+//  Generated: Tue Nov 13 13:09:09 2018
+//  OpenSplice 6.7.180404OSS
 //  
 //******************************************************************
 
 #include "tsnDcps.h"
 
+#if DDS_USE_EXPLICIT_TEMPLATES
+template class DDS_DCPSUVLSeq < TSN::private_message, struct private_messageSeq_uniq_>;
+#endif
 #if DDS_USE_EXPLICIT_TEMPLATES
 template class DDS_DCPSUVLSeq < TSN::response, struct responseSeq_uniq_>;
 #endif
@@ -545,6 +548,182 @@ TSN::responseDataReaderView_ptr TSN::responseDataReaderView::_unchecked_narrow (
 {
    TSN::responseDataReaderView_ptr result;
    result = dynamic_cast < TSN::responseDataReaderView_ptr> (p);
+   if (result) result->m_count++;
+   return result;
+}
+
+const char * TSN::private_messageTypeSupportInterface::_local_id = "IDL:TSN/private_messageTypeSupportInterface:1.0";
+
+TSN::private_messageTypeSupportInterface_ptr TSN::private_messageTypeSupportInterface::_duplicate (TSN::private_messageTypeSupportInterface_ptr p)
+{
+   if (p) p->m_count++;
+   return p;
+}
+
+DDS::Boolean TSN::private_messageTypeSupportInterface::_local_is_a (const char * _id)
+{
+   if (strcmp (_id, TSN::private_messageTypeSupportInterface::_local_id) == 0)
+   {
+      return true;
+   }
+
+   typedef DDS::TypeSupport NestedBase_1;
+
+   if (NestedBase_1::_local_is_a (_id))
+   {
+      return true;
+   }
+
+   return false;
+}
+
+TSN::private_messageTypeSupportInterface_ptr TSN::private_messageTypeSupportInterface::_narrow (DDS::Object_ptr p)
+{
+   TSN::private_messageTypeSupportInterface_ptr result = NULL;
+   if (p && p->_is_a (TSN::private_messageTypeSupportInterface::_local_id))
+   {
+      result = dynamic_cast < TSN::private_messageTypeSupportInterface_ptr> (p);
+      if (result) result->m_count++;
+   }
+   return result;
+}
+
+TSN::private_messageTypeSupportInterface_ptr TSN::private_messageTypeSupportInterface::_unchecked_narrow (DDS::Object_ptr p)
+{
+   TSN::private_messageTypeSupportInterface_ptr result;
+   result = dynamic_cast < TSN::private_messageTypeSupportInterface_ptr> (p);
+   if (result) result->m_count++;
+   return result;
+}
+
+const char * TSN::private_messageDataWriter::_local_id = "IDL:TSN/private_messageDataWriter:1.0";
+
+TSN::private_messageDataWriter_ptr TSN::private_messageDataWriter::_duplicate (TSN::private_messageDataWriter_ptr p)
+{
+   if (p) p->m_count++;
+   return p;
+}
+
+DDS::Boolean TSN::private_messageDataWriter::_local_is_a (const char * _id)
+{
+   if (strcmp (_id, TSN::private_messageDataWriter::_local_id) == 0)
+   {
+      return true;
+   }
+
+   typedef DDS::DataWriter NestedBase_1;
+
+   if (NestedBase_1::_local_is_a (_id))
+   {
+      return true;
+   }
+
+   return false;
+}
+
+TSN::private_messageDataWriter_ptr TSN::private_messageDataWriter::_narrow (DDS::Object_ptr p)
+{
+   TSN::private_messageDataWriter_ptr result = NULL;
+   if (p && p->_is_a (TSN::private_messageDataWriter::_local_id))
+   {
+      result = dynamic_cast < TSN::private_messageDataWriter_ptr> (p);
+      if (result) result->m_count++;
+   }
+   return result;
+}
+
+TSN::private_messageDataWriter_ptr TSN::private_messageDataWriter::_unchecked_narrow (DDS::Object_ptr p)
+{
+   TSN::private_messageDataWriter_ptr result;
+   result = dynamic_cast < TSN::private_messageDataWriter_ptr> (p);
+   if (result) result->m_count++;
+   return result;
+}
+
+const char * TSN::private_messageDataReader::_local_id = "IDL:TSN/private_messageDataReader:1.0";
+
+TSN::private_messageDataReader_ptr TSN::private_messageDataReader::_duplicate (TSN::private_messageDataReader_ptr p)
+{
+   if (p) p->m_count++;
+   return p;
+}
+
+DDS::Boolean TSN::private_messageDataReader::_local_is_a (const char * _id)
+{
+   if (strcmp (_id, TSN::private_messageDataReader::_local_id) == 0)
+   {
+      return true;
+   }
+
+   typedef DDS::DataReader NestedBase_1;
+
+   if (NestedBase_1::_local_is_a (_id))
+   {
+      return true;
+   }
+
+   return false;
+}
+
+TSN::private_messageDataReader_ptr TSN::private_messageDataReader::_narrow (DDS::Object_ptr p)
+{
+   TSN::private_messageDataReader_ptr result = NULL;
+   if (p && p->_is_a (TSN::private_messageDataReader::_local_id))
+   {
+      result = dynamic_cast < TSN::private_messageDataReader_ptr> (p);
+      if (result) result->m_count++;
+   }
+   return result;
+}
+
+TSN::private_messageDataReader_ptr TSN::private_messageDataReader::_unchecked_narrow (DDS::Object_ptr p)
+{
+   TSN::private_messageDataReader_ptr result;
+   result = dynamic_cast < TSN::private_messageDataReader_ptr> (p);
+   if (result) result->m_count++;
+   return result;
+}
+
+const char * TSN::private_messageDataReaderView::_local_id = "IDL:TSN/private_messageDataReaderView:1.0";
+
+TSN::private_messageDataReaderView_ptr TSN::private_messageDataReaderView::_duplicate (TSN::private_messageDataReaderView_ptr p)
+{
+   if (p) p->m_count++;
+   return p;
+}
+
+DDS::Boolean TSN::private_messageDataReaderView::_local_is_a (const char * _id)
+{
+   if (strcmp (_id, TSN::private_messageDataReaderView::_local_id) == 0)
+   {
+      return true;
+   }
+
+   typedef DDS::DataReaderView NestedBase_1;
+
+   if (NestedBase_1::_local_is_a (_id))
+   {
+      return true;
+   }
+
+   return false;
+}
+
+TSN::private_messageDataReaderView_ptr TSN::private_messageDataReaderView::_narrow (DDS::Object_ptr p)
+{
+   TSN::private_messageDataReaderView_ptr result = NULL;
+   if (p && p->_is_a (TSN::private_messageDataReaderView::_local_id))
+   {
+      result = dynamic_cast < TSN::private_messageDataReaderView_ptr> (p);
+      if (result) result->m_count++;
+   }
+   return result;
+}
+
+TSN::private_messageDataReaderView_ptr TSN::private_messageDataReaderView::_unchecked_narrow (DDS::Object_ptr p)
+{
+   TSN::private_messageDataReaderView_ptr result;
+   result = dynamic_cast < TSN::private_messageDataReaderView_ptr> (p);
    if (result) result->m_count++;
    return result;
 }

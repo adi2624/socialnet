@@ -3,127 +3,132 @@
 
 #include "ccpp.h"
 #include "ccpp_tsn.h"
-#include "ccpp_TypeSupport_impl.h"
-#include "ccpp_DataWriter_impl.h"
-#include "ccpp_DataReader_impl.h"
-#include "ccpp_DataReaderView_impl.h"
+#include "TypeSupportMetaHolder.h"
+#include "TypeSupport.h"
+#include "FooDataWriter_impl.h"
+#include "FooDataReader_impl.h"
+#include "FooDataReaderView_impl.h"
 
 
 namespace TSN {
 
-    class  user_informationTypeSupportFactory : public ::DDS::TypeSupportFactory_impl
+    class  user_informationTypeSupportMetaHolder : public ::DDS::OpenSplice::TypeSupportMetaHolder
     {
     public:
-        user_informationTypeSupportFactory() {}
-        virtual ~user_informationTypeSupportFactory() {}
+        user_informationTypeSupportMetaHolder ();
+        virtual ~user_informationTypeSupportMetaHolder ();
+    
     private:
-        ::DDS::DataWriter_ptr
-        create_datawriter (gapi_dataWriter handle);
+        ::DDS::OpenSplice::DataWriter * create_datawriter ();
     
-        ::DDS::DataReader_ptr
-        create_datareader (gapi_dataReader handle);
+        ::DDS::OpenSplice::DataReader * create_datareader ();
     
-        ::DDS::DataReaderView_ptr
-        create_view (gapi_dataReaderView handle);
+        ::DDS::OpenSplice::DataReaderView * create_view ();
     };
     
     class  user_informationTypeSupport : public virtual user_informationTypeSupportInterface,
-                                   public ::DDS::TypeSupport_impl
+                                                       public ::DDS::OpenSplice::TypeSupport
     {
     public:
-        virtual ::DDS::ReturnCode_t register_type(
-            ::DDS::DomainParticipant_ptr participant,
-            const char * type_name) THROW_ORB_EXCEPTIONS;
+        user_informationTypeSupport ();
     
-        virtual char * get_type_name() THROW_ORB_EXCEPTIONS;
-    
-        user_informationTypeSupport (void);
-        virtual ~user_informationTypeSupport (void);
+        virtual ~user_informationTypeSupport ();
     
     private:
         user_informationTypeSupport (const user_informationTypeSupport &);
-        void operator= (const user_informationTypeSupport &);
     
-        static const char *metaDescriptor[];
-        static const ::DDS::ULong metaDescriptorArrLength;
+        void operator= (const user_informationTypeSupport &);
     };
     
     typedef user_informationTypeSupportInterface_var user_informationTypeSupport_var;
     typedef user_informationTypeSupportInterface_ptr user_informationTypeSupport_ptr;
     
     class  user_informationDataWriter_impl : public virtual user_informationDataWriter,
-                                        public ::DDS::DataWriter_impl
+                                                           public ::DDS::OpenSplice::FooDataWriter_impl
     {
-    public:
+        friend class DDS::OpenSplice::Publisher;
+        friend class user_informationTypeSupportMetaHolder;
     
-        virtual ::DDS::InstanceHandle_t register_instance(
+    public:
+        virtual ::DDS::InstanceHandle_t register_instance (
             const user_information & instance_data) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::InstanceHandle_t register_instance_w_timestamp(
+        virtual ::DDS::InstanceHandle_t register_instance_w_timestamp (
             const user_information & instance_data,
             const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t unregister_instance(
+        virtual ::DDS::ReturnCode_t unregister_instance (
             const user_information & instance_data,
             ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t unregister_instance_w_timestamp(
+        virtual ::DDS::ReturnCode_t unregister_instance_w_timestamp (
             const user_information & instance_data,
             ::DDS::InstanceHandle_t handle,
             const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t write(
+        virtual ::DDS::ReturnCode_t write (
             const user_information & instance_data,
             ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t write_w_timestamp(
+        virtual ::DDS::ReturnCode_t write_w_timestamp (
             const user_information & instance_data,
             ::DDS::InstanceHandle_t handle,
             const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t dispose(
+        virtual ::DDS::ReturnCode_t dispose (
             const user_information & instance_data,
             ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t dispose_w_timestamp(
+        virtual ::DDS::ReturnCode_t dispose_w_timestamp (
             const user_information & instance_data,
             ::DDS::InstanceHandle_t handle,
             const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t writedispose(
+        virtual ::DDS::ReturnCode_t writedispose (
             const user_information & instance_data,
             ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t writedispose_w_timestamp(
+        virtual ::DDS::ReturnCode_t writedispose_w_timestamp (
             const user_information & instance_data,
             ::DDS::InstanceHandle_t handle,
             const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t get_key_value(
+        virtual ::DDS::ReturnCode_t get_key_value (
             user_information & key_holder,
             ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::InstanceHandle_t lookup_instance(
+        virtual ::DDS::InstanceHandle_t lookup_instance (
             const user_information & instance_data) THROW_ORB_EXCEPTIONS;
     
+    protected:
+        user_informationDataWriter_impl ();
     
-        user_informationDataWriter_impl (
-            gapi_dataWriter handle
-        );
+        virtual ~user_informationDataWriter_impl ();
     
-        virtual ~user_informationDataWriter_impl (void);
+        virtual DDS::ReturnCode_t init (
+                        DDS::OpenSplice::Publisher *publisher,
+                        DDS::OpenSplice::DomainParticipant *participant,
+                        const DDS::DataWriterQos &qos,
+                        DDS::OpenSplice::Topic *a_topic,
+                        const char *name,
+                        DDS::OpenSplice::cxxCopyIn copyIn,
+                        DDS::OpenSplice::cxxCopyOut copyOut);
     
     private:
-        user_informationDataWriter_impl(const user_informationDataWriter_impl &);
+        user_informationDataWriter_impl (const user_informationDataWriter_impl &);
+    
         void operator= (const user_informationDataWriter &);
     };
     
     class  user_informationDataReader_impl : public virtual user_informationDataReader,
-                                        public ::DDS::DataReader_impl
+                                                           public ::DDS::OpenSplice::FooDataReader_impl
     {
+        friend class DDS::OpenSplice::Subscriber;
+        friend class user_informationTypeSupportMetaHolder;
         friend class user_informationDataReaderView_impl;
+    
     public:
-        virtual ::DDS::ReturnCode_t read(
+        virtual ::DDS::ReturnCode_t read (
             user_informationSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -131,7 +136,7 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take(
+        virtual ::DDS::ReturnCode_t take (
             user_informationSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -139,27 +144,27 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_w_condition(
+        virtual ::DDS::ReturnCode_t read_w_condition (
             user_informationSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
             ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_w_condition(
+        virtual ::DDS::ReturnCode_t take_w_condition (
             user_informationSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
             ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_next_sample(
+        virtual ::DDS::ReturnCode_t read_next_sample (
             user_information & received_data,
             ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_next_sample(
+        virtual ::DDS::ReturnCode_t take_next_sample (
             user_information & received_data,
             ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_instance(
+        virtual ::DDS::ReturnCode_t read_instance (
             user_informationSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -168,7 +173,7 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_instance(
+        virtual ::DDS::ReturnCode_t take_instance (
             user_informationSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -177,7 +182,7 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_next_instance(
+        virtual ::DDS::ReturnCode_t read_next_instance (
             user_informationSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -186,7 +191,7 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_next_instance(
+        virtual ::DDS::ReturnCode_t take_next_instance (
             user_informationSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -195,53 +200,79 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_next_instance_w_condition(
+        virtual ::DDS::ReturnCode_t read_next_instance_w_condition (
             user_informationSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
             ::DDS::InstanceHandle_t a_handle,
             ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_next_instance_w_condition(
+        virtual ::DDS::ReturnCode_t take_next_instance_w_condition (
             user_informationSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
             ::DDS::InstanceHandle_t a_handle,
             ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t return_loan(
+        virtual ::DDS::ReturnCode_t return_loan (
             user_informationSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t get_key_value(
+        virtual ::DDS::ReturnCode_t get_key_value (
             user_information & key_holder,
             ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::InstanceHandle_t lookup_instance(
+        virtual ::DDS::InstanceHandle_t lookup_instance (
             const user_information & instance) THROW_ORB_EXCEPTIONS;
     
-        user_informationDataReader_impl (
-            gapi_dataReader handle
-        );
+    protected:
+        user_informationDataReader_impl ();
     
-        virtual ~user_informationDataReader_impl(void);
+        virtual ~user_informationDataReader_impl ();
+    
+        DDS::ReturnCode_t init (
+                DDS::OpenSplice::Subscriber *subscriber,
+                const DDS::DataReaderQos &qos,
+                DDS::OpenSplice::TopicDescription *a_topic,
+                const char *name,
+                DDS::OpenSplice::cxxCopyIn copyIn,
+                DDS::OpenSplice::cxxCopyOut copyOut);
+    
+        static void* dataSeqAlloc (
+            void * data_values,
+            DDS::ULong len);
+    
+        static void dataSeqLength (
+            void * data_values,
+            DDS::ULong len);
+    
+        static void * dataSeqGetBuffer (
+            void * data_values,
+            DDS::ULong index);
+    
+        static void dataSeqCopyOut (
+            const void * from,
+            void * received_data);
+        static void copyDataOut(const void *from, void *to);
     
     private:
-        user_informationDataReader_impl(const user_informationDataReader &);
+        user_informationDataReader_impl (const user_informationDataReader &);
         void operator= (const user_informationDataReader &);
     
-        static ::DDS::ReturnCode_t check_preconditions(
+        static ::DDS::ReturnCode_t check_preconditions (
             user_informationSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
-            ::DDS::Long max_samples
-        );
+            ::DDS::Long max_samples);
     };
     
     class  user_informationDataReaderView_impl : public virtual user_informationDataReaderView,
-                                        public ::DDS::DataReaderView_impl
+                                                               public ::DDS::OpenSplice::FooDataReaderView_impl
     {
+        friend class DDS::OpenSplice::DataReader;
+        friend class user_informationTypeSupportMetaHolder;
+    
     public:
-        virtual ::DDS::ReturnCode_t read(
+        virtual ::DDS::ReturnCode_t read (
             user_informationSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -249,7 +280,7 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take(
+        virtual ::DDS::ReturnCode_t take (
             user_informationSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -257,27 +288,27 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_w_condition(
+        virtual ::DDS::ReturnCode_t read_w_condition (
             user_informationSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
             ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_w_condition(
+        virtual ::DDS::ReturnCode_t take_w_condition (
             user_informationSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
             ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_next_sample(
+        virtual ::DDS::ReturnCode_t read_next_sample (
             user_information & received_data,
             ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_next_sample(
+        virtual ::DDS::ReturnCode_t take_next_sample (
             user_information & received_data,
             ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_instance(
+        virtual ::DDS::ReturnCode_t read_instance (
             user_informationSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -286,7 +317,7 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_instance(
+        virtual ::DDS::ReturnCode_t take_instance (
             user_informationSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -295,7 +326,7 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_next_instance(
+        virtual ::DDS::ReturnCode_t read_next_instance (
             user_informationSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -304,7 +335,7 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_next_instance(
+        virtual ::DDS::ReturnCode_t take_next_instance (
             user_informationSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -313,155 +344,166 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_next_instance_w_condition(
+        virtual ::DDS::ReturnCode_t read_next_instance_w_condition (
             user_informationSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
             ::DDS::InstanceHandle_t a_handle,
             ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_next_instance_w_condition(
+        virtual ::DDS::ReturnCode_t take_next_instance_w_condition (
             user_informationSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
             ::DDS::InstanceHandle_t a_handle,
             ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t return_loan(
+        virtual ::DDS::ReturnCode_t return_loan (
             user_informationSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t get_key_value(
+        virtual ::DDS::ReturnCode_t get_key_value (
             user_information & key_holder,
             ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::InstanceHandle_t lookup_instance(
+        virtual ::DDS::InstanceHandle_t lookup_instance (
             const user_information & instance) THROW_ORB_EXCEPTIONS;
     
-        user_informationDataReaderView_impl (
-            gapi_dataReader handle
-        );
+    protected:
+        user_informationDataReaderView_impl ();
     
-        virtual ~user_informationDataReaderView_impl(void);
+        virtual ~user_informationDataReaderView_impl ();
+    
+        virtual DDS::ReturnCode_t init (
+            DDS::OpenSplice::DataReader *reader,
+            const char *name,
+            const DDS::DataReaderViewQos &qos,
+            DDS::OpenSplice::cxxCopyIn copyIn,
+            DDS::OpenSplice::cxxCopyOut copyOut);
     
     private:
-        user_informationDataReaderView_impl(const user_informationDataReaderView &);
+        user_informationDataReaderView_impl (const user_informationDataReaderView &);
+    
         void operator= (const user_informationDataReaderView &);
     };
     
-    class  requestTypeSupportFactory : public ::DDS::TypeSupportFactory_impl
+    class  requestTypeSupportMetaHolder : public ::DDS::OpenSplice::TypeSupportMetaHolder
     {
     public:
-        requestTypeSupportFactory() {}
-        virtual ~requestTypeSupportFactory() {}
+        requestTypeSupportMetaHolder ();
+        virtual ~requestTypeSupportMetaHolder ();
+    
     private:
-        ::DDS::DataWriter_ptr
-        create_datawriter (gapi_dataWriter handle);
+        ::DDS::OpenSplice::DataWriter * create_datawriter ();
     
-        ::DDS::DataReader_ptr
-        create_datareader (gapi_dataReader handle);
+        ::DDS::OpenSplice::DataReader * create_datareader ();
     
-        ::DDS::DataReaderView_ptr
-        create_view (gapi_dataReaderView handle);
+        ::DDS::OpenSplice::DataReaderView * create_view ();
     };
     
     class  requestTypeSupport : public virtual requestTypeSupportInterface,
-                                   public ::DDS::TypeSupport_impl
+                                                       public ::DDS::OpenSplice::TypeSupport
     {
     public:
-        virtual ::DDS::ReturnCode_t register_type(
-            ::DDS::DomainParticipant_ptr participant,
-            const char * type_name) THROW_ORB_EXCEPTIONS;
+        requestTypeSupport ();
     
-        virtual char * get_type_name() THROW_ORB_EXCEPTIONS;
-    
-        requestTypeSupport (void);
-        virtual ~requestTypeSupport (void);
+        virtual ~requestTypeSupport ();
     
     private:
         requestTypeSupport (const requestTypeSupport &);
-        void operator= (const requestTypeSupport &);
     
-        static const char *metaDescriptor[];
-        static const ::DDS::ULong metaDescriptorArrLength;
+        void operator= (const requestTypeSupport &);
     };
     
     typedef requestTypeSupportInterface_var requestTypeSupport_var;
     typedef requestTypeSupportInterface_ptr requestTypeSupport_ptr;
     
     class  requestDataWriter_impl : public virtual requestDataWriter,
-                                        public ::DDS::DataWriter_impl
+                                                           public ::DDS::OpenSplice::FooDataWriter_impl
     {
-    public:
+        friend class DDS::OpenSplice::Publisher;
+        friend class requestTypeSupportMetaHolder;
     
-        virtual ::DDS::InstanceHandle_t register_instance(
+    public:
+        virtual ::DDS::InstanceHandle_t register_instance (
             const request & instance_data) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::InstanceHandle_t register_instance_w_timestamp(
+        virtual ::DDS::InstanceHandle_t register_instance_w_timestamp (
             const request & instance_data,
             const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t unregister_instance(
+        virtual ::DDS::ReturnCode_t unregister_instance (
             const request & instance_data,
             ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t unregister_instance_w_timestamp(
+        virtual ::DDS::ReturnCode_t unregister_instance_w_timestamp (
             const request & instance_data,
             ::DDS::InstanceHandle_t handle,
             const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t write(
+        virtual ::DDS::ReturnCode_t write (
             const request & instance_data,
             ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t write_w_timestamp(
+        virtual ::DDS::ReturnCode_t write_w_timestamp (
             const request & instance_data,
             ::DDS::InstanceHandle_t handle,
             const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t dispose(
+        virtual ::DDS::ReturnCode_t dispose (
             const request & instance_data,
             ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t dispose_w_timestamp(
+        virtual ::DDS::ReturnCode_t dispose_w_timestamp (
             const request & instance_data,
             ::DDS::InstanceHandle_t handle,
             const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t writedispose(
+        virtual ::DDS::ReturnCode_t writedispose (
             const request & instance_data,
             ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t writedispose_w_timestamp(
+        virtual ::DDS::ReturnCode_t writedispose_w_timestamp (
             const request & instance_data,
             ::DDS::InstanceHandle_t handle,
             const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t get_key_value(
+        virtual ::DDS::ReturnCode_t get_key_value (
             request & key_holder,
             ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::InstanceHandle_t lookup_instance(
+        virtual ::DDS::InstanceHandle_t lookup_instance (
             const request & instance_data) THROW_ORB_EXCEPTIONS;
     
+    protected:
+        requestDataWriter_impl ();
     
-        requestDataWriter_impl (
-            gapi_dataWriter handle
-        );
+        virtual ~requestDataWriter_impl ();
     
-        virtual ~requestDataWriter_impl (void);
+        virtual DDS::ReturnCode_t init (
+                        DDS::OpenSplice::Publisher *publisher,
+                        DDS::OpenSplice::DomainParticipant *participant,
+                        const DDS::DataWriterQos &qos,
+                        DDS::OpenSplice::Topic *a_topic,
+                        const char *name,
+                        DDS::OpenSplice::cxxCopyIn copyIn,
+                        DDS::OpenSplice::cxxCopyOut copyOut);
     
     private:
-        requestDataWriter_impl(const requestDataWriter_impl &);
+        requestDataWriter_impl (const requestDataWriter_impl &);
+    
         void operator= (const requestDataWriter &);
     };
     
     class  requestDataReader_impl : public virtual requestDataReader,
-                                        public ::DDS::DataReader_impl
+                                                           public ::DDS::OpenSplice::FooDataReader_impl
     {
+        friend class DDS::OpenSplice::Subscriber;
+        friend class requestTypeSupportMetaHolder;
         friend class requestDataReaderView_impl;
+    
     public:
-        virtual ::DDS::ReturnCode_t read(
+        virtual ::DDS::ReturnCode_t read (
             requestSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -469,7 +511,7 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take(
+        virtual ::DDS::ReturnCode_t take (
             requestSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -477,27 +519,27 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_w_condition(
+        virtual ::DDS::ReturnCode_t read_w_condition (
             requestSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
             ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_w_condition(
+        virtual ::DDS::ReturnCode_t take_w_condition (
             requestSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
             ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_next_sample(
+        virtual ::DDS::ReturnCode_t read_next_sample (
             request & received_data,
             ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_next_sample(
+        virtual ::DDS::ReturnCode_t take_next_sample (
             request & received_data,
             ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_instance(
+        virtual ::DDS::ReturnCode_t read_instance (
             requestSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -506,7 +548,7 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_instance(
+        virtual ::DDS::ReturnCode_t take_instance (
             requestSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -515,7 +557,7 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_next_instance(
+        virtual ::DDS::ReturnCode_t read_next_instance (
             requestSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -524,7 +566,7 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_next_instance(
+        virtual ::DDS::ReturnCode_t take_next_instance (
             requestSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -533,53 +575,79 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_next_instance_w_condition(
+        virtual ::DDS::ReturnCode_t read_next_instance_w_condition (
             requestSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
             ::DDS::InstanceHandle_t a_handle,
             ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_next_instance_w_condition(
+        virtual ::DDS::ReturnCode_t take_next_instance_w_condition (
             requestSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
             ::DDS::InstanceHandle_t a_handle,
             ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t return_loan(
+        virtual ::DDS::ReturnCode_t return_loan (
             requestSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t get_key_value(
+        virtual ::DDS::ReturnCode_t get_key_value (
             request & key_holder,
             ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::InstanceHandle_t lookup_instance(
+        virtual ::DDS::InstanceHandle_t lookup_instance (
             const request & instance) THROW_ORB_EXCEPTIONS;
     
-        requestDataReader_impl (
-            gapi_dataReader handle
-        );
+    protected:
+        requestDataReader_impl ();
     
-        virtual ~requestDataReader_impl(void);
+        virtual ~requestDataReader_impl ();
+    
+        DDS::ReturnCode_t init (
+                DDS::OpenSplice::Subscriber *subscriber,
+                const DDS::DataReaderQos &qos,
+                DDS::OpenSplice::TopicDescription *a_topic,
+                const char *name,
+                DDS::OpenSplice::cxxCopyIn copyIn,
+                DDS::OpenSplice::cxxCopyOut copyOut);
+    
+        static void* dataSeqAlloc (
+            void * data_values,
+            DDS::ULong len);
+    
+        static void dataSeqLength (
+            void * data_values,
+            DDS::ULong len);
+    
+        static void * dataSeqGetBuffer (
+            void * data_values,
+            DDS::ULong index);
+    
+        static void dataSeqCopyOut (
+            const void * from,
+            void * received_data);
+        static void copyDataOut(const void *from, void *to);
     
     private:
-        requestDataReader_impl(const requestDataReader &);
+        requestDataReader_impl (const requestDataReader &);
         void operator= (const requestDataReader &);
     
-        static ::DDS::ReturnCode_t check_preconditions(
+        static ::DDS::ReturnCode_t check_preconditions (
             requestSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
-            ::DDS::Long max_samples
-        );
+            ::DDS::Long max_samples);
     };
     
     class  requestDataReaderView_impl : public virtual requestDataReaderView,
-                                        public ::DDS::DataReaderView_impl
+                                                               public ::DDS::OpenSplice::FooDataReaderView_impl
     {
+        friend class DDS::OpenSplice::DataReader;
+        friend class requestTypeSupportMetaHolder;
+    
     public:
-        virtual ::DDS::ReturnCode_t read(
+        virtual ::DDS::ReturnCode_t read (
             requestSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -587,7 +655,7 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take(
+        virtual ::DDS::ReturnCode_t take (
             requestSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -595,27 +663,27 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_w_condition(
+        virtual ::DDS::ReturnCode_t read_w_condition (
             requestSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
             ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_w_condition(
+        virtual ::DDS::ReturnCode_t take_w_condition (
             requestSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
             ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_next_sample(
+        virtual ::DDS::ReturnCode_t read_next_sample (
             request & received_data,
             ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_next_sample(
+        virtual ::DDS::ReturnCode_t take_next_sample (
             request & received_data,
             ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_instance(
+        virtual ::DDS::ReturnCode_t read_instance (
             requestSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -624,7 +692,7 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_instance(
+        virtual ::DDS::ReturnCode_t take_instance (
             requestSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -633,7 +701,7 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_next_instance(
+        virtual ::DDS::ReturnCode_t read_next_instance (
             requestSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -642,7 +710,7 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_next_instance(
+        virtual ::DDS::ReturnCode_t take_next_instance (
             requestSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -651,155 +719,166 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_next_instance_w_condition(
+        virtual ::DDS::ReturnCode_t read_next_instance_w_condition (
             requestSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
             ::DDS::InstanceHandle_t a_handle,
             ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_next_instance_w_condition(
+        virtual ::DDS::ReturnCode_t take_next_instance_w_condition (
             requestSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
             ::DDS::InstanceHandle_t a_handle,
             ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t return_loan(
+        virtual ::DDS::ReturnCode_t return_loan (
             requestSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t get_key_value(
+        virtual ::DDS::ReturnCode_t get_key_value (
             request & key_holder,
             ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::InstanceHandle_t lookup_instance(
+        virtual ::DDS::InstanceHandle_t lookup_instance (
             const request & instance) THROW_ORB_EXCEPTIONS;
     
-        requestDataReaderView_impl (
-            gapi_dataReader handle
-        );
+    protected:
+        requestDataReaderView_impl ();
     
-        virtual ~requestDataReaderView_impl(void);
+        virtual ~requestDataReaderView_impl ();
+    
+        virtual DDS::ReturnCode_t init (
+            DDS::OpenSplice::DataReader *reader,
+            const char *name,
+            const DDS::DataReaderViewQos &qos,
+            DDS::OpenSplice::cxxCopyIn copyIn,
+            DDS::OpenSplice::cxxCopyOut copyOut);
     
     private:
-        requestDataReaderView_impl(const requestDataReaderView &);
+        requestDataReaderView_impl (const requestDataReaderView &);
+    
         void operator= (const requestDataReaderView &);
     };
     
-    class  responseTypeSupportFactory : public ::DDS::TypeSupportFactory_impl
+    class  responseTypeSupportMetaHolder : public ::DDS::OpenSplice::TypeSupportMetaHolder
     {
     public:
-        responseTypeSupportFactory() {}
-        virtual ~responseTypeSupportFactory() {}
+        responseTypeSupportMetaHolder ();
+        virtual ~responseTypeSupportMetaHolder ();
+    
     private:
-        ::DDS::DataWriter_ptr
-        create_datawriter (gapi_dataWriter handle);
+        ::DDS::OpenSplice::DataWriter * create_datawriter ();
     
-        ::DDS::DataReader_ptr
-        create_datareader (gapi_dataReader handle);
+        ::DDS::OpenSplice::DataReader * create_datareader ();
     
-        ::DDS::DataReaderView_ptr
-        create_view (gapi_dataReaderView handle);
+        ::DDS::OpenSplice::DataReaderView * create_view ();
     };
     
     class  responseTypeSupport : public virtual responseTypeSupportInterface,
-                                   public ::DDS::TypeSupport_impl
+                                                       public ::DDS::OpenSplice::TypeSupport
     {
     public:
-        virtual ::DDS::ReturnCode_t register_type(
-            ::DDS::DomainParticipant_ptr participant,
-            const char * type_name) THROW_ORB_EXCEPTIONS;
+        responseTypeSupport ();
     
-        virtual char * get_type_name() THROW_ORB_EXCEPTIONS;
-    
-        responseTypeSupport (void);
-        virtual ~responseTypeSupport (void);
+        virtual ~responseTypeSupport ();
     
     private:
         responseTypeSupport (const responseTypeSupport &);
-        void operator= (const responseTypeSupport &);
     
-        static const char *metaDescriptor[];
-        static const ::DDS::ULong metaDescriptorArrLength;
+        void operator= (const responseTypeSupport &);
     };
     
     typedef responseTypeSupportInterface_var responseTypeSupport_var;
     typedef responseTypeSupportInterface_ptr responseTypeSupport_ptr;
     
     class  responseDataWriter_impl : public virtual responseDataWriter,
-                                        public ::DDS::DataWriter_impl
+                                                           public ::DDS::OpenSplice::FooDataWriter_impl
     {
-    public:
+        friend class DDS::OpenSplice::Publisher;
+        friend class responseTypeSupportMetaHolder;
     
-        virtual ::DDS::InstanceHandle_t register_instance(
+    public:
+        virtual ::DDS::InstanceHandle_t register_instance (
             const response & instance_data) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::InstanceHandle_t register_instance_w_timestamp(
+        virtual ::DDS::InstanceHandle_t register_instance_w_timestamp (
             const response & instance_data,
             const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t unregister_instance(
+        virtual ::DDS::ReturnCode_t unregister_instance (
             const response & instance_data,
             ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t unregister_instance_w_timestamp(
+        virtual ::DDS::ReturnCode_t unregister_instance_w_timestamp (
             const response & instance_data,
             ::DDS::InstanceHandle_t handle,
             const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t write(
+        virtual ::DDS::ReturnCode_t write (
             const response & instance_data,
             ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t write_w_timestamp(
+        virtual ::DDS::ReturnCode_t write_w_timestamp (
             const response & instance_data,
             ::DDS::InstanceHandle_t handle,
             const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t dispose(
+        virtual ::DDS::ReturnCode_t dispose (
             const response & instance_data,
             ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t dispose_w_timestamp(
+        virtual ::DDS::ReturnCode_t dispose_w_timestamp (
             const response & instance_data,
             ::DDS::InstanceHandle_t handle,
             const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t writedispose(
+        virtual ::DDS::ReturnCode_t writedispose (
             const response & instance_data,
             ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t writedispose_w_timestamp(
+        virtual ::DDS::ReturnCode_t writedispose_w_timestamp (
             const response & instance_data,
             ::DDS::InstanceHandle_t handle,
             const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t get_key_value(
+        virtual ::DDS::ReturnCode_t get_key_value (
             response & key_holder,
             ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::InstanceHandle_t lookup_instance(
+        virtual ::DDS::InstanceHandle_t lookup_instance (
             const response & instance_data) THROW_ORB_EXCEPTIONS;
     
+    protected:
+        responseDataWriter_impl ();
     
-        responseDataWriter_impl (
-            gapi_dataWriter handle
-        );
+        virtual ~responseDataWriter_impl ();
     
-        virtual ~responseDataWriter_impl (void);
+        virtual DDS::ReturnCode_t init (
+                        DDS::OpenSplice::Publisher *publisher,
+                        DDS::OpenSplice::DomainParticipant *participant,
+                        const DDS::DataWriterQos &qos,
+                        DDS::OpenSplice::Topic *a_topic,
+                        const char *name,
+                        DDS::OpenSplice::cxxCopyIn copyIn,
+                        DDS::OpenSplice::cxxCopyOut copyOut);
     
     private:
-        responseDataWriter_impl(const responseDataWriter_impl &);
+        responseDataWriter_impl (const responseDataWriter_impl &);
+    
         void operator= (const responseDataWriter &);
     };
     
     class  responseDataReader_impl : public virtual responseDataReader,
-                                        public ::DDS::DataReader_impl
+                                                           public ::DDS::OpenSplice::FooDataReader_impl
     {
+        friend class DDS::OpenSplice::Subscriber;
+        friend class responseTypeSupportMetaHolder;
         friend class responseDataReaderView_impl;
+    
     public:
-        virtual ::DDS::ReturnCode_t read(
+        virtual ::DDS::ReturnCode_t read (
             responseSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -807,7 +886,7 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take(
+        virtual ::DDS::ReturnCode_t take (
             responseSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -815,27 +894,27 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_w_condition(
+        virtual ::DDS::ReturnCode_t read_w_condition (
             responseSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
             ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_w_condition(
+        virtual ::DDS::ReturnCode_t take_w_condition (
             responseSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
             ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_next_sample(
+        virtual ::DDS::ReturnCode_t read_next_sample (
             response & received_data,
             ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_next_sample(
+        virtual ::DDS::ReturnCode_t take_next_sample (
             response & received_data,
             ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_instance(
+        virtual ::DDS::ReturnCode_t read_instance (
             responseSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -844,7 +923,7 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_instance(
+        virtual ::DDS::ReturnCode_t take_instance (
             responseSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -853,7 +932,7 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_next_instance(
+        virtual ::DDS::ReturnCode_t read_next_instance (
             responseSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -862,7 +941,7 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_next_instance(
+        virtual ::DDS::ReturnCode_t take_next_instance (
             responseSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -871,53 +950,79 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_next_instance_w_condition(
+        virtual ::DDS::ReturnCode_t read_next_instance_w_condition (
             responseSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
             ::DDS::InstanceHandle_t a_handle,
             ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_next_instance_w_condition(
+        virtual ::DDS::ReturnCode_t take_next_instance_w_condition (
             responseSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
             ::DDS::InstanceHandle_t a_handle,
             ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t return_loan(
+        virtual ::DDS::ReturnCode_t return_loan (
             responseSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t get_key_value(
+        virtual ::DDS::ReturnCode_t get_key_value (
             response & key_holder,
             ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::InstanceHandle_t lookup_instance(
+        virtual ::DDS::InstanceHandle_t lookup_instance (
             const response & instance) THROW_ORB_EXCEPTIONS;
     
-        responseDataReader_impl (
-            gapi_dataReader handle
-        );
+    protected:
+        responseDataReader_impl ();
     
-        virtual ~responseDataReader_impl(void);
+        virtual ~responseDataReader_impl ();
+    
+        DDS::ReturnCode_t init (
+                DDS::OpenSplice::Subscriber *subscriber,
+                const DDS::DataReaderQos &qos,
+                DDS::OpenSplice::TopicDescription *a_topic,
+                const char *name,
+                DDS::OpenSplice::cxxCopyIn copyIn,
+                DDS::OpenSplice::cxxCopyOut copyOut);
+    
+        static void* dataSeqAlloc (
+            void * data_values,
+            DDS::ULong len);
+    
+        static void dataSeqLength (
+            void * data_values,
+            DDS::ULong len);
+    
+        static void * dataSeqGetBuffer (
+            void * data_values,
+            DDS::ULong index);
+    
+        static void dataSeqCopyOut (
+            const void * from,
+            void * received_data);
+        static void copyDataOut(const void *from, void *to);
     
     private:
-        responseDataReader_impl(const responseDataReader &);
+        responseDataReader_impl (const responseDataReader &);
         void operator= (const responseDataReader &);
     
-        static ::DDS::ReturnCode_t check_preconditions(
+        static ::DDS::ReturnCode_t check_preconditions (
             responseSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
-            ::DDS::Long max_samples
-        );
+            ::DDS::Long max_samples);
     };
     
     class  responseDataReaderView_impl : public virtual responseDataReaderView,
-                                        public ::DDS::DataReaderView_impl
+                                                               public ::DDS::OpenSplice::FooDataReaderView_impl
     {
+        friend class DDS::OpenSplice::DataReader;
+        friend class responseTypeSupportMetaHolder;
+    
     public:
-        virtual ::DDS::ReturnCode_t read(
+        virtual ::DDS::ReturnCode_t read (
             responseSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -925,7 +1030,7 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take(
+        virtual ::DDS::ReturnCode_t take (
             responseSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -933,27 +1038,27 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_w_condition(
+        virtual ::DDS::ReturnCode_t read_w_condition (
             responseSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
             ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_w_condition(
+        virtual ::DDS::ReturnCode_t take_w_condition (
             responseSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
             ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_next_sample(
+        virtual ::DDS::ReturnCode_t read_next_sample (
             response & received_data,
             ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_next_sample(
+        virtual ::DDS::ReturnCode_t take_next_sample (
             response & received_data,
             ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_instance(
+        virtual ::DDS::ReturnCode_t read_instance (
             responseSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -962,7 +1067,7 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_instance(
+        virtual ::DDS::ReturnCode_t take_instance (
             responseSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -971,7 +1076,7 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_next_instance(
+        virtual ::DDS::ReturnCode_t read_next_instance (
             responseSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -980,7 +1085,7 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_next_instance(
+        virtual ::DDS::ReturnCode_t take_next_instance (
             responseSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
@@ -989,42 +1094,425 @@ namespace TSN {
             ::DDS::ViewStateMask view_states,
             ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t read_next_instance_w_condition(
+        virtual ::DDS::ReturnCode_t read_next_instance_w_condition (
             responseSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
             ::DDS::InstanceHandle_t a_handle,
             ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t take_next_instance_w_condition(
+        virtual ::DDS::ReturnCode_t take_next_instance_w_condition (
             responseSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq,
             ::DDS::Long max_samples,
             ::DDS::InstanceHandle_t a_handle,
             ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t return_loan(
+        virtual ::DDS::ReturnCode_t return_loan (
             responseSeq & received_data,
             ::DDS::SampleInfoSeq & info_seq) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::ReturnCode_t get_key_value(
+        virtual ::DDS::ReturnCode_t get_key_value (
             response & key_holder,
             ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
     
-        virtual ::DDS::InstanceHandle_t lookup_instance(
+        virtual ::DDS::InstanceHandle_t lookup_instance (
             const response & instance) THROW_ORB_EXCEPTIONS;
     
-        responseDataReaderView_impl (
-            gapi_dataReader handle
-        );
+    protected:
+        responseDataReaderView_impl ();
     
-        virtual ~responseDataReaderView_impl(void);
+        virtual ~responseDataReaderView_impl ();
+    
+        virtual DDS::ReturnCode_t init (
+            DDS::OpenSplice::DataReader *reader,
+            const char *name,
+            const DDS::DataReaderViewQos &qos,
+            DDS::OpenSplice::cxxCopyIn copyIn,
+            DDS::OpenSplice::cxxCopyOut copyOut);
     
     private:
-        responseDataReaderView_impl(const responseDataReaderView &);
+        responseDataReaderView_impl (const responseDataReaderView &);
+    
         void operator= (const responseDataReaderView &);
+    };
+    
+    class  private_messageTypeSupportMetaHolder : public ::DDS::OpenSplice::TypeSupportMetaHolder
+    {
+    public:
+        private_messageTypeSupportMetaHolder ();
+        virtual ~private_messageTypeSupportMetaHolder ();
+    
+    private:
+        ::DDS::OpenSplice::DataWriter * create_datawriter ();
+    
+        ::DDS::OpenSplice::DataReader * create_datareader ();
+    
+        ::DDS::OpenSplice::DataReaderView * create_view ();
+    };
+    
+    class  private_messageTypeSupport : public virtual private_messageTypeSupportInterface,
+                                                       public ::DDS::OpenSplice::TypeSupport
+    {
+    public:
+        private_messageTypeSupport ();
+    
+        virtual ~private_messageTypeSupport ();
+    
+    private:
+        private_messageTypeSupport (const private_messageTypeSupport &);
+    
+        void operator= (const private_messageTypeSupport &);
+    };
+    
+    typedef private_messageTypeSupportInterface_var private_messageTypeSupport_var;
+    typedef private_messageTypeSupportInterface_ptr private_messageTypeSupport_ptr;
+    
+    class  private_messageDataWriter_impl : public virtual private_messageDataWriter,
+                                                           public ::DDS::OpenSplice::FooDataWriter_impl
+    {
+        friend class DDS::OpenSplice::Publisher;
+        friend class private_messageTypeSupportMetaHolder;
+    
+    public:
+        virtual ::DDS::InstanceHandle_t register_instance (
+            const private_message & instance_data) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::InstanceHandle_t register_instance_w_timestamp (
+            const private_message & instance_data,
+            const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t unregister_instance (
+            const private_message & instance_data,
+            ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t unregister_instance_w_timestamp (
+            const private_message & instance_data,
+            ::DDS::InstanceHandle_t handle,
+            const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t write (
+            const private_message & instance_data,
+            ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t write_w_timestamp (
+            const private_message & instance_data,
+            ::DDS::InstanceHandle_t handle,
+            const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t dispose (
+            const private_message & instance_data,
+            ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t dispose_w_timestamp (
+            const private_message & instance_data,
+            ::DDS::InstanceHandle_t handle,
+            const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t writedispose (
+            const private_message & instance_data,
+            ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t writedispose_w_timestamp (
+            const private_message & instance_data,
+            ::DDS::InstanceHandle_t handle,
+            const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t get_key_value (
+            private_message & key_holder,
+            ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::InstanceHandle_t lookup_instance (
+            const private_message & instance_data) THROW_ORB_EXCEPTIONS;
+    
+    protected:
+        private_messageDataWriter_impl ();
+    
+        virtual ~private_messageDataWriter_impl ();
+    
+        virtual DDS::ReturnCode_t init (
+                        DDS::OpenSplice::Publisher *publisher,
+                        DDS::OpenSplice::DomainParticipant *participant,
+                        const DDS::DataWriterQos &qos,
+                        DDS::OpenSplice::Topic *a_topic,
+                        const char *name,
+                        DDS::OpenSplice::cxxCopyIn copyIn,
+                        DDS::OpenSplice::cxxCopyOut copyOut);
+    
+    private:
+        private_messageDataWriter_impl (const private_messageDataWriter_impl &);
+    
+        void operator= (const private_messageDataWriter &);
+    };
+    
+    class  private_messageDataReader_impl : public virtual private_messageDataReader,
+                                                           public ::DDS::OpenSplice::FooDataReader_impl
+    {
+        friend class DDS::OpenSplice::Subscriber;
+        friend class private_messageTypeSupportMetaHolder;
+        friend class private_messageDataReaderView_impl;
+    
+    public:
+        virtual ::DDS::ReturnCode_t read (
+            private_messageSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::SampleStateMask sample_states,
+            ::DDS::ViewStateMask view_states,
+            ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t take (
+            private_messageSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::SampleStateMask sample_states,
+            ::DDS::ViewStateMask view_states,
+            ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t read_w_condition (
+            private_messageSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t take_w_condition (
+            private_messageSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t read_next_sample (
+            private_message & received_data,
+            ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t take_next_sample (
+            private_message & received_data,
+            ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t read_instance (
+            private_messageSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::InstanceHandle_t a_handle,
+            ::DDS::SampleStateMask sample_states,
+            ::DDS::ViewStateMask view_states,
+            ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t take_instance (
+            private_messageSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::InstanceHandle_t a_handle,
+            ::DDS::SampleStateMask sample_states,
+            ::DDS::ViewStateMask view_states,
+            ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t read_next_instance (
+            private_messageSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::InstanceHandle_t a_handle,
+            ::DDS::SampleStateMask sample_states,
+            ::DDS::ViewStateMask view_states,
+            ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t take_next_instance (
+            private_messageSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::InstanceHandle_t a_handle,
+            ::DDS::SampleStateMask sample_states,
+            ::DDS::ViewStateMask view_states,
+            ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t read_next_instance_w_condition (
+            private_messageSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::InstanceHandle_t a_handle,
+            ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t take_next_instance_w_condition (
+            private_messageSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::InstanceHandle_t a_handle,
+            ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t return_loan (
+            private_messageSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t get_key_value (
+            private_message & key_holder,
+            ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::InstanceHandle_t lookup_instance (
+            const private_message & instance) THROW_ORB_EXCEPTIONS;
+    
+    protected:
+        private_messageDataReader_impl ();
+    
+        virtual ~private_messageDataReader_impl ();
+    
+        DDS::ReturnCode_t init (
+                DDS::OpenSplice::Subscriber *subscriber,
+                const DDS::DataReaderQos &qos,
+                DDS::OpenSplice::TopicDescription *a_topic,
+                const char *name,
+                DDS::OpenSplice::cxxCopyIn copyIn,
+                DDS::OpenSplice::cxxCopyOut copyOut);
+    
+        static void* dataSeqAlloc (
+            void * data_values,
+            DDS::ULong len);
+    
+        static void dataSeqLength (
+            void * data_values,
+            DDS::ULong len);
+    
+        static void * dataSeqGetBuffer (
+            void * data_values,
+            DDS::ULong index);
+    
+        static void dataSeqCopyOut (
+            const void * from,
+            void * received_data);
+        static void copyDataOut(const void *from, void *to);
+    
+    private:
+        private_messageDataReader_impl (const private_messageDataReader &);
+        void operator= (const private_messageDataReader &);
+    
+        static ::DDS::ReturnCode_t check_preconditions (
+            private_messageSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples);
+    };
+    
+    class  private_messageDataReaderView_impl : public virtual private_messageDataReaderView,
+                                                               public ::DDS::OpenSplice::FooDataReaderView_impl
+    {
+        friend class DDS::OpenSplice::DataReader;
+        friend class private_messageTypeSupportMetaHolder;
+    
+    public:
+        virtual ::DDS::ReturnCode_t read (
+            private_messageSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::SampleStateMask sample_states,
+            ::DDS::ViewStateMask view_states,
+            ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t take (
+            private_messageSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::SampleStateMask sample_states,
+            ::DDS::ViewStateMask view_states,
+            ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t read_w_condition (
+            private_messageSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t take_w_condition (
+            private_messageSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t read_next_sample (
+            private_message & received_data,
+            ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t take_next_sample (
+            private_message & received_data,
+            ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t read_instance (
+            private_messageSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::InstanceHandle_t a_handle,
+            ::DDS::SampleStateMask sample_states,
+            ::DDS::ViewStateMask view_states,
+            ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t take_instance (
+            private_messageSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::InstanceHandle_t a_handle,
+            ::DDS::SampleStateMask sample_states,
+            ::DDS::ViewStateMask view_states,
+            ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t read_next_instance (
+            private_messageSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::InstanceHandle_t a_handle,
+            ::DDS::SampleStateMask sample_states,
+            ::DDS::ViewStateMask view_states,
+            ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t take_next_instance (
+            private_messageSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::InstanceHandle_t a_handle,
+            ::DDS::SampleStateMask sample_states,
+            ::DDS::ViewStateMask view_states,
+            ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t read_next_instance_w_condition (
+            private_messageSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::InstanceHandle_t a_handle,
+            ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t take_next_instance_w_condition (
+            private_messageSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq,
+            ::DDS::Long max_samples,
+            ::DDS::InstanceHandle_t a_handle,
+            ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t return_loan (
+            private_messageSeq & received_data,
+            ::DDS::SampleInfoSeq & info_seq) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::ReturnCode_t get_key_value (
+            private_message & key_holder,
+            ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS;
+    
+        virtual ::DDS::InstanceHandle_t lookup_instance (
+            const private_message & instance) THROW_ORB_EXCEPTIONS;
+    
+    protected:
+        private_messageDataReaderView_impl ();
+    
+        virtual ~private_messageDataReaderView_impl ();
+    
+        virtual DDS::ReturnCode_t init (
+            DDS::OpenSplice::DataReader *reader,
+            const char *name,
+            const DDS::DataReaderViewQos &qos,
+            DDS::OpenSplice::cxxCopyIn copyIn,
+            DDS::OpenSplice::cxxCopyOut copyOut);
+    
+    private:
+        private_messageDataReaderView_impl (const private_messageDataReaderView &);
+    
+        void operator= (const private_messageDataReaderView &);
     };
     
 }
 
+#undef OS_API
 #endif

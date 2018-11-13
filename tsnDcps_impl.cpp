@@ -1,2239 +1,3308 @@
 #include "tsnDcps_impl.h"
-#include "gapi.h"
-#include "gapi_loanRegistry.h"
 #include "tsnSplDcps.h"
-#include "ccpp_DataReader_impl.h"
-#include "ccpp_DataReaderView_impl.h"
+//
 
-
-extern c_bool
-__TSN_user_information__copyIn(
+extern v_copyin_result
+__TSN_user_information__copyIn (
     c_base base,
-    struct TSN::user_information *from,
+    const struct TSN::user_information *from,
     struct _TSN_user_information *to);
 
 extern void
-__TSN_user_information__copyOut(
-    void *_from,
+__TSN_user_information__copyOut (
+    const void *_from,
     void *_to);
 
-// DDS TSN::user_information TypeSupportFactory Object Body
-
-::DDS::DataWriter_ptr
-TSN::user_informationTypeSupportFactory::create_datawriter (gapi_dataWriter handle)
-{
-    return new TSN::user_informationDataWriter_impl(handle);
-}
-
-::DDS::DataReader_ptr
-TSN::user_informationTypeSupportFactory::create_datareader (gapi_dataReader handle)
-{
-    return new TSN::user_informationDataReader_impl (handle);
-}
-
-
-::DDS::DataReaderView_ptr
-TSN::user_informationTypeSupportFactory::create_view (gapi_dataReaderView handle)
-{
-    return new TSN::user_informationDataReaderView_impl (handle);
-}
-
-// DDS TSN::user_information TypeSupport Object Body
-
-TSN::user_informationTypeSupport::user_informationTypeSupport(void) :
-    TypeSupport_impl(
-        __TSN_user_information__name(),
-        __TSN_user_information__keys(),
-        TSN::user_informationTypeSupport::metaDescriptor,
-        (gapi_copyIn) __TSN_user_information__copyIn,
-        (gapi_copyOut) __TSN_user_information__copyOut,
-        (gapi_readerCopy) ::DDS::ccpp_DataReaderCopy<TSN::user_informationSeq, TSN::user_information>,
-        new  TSN::user_informationTypeSupportFactory(),
-        TSN::user_informationTypeSupport::metaDescriptorArrLength)
-{
-    // Parent constructor takes care of everything.
-}
-
-TSN::user_informationTypeSupport::~user_informationTypeSupport(void)
-{
-    // Parent destructor takes care of everything.
-}
-
-::DDS::ReturnCode_t
-TSN::user_informationTypeSupport::register_type(
-    ::DDS::DomainParticipant_ptr domain,
-    const char * type_name) THROW_ORB_EXCEPTIONS
-{
-    return TypeSupport_impl::register_type(domain, type_name);
-}
-
-char *
-TSN::user_informationTypeSupport::get_type_name() THROW_ORB_EXCEPTIONS
-{
-    return TypeSupport_impl::get_type_name();
-}
-
-// DDS TSN::user_information DataWriter_impl Object Body
-
-TSN::user_informationDataWriter_impl::user_informationDataWriter_impl (
-    gapi_dataWriter handle
-) : ::DDS::DataWriter_impl(handle)
-{
-    // Parent constructor takes care of everything.
-}
-
-TSN::user_informationDataWriter_impl::~user_informationDataWriter_impl(void)
-{
-    // Parent destructor takes care of everything.
-}
-
-::DDS::InstanceHandle_t
-TSN::user_informationDataWriter_impl::register_instance(
-    const TSN::user_information & instance_data) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::register_instance(&instance_data);
-}
-
-::DDS::InstanceHandle_t
-TSN::user_informationDataWriter_impl::register_instance_w_timestamp(
-    const user_information & instance_data,
-    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::register_instance_w_timestamp(&instance_data, source_timestamp);
-}
-
-::DDS::ReturnCode_t
-TSN::user_informationDataWriter_impl::unregister_instance(
-    const TSN::user_information & instance_data,
-    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::unregister_instance(&instance_data, handle);
-}
-
-::DDS::ReturnCode_t
-TSN::user_informationDataWriter_impl::unregister_instance_w_timestamp(
-    const user_information & instance_data,
-    ::DDS::InstanceHandle_t handle,
-    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::unregister_instance_w_timestamp(&instance_data, handle, source_timestamp);
-}
-
-::DDS::ReturnCode_t
-TSN::user_informationDataWriter_impl::write(
-    const TSN::user_information & instance_data,
-    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::write(&instance_data, handle);
-}
-
-::DDS::ReturnCode_t
-TSN::user_informationDataWriter_impl::write_w_timestamp(
-    const user_information & instance_data,
-    ::DDS::InstanceHandle_t handle,
-    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::write_w_timestamp(&instance_data, handle, source_timestamp);
-}
-
-::DDS::ReturnCode_t
-TSN::user_informationDataWriter_impl::dispose(
-    const TSN::user_information & instance_data,
-    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::dispose(&instance_data, handle);
-}
-
-::DDS::ReturnCode_t
-TSN::user_informationDataWriter_impl::dispose_w_timestamp(
-    const user_information & instance_data,
-    ::DDS::InstanceHandle_t handle,
-    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::dispose_w_timestamp(&instance_data, handle, source_timestamp);
-}
-
-::DDS::ReturnCode_t
-TSN::user_informationDataWriter_impl::writedispose(
-    const TSN::user_information & instance_data,
-    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::writedispose(&instance_data, handle);
-}
-
-::DDS::ReturnCode_t
-TSN::user_informationDataWriter_impl::writedispose_w_timestamp(
-    const user_information & instance_data,
-    ::DDS::InstanceHandle_t handle,
-    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::writedispose_w_timestamp(&instance_data, handle, source_timestamp);
-}
-
-::DDS::ReturnCode_t
-TSN::user_informationDataWriter_impl::get_key_value(
-    user_information & key_holder,
-    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::get_key_value(&key_holder, handle);
-}
-
-::DDS::InstanceHandle_t
-TSN::user_informationDataWriter_impl::lookup_instance(
-    const TSN::user_information & instance_data) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::lookup_instance(&instance_data);
-}
-
-// DDS TSN::user_information DataReader_impl Object Body
-
-TSN::user_informationDataReader_impl::user_informationDataReader_impl (
-    gapi_dataReader handle
-) : ::DDS::DataReader_impl(handle, ::DDS::ccpp_DataReaderParallelDemarshallingMain<TSN::user_informationSeq>)
-{
-    // Parent constructor takes care of everything.
-}
-
-TSN::user_informationDataReader_impl::~user_informationDataReader_impl(void)
-{
-    // Parent destructor takes care of everything.
-}
-
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReader_impl::read(
-    TSN::user_informationSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::read(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReader_impl::take(
-    TSN::user_informationSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::take(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReader_impl::read_w_condition(
-    TSN::user_informationSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::read_w_condition(&received_data, info_seq, max_samples, a_condition);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReader_impl::take_w_condition(
-    TSN::user_informationSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::take_w_condition(&received_data, info_seq, max_samples, a_condition);
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReader_impl::read_next_sample(
-    TSN::user_information & received_data,
-    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
-{
-    return DataReader_impl::read_next_sample(&received_data, sample_info);
-}
-
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReader_impl::take_next_sample(
-    TSN::user_information & received_data,
-    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
-{
-    return DataReader_impl::take_next_sample(&received_data, sample_info);
-}
-
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReader_impl::read_instance(
-    TSN::user_informationSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::read_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReader_impl::take_instance(
-    TSN::user_informationSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::take_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReader_impl::read_next_instance(
-    TSN::user_informationSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::read_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReader_impl::take_next_instance(
-    TSN::user_informationSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::take_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReader_impl::read_next_instance_w_condition(
-    TSN::user_informationSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::read_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReader_impl::take_next_instance_w_condition(
-    TSN::user_informationSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::take_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReader_impl::return_loan(
-    TSN::user_informationSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status = ::DDS::RETCODE_OK;
-
-    if ( received_data.length() > 0 ) {
-        if (received_data.length() == info_seq.length() &&
-            received_data.release() == info_seq.release() ) {
-            if (!received_data.release()) {
-                status = DataReader_impl::return_loan( received_data.get_buffer(),
-                                                       info_seq.get_buffer() );
-
-                if ( status == ::DDS::RETCODE_OK ) {
-                    if ( !received_data.release() ) {
-                        TSN::user_informationSeq::freebuf( received_data.get_buffer(false) );
-                        received_data.replace(0, 0, NULL, false);
-                        ::DDS::SampleInfoSeq::freebuf( info_seq.get_buffer(false) );
-                        info_seq.replace(0, 0, NULL, false);
-                    }
-                } else if ( status == ::DDS::RETCODE_NO_DATA ) {
-                    if ( received_data.release() ) {
-                        status = ::DDS::RETCODE_OK;
-                    } else {
-                        status = ::DDS::RETCODE_PRECONDITION_NOT_MET;
-                    }
-                }
-            }
-        } else {
-            status = ::DDS::RETCODE_PRECONDITION_NOT_MET;
-        }
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReader_impl::get_key_value(
-    TSN::user_information & key_holder,
-    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
-{
-    return DataReader_impl::get_key_value(&key_holder, handle);
-}
-
-::DDS::InstanceHandle_t
-TSN::user_informationDataReader_impl::lookup_instance(
-    const TSN::user_information & instance) THROW_ORB_EXCEPTIONS
-{
-    return DataReader_impl::lookup_instance(&instance);
-}
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReader_impl::check_preconditions(
-    TSN::user_informationSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples)
-{
-    ::DDS::ReturnCode_t status = ::DDS::RETCODE_PRECONDITION_NOT_MET;
-
-    if ( received_data.length() == info_seq.length() &&
-         received_data.maximum() == info_seq.maximum() &&
-         received_data.release() == info_seq.release() ) {
-        if ( received_data.maximum() == 0 || received_data.release() ) {
-            if (received_data.maximum() == 0 ||
-                max_samples <= static_cast<DDS::Long>(received_data.maximum()) ||
-                max_samples == ::DDS::LENGTH_UNLIMITED ) {
-                status = ::DDS::RETCODE_OK;
-            }
-        }
-    }
-    return status;
-}
-
-
-// DDS TSN::user_information DataReaderView_impl Object Body
-
-TSN::user_informationDataReaderView_impl::user_informationDataReaderView_impl (
-    gapi_dataReaderView handle
-) : ::DDS::DataReaderView_impl(handle)
-{
-    // Parent constructor takes care of everything.
-}
-
-TSN::user_informationDataReaderView_impl::~user_informationDataReaderView_impl(void)
-{
-    // Parent destructor takes care of everything.
-}
-
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReaderView_impl::read(
-    TSN::user_informationSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::user_informationDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::read(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReaderView_impl::take(
-    TSN::user_informationSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::user_informationDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::take(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReaderView_impl::read_w_condition(
-    TSN::user_informationSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::user_informationDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::read_w_condition(&received_data, info_seq, max_samples, a_condition);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReaderView_impl::take_w_condition(
-    TSN::user_informationSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::user_informationDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::take_w_condition(&received_data, info_seq, max_samples, a_condition);
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReaderView_impl::read_next_sample(
-    TSN::user_information & received_data,
-    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
-{
-    return DataReaderView_impl::read_next_sample(&received_data, sample_info);
-}
-
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReaderView_impl::take_next_sample(
-    TSN::user_information & received_data,
-    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
-{
-    return DataReaderView_impl::take_next_sample(&received_data, sample_info);
-}
-
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReaderView_impl::read_instance(
-    TSN::user_informationSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::user_informationDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::read_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReaderView_impl::take_instance(
-    TSN::user_informationSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::user_informationDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::take_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReaderView_impl::read_next_instance(
-    TSN::user_informationSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::user_informationDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::read_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReaderView_impl::take_next_instance(
-    TSN::user_informationSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::user_informationDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::take_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReaderView_impl::read_next_instance_w_condition(
-    TSN::user_informationSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::user_informationDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::read_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReaderView_impl::take_next_instance_w_condition(
-    TSN::user_informationSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::user_informationDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::take_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReaderView_impl::return_loan(
-    TSN::user_informationSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status = ::DDS::RETCODE_OK;
-
-    if ( received_data.length() > 0 ) {
-        if (received_data.length() == info_seq.length() &&
-            received_data.release() == info_seq.release() ) {
-            if (!received_data.release()) {
-                status = DataReaderView_impl::return_loan( received_data.get_buffer(),
-                                                       info_seq.get_buffer() );
-
-                if ( status == ::DDS::RETCODE_OK ) {
-                    if ( !received_data.release() ) {
-                        TSN::user_informationSeq::freebuf( received_data.get_buffer(false) );
-                        received_data.replace(0, 0, NULL, false);
-                        ::DDS::SampleInfoSeq::freebuf( info_seq.get_buffer(false) );
-                        info_seq.replace(0, 0, NULL, false);
-                    }
-                } else if ( status == ::DDS::RETCODE_NO_DATA ) {
-                    if ( received_data.release() ) {
-                        status = ::DDS::RETCODE_OK;
-                    } else {
-                        status = ::DDS::RETCODE_PRECONDITION_NOT_MET;
-                    }
-                }
-            }
-        } else {
-            status = ::DDS::RETCODE_PRECONDITION_NOT_MET;
-        }
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::user_informationDataReaderView_impl::get_key_value(
-    TSN::user_information & key_holder,
-    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
-{
-    return DataReaderView_impl::get_key_value(&key_holder, handle);
-}
-
-::DDS::InstanceHandle_t
-TSN::user_informationDataReaderView_impl::lookup_instance(
-    const TSN::user_information & instance) THROW_ORB_EXCEPTIONS
-{
-    return DataReaderView_impl::lookup_instance(&instance);
-}
-
-
-
-extern c_bool
-__TSN_request__copyIn(
-    c_base base,
-    struct TSN::request *from,
-    struct _TSN_request *to);
-
-extern void
-__TSN_request__copyOut(
-    void *_from,
-    void *_to);
-
-// DDS TSN::request TypeSupportFactory Object Body
-
-::DDS::DataWriter_ptr
-TSN::requestTypeSupportFactory::create_datawriter (gapi_dataWriter handle)
-{
-    return new TSN::requestDataWriter_impl(handle);
-}
-
-::DDS::DataReader_ptr
-TSN::requestTypeSupportFactory::create_datareader (gapi_dataReader handle)
-{
-    return new TSN::requestDataReader_impl (handle);
-}
-
-
-::DDS::DataReaderView_ptr
-TSN::requestTypeSupportFactory::create_view (gapi_dataReaderView handle)
-{
-    return new TSN::requestDataReaderView_impl (handle);
-}
-
-// DDS TSN::request TypeSupport Object Body
-
-TSN::requestTypeSupport::requestTypeSupport(void) :
-    TypeSupport_impl(
-        __TSN_request__name(),
-        __TSN_request__keys(),
-        TSN::requestTypeSupport::metaDescriptor,
-        (gapi_copyIn) __TSN_request__copyIn,
-        (gapi_copyOut) __TSN_request__copyOut,
-        (gapi_readerCopy) ::DDS::ccpp_DataReaderCopy<TSN::requestSeq, TSN::request>,
-        new  TSN::requestTypeSupportFactory(),
-        TSN::requestTypeSupport::metaDescriptorArrLength)
-{
-    // Parent constructor takes care of everything.
-}
-
-TSN::requestTypeSupport::~requestTypeSupport(void)
-{
-    // Parent destructor takes care of everything.
-}
-
-::DDS::ReturnCode_t
-TSN::requestTypeSupport::register_type(
-    ::DDS::DomainParticipant_ptr domain,
-    const char * type_name) THROW_ORB_EXCEPTIONS
-{
-    return TypeSupport_impl::register_type(domain, type_name);
-}
-
-char *
-TSN::requestTypeSupport::get_type_name() THROW_ORB_EXCEPTIONS
-{
-    return TypeSupport_impl::get_type_name();
-}
-
-// DDS TSN::request DataWriter_impl Object Body
-
-TSN::requestDataWriter_impl::requestDataWriter_impl (
-    gapi_dataWriter handle
-) : ::DDS::DataWriter_impl(handle)
-{
-    // Parent constructor takes care of everything.
-}
-
-TSN::requestDataWriter_impl::~requestDataWriter_impl(void)
-{
-    // Parent destructor takes care of everything.
-}
-
-::DDS::InstanceHandle_t
-TSN::requestDataWriter_impl::register_instance(
-    const TSN::request & instance_data) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::register_instance(&instance_data);
-}
-
-::DDS::InstanceHandle_t
-TSN::requestDataWriter_impl::register_instance_w_timestamp(
-    const request & instance_data,
-    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::register_instance_w_timestamp(&instance_data, source_timestamp);
-}
-
-::DDS::ReturnCode_t
-TSN::requestDataWriter_impl::unregister_instance(
-    const TSN::request & instance_data,
-    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::unregister_instance(&instance_data, handle);
-}
-
-::DDS::ReturnCode_t
-TSN::requestDataWriter_impl::unregister_instance_w_timestamp(
-    const request & instance_data,
-    ::DDS::InstanceHandle_t handle,
-    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::unregister_instance_w_timestamp(&instance_data, handle, source_timestamp);
-}
-
-::DDS::ReturnCode_t
-TSN::requestDataWriter_impl::write(
-    const TSN::request & instance_data,
-    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::write(&instance_data, handle);
-}
-
-::DDS::ReturnCode_t
-TSN::requestDataWriter_impl::write_w_timestamp(
-    const request & instance_data,
-    ::DDS::InstanceHandle_t handle,
-    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::write_w_timestamp(&instance_data, handle, source_timestamp);
-}
-
-::DDS::ReturnCode_t
-TSN::requestDataWriter_impl::dispose(
-    const TSN::request & instance_data,
-    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::dispose(&instance_data, handle);
-}
-
-::DDS::ReturnCode_t
-TSN::requestDataWriter_impl::dispose_w_timestamp(
-    const request & instance_data,
-    ::DDS::InstanceHandle_t handle,
-    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::dispose_w_timestamp(&instance_data, handle, source_timestamp);
-}
-
-::DDS::ReturnCode_t
-TSN::requestDataWriter_impl::writedispose(
-    const TSN::request & instance_data,
-    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::writedispose(&instance_data, handle);
-}
-
-::DDS::ReturnCode_t
-TSN::requestDataWriter_impl::writedispose_w_timestamp(
-    const request & instance_data,
-    ::DDS::InstanceHandle_t handle,
-    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::writedispose_w_timestamp(&instance_data, handle, source_timestamp);
-}
-
-::DDS::ReturnCode_t
-TSN::requestDataWriter_impl::get_key_value(
-    request & key_holder,
-    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::get_key_value(&key_holder, handle);
-}
-
-::DDS::InstanceHandle_t
-TSN::requestDataWriter_impl::lookup_instance(
-    const TSN::request & instance_data) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::lookup_instance(&instance_data);
-}
-
-// DDS TSN::request DataReader_impl Object Body
-
-TSN::requestDataReader_impl::requestDataReader_impl (
-    gapi_dataReader handle
-) : ::DDS::DataReader_impl(handle, ::DDS::ccpp_DataReaderParallelDemarshallingMain<TSN::requestSeq>)
-{
-    // Parent constructor takes care of everything.
-}
-
-TSN::requestDataReader_impl::~requestDataReader_impl(void)
-{
-    // Parent destructor takes care of everything.
-}
-
-
-::DDS::ReturnCode_t
-TSN::requestDataReader_impl::read(
-    TSN::requestSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::read(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::requestDataReader_impl::take(
-    TSN::requestSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::take(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::requestDataReader_impl::read_w_condition(
-    TSN::requestSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::read_w_condition(&received_data, info_seq, max_samples, a_condition);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::requestDataReader_impl::take_w_condition(
-    TSN::requestSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::take_w_condition(&received_data, info_seq, max_samples, a_condition);
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::requestDataReader_impl::read_next_sample(
-    TSN::request & received_data,
-    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
-{
-    return DataReader_impl::read_next_sample(&received_data, sample_info);
-}
-
-
-::DDS::ReturnCode_t
-TSN::requestDataReader_impl::take_next_sample(
-    TSN::request & received_data,
-    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
-{
-    return DataReader_impl::take_next_sample(&received_data, sample_info);
-}
-
-
-::DDS::ReturnCode_t
-TSN::requestDataReader_impl::read_instance(
-    TSN::requestSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::read_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::requestDataReader_impl::take_instance(
-    TSN::requestSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::take_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::requestDataReader_impl::read_next_instance(
-    TSN::requestSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::read_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::requestDataReader_impl::take_next_instance(
-    TSN::requestSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::take_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::requestDataReader_impl::read_next_instance_w_condition(
-    TSN::requestSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::read_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::requestDataReader_impl::take_next_instance_w_condition(
-    TSN::requestSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::take_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::requestDataReader_impl::return_loan(
-    TSN::requestSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status = ::DDS::RETCODE_OK;
-
-    if ( received_data.length() > 0 ) {
-        if (received_data.length() == info_seq.length() &&
-            received_data.release() == info_seq.release() ) {
-            if (!received_data.release()) {
-                status = DataReader_impl::return_loan( received_data.get_buffer(),
-                                                       info_seq.get_buffer() );
-
-                if ( status == ::DDS::RETCODE_OK ) {
-                    if ( !received_data.release() ) {
-                        TSN::requestSeq::freebuf( received_data.get_buffer(false) );
-                        received_data.replace(0, 0, NULL, false);
-                        ::DDS::SampleInfoSeq::freebuf( info_seq.get_buffer(false) );
-                        info_seq.replace(0, 0, NULL, false);
-                    }
-                } else if ( status == ::DDS::RETCODE_NO_DATA ) {
-                    if ( received_data.release() ) {
-                        status = ::DDS::RETCODE_OK;
-                    } else {
-                        status = ::DDS::RETCODE_PRECONDITION_NOT_MET;
-                    }
-                }
-            }
-        } else {
-            status = ::DDS::RETCODE_PRECONDITION_NOT_MET;
-        }
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::requestDataReader_impl::get_key_value(
-    TSN::request & key_holder,
-    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
-{
-    return DataReader_impl::get_key_value(&key_holder, handle);
-}
-
-::DDS::InstanceHandle_t
-TSN::requestDataReader_impl::lookup_instance(
-    const TSN::request & instance) THROW_ORB_EXCEPTIONS
-{
-    return DataReader_impl::lookup_instance(&instance);
-}
-
-::DDS::ReturnCode_t
-TSN::requestDataReader_impl::check_preconditions(
-    TSN::requestSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples)
-{
-    ::DDS::ReturnCode_t status = ::DDS::RETCODE_PRECONDITION_NOT_MET;
-
-    if ( received_data.length() == info_seq.length() &&
-         received_data.maximum() == info_seq.maximum() &&
-         received_data.release() == info_seq.release() ) {
-        if ( received_data.maximum() == 0 || received_data.release() ) {
-            if (received_data.maximum() == 0 ||
-                max_samples <= static_cast<DDS::Long>(received_data.maximum()) ||
-                max_samples == ::DDS::LENGTH_UNLIMITED ) {
-                status = ::DDS::RETCODE_OK;
-            }
-        }
-    }
-    return status;
-}
-
-
-// DDS TSN::request DataReaderView_impl Object Body
-
-TSN::requestDataReaderView_impl::requestDataReaderView_impl (
-    gapi_dataReaderView handle
-) : ::DDS::DataReaderView_impl(handle)
-{
-    // Parent constructor takes care of everything.
-}
-
-TSN::requestDataReaderView_impl::~requestDataReaderView_impl(void)
-{
-    // Parent destructor takes care of everything.
-}
-
-
-::DDS::ReturnCode_t
-TSN::requestDataReaderView_impl::read(
-    TSN::requestSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::requestDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::read(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::requestDataReaderView_impl::take(
-    TSN::requestSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::requestDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::take(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::requestDataReaderView_impl::read_w_condition(
-    TSN::requestSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::requestDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::read_w_condition(&received_data, info_seq, max_samples, a_condition);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::requestDataReaderView_impl::take_w_condition(
-    TSN::requestSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::requestDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::take_w_condition(&received_data, info_seq, max_samples, a_condition);
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::requestDataReaderView_impl::read_next_sample(
-    TSN::request & received_data,
-    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
-{
-    return DataReaderView_impl::read_next_sample(&received_data, sample_info);
-}
-
-
-::DDS::ReturnCode_t
-TSN::requestDataReaderView_impl::take_next_sample(
-    TSN::request & received_data,
-    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
-{
-    return DataReaderView_impl::take_next_sample(&received_data, sample_info);
-}
-
-
-::DDS::ReturnCode_t
-TSN::requestDataReaderView_impl::read_instance(
-    TSN::requestSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::requestDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::read_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::requestDataReaderView_impl::take_instance(
-    TSN::requestSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::requestDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::take_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::requestDataReaderView_impl::read_next_instance(
-    TSN::requestSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::requestDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::read_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::requestDataReaderView_impl::take_next_instance(
-    TSN::requestSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::requestDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::take_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::requestDataReaderView_impl::read_next_instance_w_condition(
-    TSN::requestSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::requestDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::read_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::requestDataReaderView_impl::take_next_instance_w_condition(
-    TSN::requestSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::requestDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::take_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::requestDataReaderView_impl::return_loan(
-    TSN::requestSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status = ::DDS::RETCODE_OK;
-
-    if ( received_data.length() > 0 ) {
-        if (received_data.length() == info_seq.length() &&
-            received_data.release() == info_seq.release() ) {
-            if (!received_data.release()) {
-                status = DataReaderView_impl::return_loan( received_data.get_buffer(),
-                                                       info_seq.get_buffer() );
-
-                if ( status == ::DDS::RETCODE_OK ) {
-                    if ( !received_data.release() ) {
-                        TSN::requestSeq::freebuf( received_data.get_buffer(false) );
-                        received_data.replace(0, 0, NULL, false);
-                        ::DDS::SampleInfoSeq::freebuf( info_seq.get_buffer(false) );
-                        info_seq.replace(0, 0, NULL, false);
-                    }
-                } else if ( status == ::DDS::RETCODE_NO_DATA ) {
-                    if ( received_data.release() ) {
-                        status = ::DDS::RETCODE_OK;
-                    } else {
-                        status = ::DDS::RETCODE_PRECONDITION_NOT_MET;
-                    }
-                }
-            }
-        } else {
-            status = ::DDS::RETCODE_PRECONDITION_NOT_MET;
-        }
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::requestDataReaderView_impl::get_key_value(
-    TSN::request & key_holder,
-    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
-{
-    return DataReaderView_impl::get_key_value(&key_holder, handle);
-}
-
-::DDS::InstanceHandle_t
-TSN::requestDataReaderView_impl::lookup_instance(
-    const TSN::request & instance) THROW_ORB_EXCEPTIONS
-{
-    return DataReaderView_impl::lookup_instance(&instance);
-}
-
-
-
-extern c_bool
-__TSN_response__copyIn(
-    c_base base,
-    struct TSN::response *from,
-    struct _TSN_response *to);
-
-extern void
-__TSN_response__copyOut(
-    void *_from,
-    void *_to);
-
-// DDS TSN::response TypeSupportFactory Object Body
-
-::DDS::DataWriter_ptr
-TSN::responseTypeSupportFactory::create_datawriter (gapi_dataWriter handle)
-{
-    return new TSN::responseDataWriter_impl(handle);
-}
-
-::DDS::DataReader_ptr
-TSN::responseTypeSupportFactory::create_datareader (gapi_dataReader handle)
-{
-    return new TSN::responseDataReader_impl (handle);
-}
-
-
-::DDS::DataReaderView_ptr
-TSN::responseTypeSupportFactory::create_view (gapi_dataReaderView handle)
-{
-    return new TSN::responseDataReaderView_impl (handle);
-}
-
-// DDS TSN::response TypeSupport Object Body
-
-TSN::responseTypeSupport::responseTypeSupport(void) :
-    TypeSupport_impl(
-        __TSN_response__name(),
-        __TSN_response__keys(),
-        TSN::responseTypeSupport::metaDescriptor,
-        (gapi_copyIn) __TSN_response__copyIn,
-        (gapi_copyOut) __TSN_response__copyOut,
-        (gapi_readerCopy) ::DDS::ccpp_DataReaderCopy<TSN::responseSeq, TSN::response>,
-        new  TSN::responseTypeSupportFactory(),
-        TSN::responseTypeSupport::metaDescriptorArrLength)
-{
-    // Parent constructor takes care of everything.
-}
-
-TSN::responseTypeSupport::~responseTypeSupport(void)
-{
-    // Parent destructor takes care of everything.
-}
-
-::DDS::ReturnCode_t
-TSN::responseTypeSupport::register_type(
-    ::DDS::DomainParticipant_ptr domain,
-    const char * type_name) THROW_ORB_EXCEPTIONS
-{
-    return TypeSupport_impl::register_type(domain, type_name);
-}
-
-char *
-TSN::responseTypeSupport::get_type_name() THROW_ORB_EXCEPTIONS
-{
-    return TypeSupport_impl::get_type_name();
-}
-
-// DDS TSN::response DataWriter_impl Object Body
-
-TSN::responseDataWriter_impl::responseDataWriter_impl (
-    gapi_dataWriter handle
-) : ::DDS::DataWriter_impl(handle)
-{
-    // Parent constructor takes care of everything.
-}
-
-TSN::responseDataWriter_impl::~responseDataWriter_impl(void)
-{
-    // Parent destructor takes care of everything.
-}
-
-::DDS::InstanceHandle_t
-TSN::responseDataWriter_impl::register_instance(
-    const TSN::response & instance_data) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::register_instance(&instance_data);
-}
-
-::DDS::InstanceHandle_t
-TSN::responseDataWriter_impl::register_instance_w_timestamp(
-    const response & instance_data,
-    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::register_instance_w_timestamp(&instance_data, source_timestamp);
-}
-
-::DDS::ReturnCode_t
-TSN::responseDataWriter_impl::unregister_instance(
-    const TSN::response & instance_data,
-    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::unregister_instance(&instance_data, handle);
-}
-
-::DDS::ReturnCode_t
-TSN::responseDataWriter_impl::unregister_instance_w_timestamp(
-    const response & instance_data,
-    ::DDS::InstanceHandle_t handle,
-    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::unregister_instance_w_timestamp(&instance_data, handle, source_timestamp);
-}
-
-::DDS::ReturnCode_t
-TSN::responseDataWriter_impl::write(
-    const TSN::response & instance_data,
-    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::write(&instance_data, handle);
-}
-
-::DDS::ReturnCode_t
-TSN::responseDataWriter_impl::write_w_timestamp(
-    const response & instance_data,
-    ::DDS::InstanceHandle_t handle,
-    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::write_w_timestamp(&instance_data, handle, source_timestamp);
-}
-
-::DDS::ReturnCode_t
-TSN::responseDataWriter_impl::dispose(
-    const TSN::response & instance_data,
-    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::dispose(&instance_data, handle);
-}
-
-::DDS::ReturnCode_t
-TSN::responseDataWriter_impl::dispose_w_timestamp(
-    const response & instance_data,
-    ::DDS::InstanceHandle_t handle,
-    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::dispose_w_timestamp(&instance_data, handle, source_timestamp);
-}
-
-::DDS::ReturnCode_t
-TSN::responseDataWriter_impl::writedispose(
-    const TSN::response & instance_data,
-    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::writedispose(&instance_data, handle);
-}
-
-::DDS::ReturnCode_t
-TSN::responseDataWriter_impl::writedispose_w_timestamp(
-    const response & instance_data,
-    ::DDS::InstanceHandle_t handle,
-    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::writedispose_w_timestamp(&instance_data, handle, source_timestamp);
-}
-
-::DDS::ReturnCode_t
-TSN::responseDataWriter_impl::get_key_value(
-    response & key_holder,
-    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::get_key_value(&key_holder, handle);
-}
-
-::DDS::InstanceHandle_t
-TSN::responseDataWriter_impl::lookup_instance(
-    const TSN::response & instance_data) THROW_ORB_EXCEPTIONS
-{
-    return DataWriter_impl::lookup_instance(&instance_data);
-}
-
-// DDS TSN::response DataReader_impl Object Body
-
-TSN::responseDataReader_impl::responseDataReader_impl (
-    gapi_dataReader handle
-) : ::DDS::DataReader_impl(handle, ::DDS::ccpp_DataReaderParallelDemarshallingMain<TSN::responseSeq>)
-{
-    // Parent constructor takes care of everything.
-}
-
-TSN::responseDataReader_impl::~responseDataReader_impl(void)
-{
-    // Parent destructor takes care of everything.
-}
-
-
-::DDS::ReturnCode_t
-TSN::responseDataReader_impl::read(
-    TSN::responseSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::read(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::responseDataReader_impl::take(
-    TSN::responseSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::take(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::responseDataReader_impl::read_w_condition(
-    TSN::responseSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::read_w_condition(&received_data, info_seq, max_samples, a_condition);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::responseDataReader_impl::take_w_condition(
-    TSN::responseSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::take_w_condition(&received_data, info_seq, max_samples, a_condition);
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::responseDataReader_impl::read_next_sample(
-    TSN::response & received_data,
-    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
-{
-    return DataReader_impl::read_next_sample(&received_data, sample_info);
-}
-
-
-::DDS::ReturnCode_t
-TSN::responseDataReader_impl::take_next_sample(
-    TSN::response & received_data,
-    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
-{
-    return DataReader_impl::take_next_sample(&received_data, sample_info);
-}
-
-
-::DDS::ReturnCode_t
-TSN::responseDataReader_impl::read_instance(
-    TSN::responseSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::read_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::responseDataReader_impl::take_instance(
-    TSN::responseSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::take_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::responseDataReader_impl::read_next_instance(
-    TSN::responseSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::read_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::responseDataReader_impl::take_next_instance(
-    TSN::responseSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::take_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::responseDataReader_impl::read_next_instance_w_condition(
-    TSN::responseSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::read_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::responseDataReader_impl::take_next_instance_w_condition(
-    TSN::responseSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReader_impl::take_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::responseDataReader_impl::return_loan(
-    TSN::responseSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status = ::DDS::RETCODE_OK;
-
-    if ( received_data.length() > 0 ) {
-        if (received_data.length() == info_seq.length() &&
-            received_data.release() == info_seq.release() ) {
-            if (!received_data.release()) {
-                status = DataReader_impl::return_loan( received_data.get_buffer(),
-                                                       info_seq.get_buffer() );
-
-                if ( status == ::DDS::RETCODE_OK ) {
-                    if ( !received_data.release() ) {
-                        TSN::responseSeq::freebuf( received_data.get_buffer(false) );
-                        received_data.replace(0, 0, NULL, false);
-                        ::DDS::SampleInfoSeq::freebuf( info_seq.get_buffer(false) );
-                        info_seq.replace(0, 0, NULL, false);
-                    }
-                } else if ( status == ::DDS::RETCODE_NO_DATA ) {
-                    if ( received_data.release() ) {
-                        status = ::DDS::RETCODE_OK;
-                    } else {
-                        status = ::DDS::RETCODE_PRECONDITION_NOT_MET;
-                    }
-                }
-            }
-        } else {
-            status = ::DDS::RETCODE_PRECONDITION_NOT_MET;
-        }
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::responseDataReader_impl::get_key_value(
-    TSN::response & key_holder,
-    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
-{
-    return DataReader_impl::get_key_value(&key_holder, handle);
-}
-
-::DDS::InstanceHandle_t
-TSN::responseDataReader_impl::lookup_instance(
-    const TSN::response & instance) THROW_ORB_EXCEPTIONS
-{
-    return DataReader_impl::lookup_instance(&instance);
-}
-
-::DDS::ReturnCode_t
-TSN::responseDataReader_impl::check_preconditions(
-    TSN::responseSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples)
-{
-    ::DDS::ReturnCode_t status = ::DDS::RETCODE_PRECONDITION_NOT_MET;
-
-    if ( received_data.length() == info_seq.length() &&
-         received_data.maximum() == info_seq.maximum() &&
-         received_data.release() == info_seq.release() ) {
-        if ( received_data.maximum() == 0 || received_data.release() ) {
-            if (received_data.maximum() == 0 ||
-                max_samples <= static_cast<DDS::Long>(received_data.maximum()) ||
-                max_samples == ::DDS::LENGTH_UNLIMITED ) {
-                status = ::DDS::RETCODE_OK;
-            }
-        }
-    }
-    return status;
-}
-
-
-// DDS TSN::response DataReaderView_impl Object Body
-
-TSN::responseDataReaderView_impl::responseDataReaderView_impl (
-    gapi_dataReaderView handle
-) : ::DDS::DataReaderView_impl(handle)
-{
-    // Parent constructor takes care of everything.
-}
-
-TSN::responseDataReaderView_impl::~responseDataReaderView_impl(void)
-{
-    // Parent destructor takes care of everything.
-}
-
-
-::DDS::ReturnCode_t
-TSN::responseDataReaderView_impl::read(
-    TSN::responseSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::responseDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::read(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::responseDataReaderView_impl::take(
-    TSN::responseSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::responseDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::take(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::responseDataReaderView_impl::read_w_condition(
-    TSN::responseSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::responseDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::read_w_condition(&received_data, info_seq, max_samples, a_condition);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::responseDataReaderView_impl::take_w_condition(
-    TSN::responseSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::responseDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::take_w_condition(&received_data, info_seq, max_samples, a_condition);
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::responseDataReaderView_impl::read_next_sample(
-    TSN::response & received_data,
-    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
-{
-    return DataReaderView_impl::read_next_sample(&received_data, sample_info);
-}
-
-
-::DDS::ReturnCode_t
-TSN::responseDataReaderView_impl::take_next_sample(
-    TSN::response & received_data,
-    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
-{
-    return DataReaderView_impl::take_next_sample(&received_data, sample_info);
-}
-
-
-::DDS::ReturnCode_t
-TSN::responseDataReaderView_impl::read_instance(
-    TSN::responseSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::responseDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::read_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::responseDataReaderView_impl::take_instance(
-    TSN::responseSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::responseDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::take_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::responseDataReaderView_impl::read_next_instance(
-    TSN::responseSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::responseDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::read_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-::DDS::ReturnCode_t
-TSN::responseDataReaderView_impl::take_next_instance(
-    TSN::responseSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::SampleStateMask sample_states,
-    ::DDS::ViewStateMask view_states,
-    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::responseDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::take_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::responseDataReaderView_impl::read_next_instance_w_condition(
-    TSN::responseSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::responseDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::read_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::responseDataReaderView_impl::take_next_instance_w_condition(
-    TSN::responseSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq,
-    ::DDS::Long max_samples,
-    ::DDS::InstanceHandle_t a_handle,
-    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status;
-
-    status = TSN::responseDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
-    if ( status == ::DDS::RETCODE_OK ) {
-        status = DataReaderView_impl::take_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::responseDataReaderView_impl::return_loan(
-    TSN::responseSeq & received_data,
-    ::DDS::SampleInfoSeq & info_seq) THROW_ORB_EXCEPTIONS
-{
-    ::DDS::ReturnCode_t status = ::DDS::RETCODE_OK;
-
-    if ( received_data.length() > 0 ) {
-        if (received_data.length() == info_seq.length() &&
-            received_data.release() == info_seq.release() ) {
-            if (!received_data.release()) {
-                status = DataReaderView_impl::return_loan( received_data.get_buffer(),
-                                                       info_seq.get_buffer() );
-
-                if ( status == ::DDS::RETCODE_OK ) {
-                    if ( !received_data.release() ) {
-                        TSN::responseSeq::freebuf( received_data.get_buffer(false) );
-                        received_data.replace(0, 0, NULL, false);
-                        ::DDS::SampleInfoSeq::freebuf( info_seq.get_buffer(false) );
-                        info_seq.replace(0, 0, NULL, false);
-                    }
-                } else if ( status == ::DDS::RETCODE_NO_DATA ) {
-                    if ( received_data.release() ) {
-                        status = ::DDS::RETCODE_OK;
-                    } else {
-                        status = ::DDS::RETCODE_PRECONDITION_NOT_MET;
-                    }
-                }
-            }
-        } else {
-            status = ::DDS::RETCODE_PRECONDITION_NOT_MET;
-        }
-    }
-    return status;
-}
-
-
-::DDS::ReturnCode_t
-TSN::responseDataReaderView_impl::get_key_value(
-    TSN::response & key_holder,
-    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
-{
-    return DataReaderView_impl::get_key_value(&key_holder, handle);
-}
-
-::DDS::InstanceHandle_t
-TSN::responseDataReaderView_impl::lookup_instance(
-    const TSN::response & instance) THROW_ORB_EXCEPTIONS
-{
-    return DataReaderView_impl::lookup_instance(&instance);
-}
-
-
-
-const char * ::TSN::user_informationTypeSupport::metaDescriptor[] = {"<MetaData version=\"1.0.0\"><Module name=\"TSN\"><Struct name=\"user_information\"><Member name=\"uuid\">",
+// DDS TSN::user_information TypeSupportMetaHolder Object Body
+TSN::user_informationTypeSupportMetaHolder::user_informationTypeSupportMetaHolder () :
+        DDS::OpenSplice::TypeSupportMetaHolder ("TSN::user_information", "", "uuid")
+{
+    copyIn = (DDS::OpenSplice::cxxCopyIn) __TSN_user_information__copyIn;
+    copyOut = (DDS::OpenSplice::cxxCopyOut) __TSN_user_information__copyOut;
+    metaDescriptorArrLength = 5;
+    metaDescriptorLength = 459;
+    const char *tmp[] = {"<MetaData version=\"1.0.0\"><Module name=\"TSN\"><Struct name=\"user_information\"><Member name=\"uuid\">",
 "<String length=\"37\"/></Member><Member name=\"first_name\"><String length=\"70\"/></Member><Member name=\"last_name\">",
 "<String length=\"70\"/></Member><Member name=\"date_of_birth\"><Long/></Member><Member name=\"interests\">",
 "<Sequence><String/></Sequence></Member><Member name=\"number_of_highest_post\"><ULongLong/></Member></Struct>",
 "</Module></MetaData>"};
-const ::DDS::ULong (::TSN::user_informationTypeSupport::metaDescriptorArrLength) = 5;
-const char * ::TSN::requestTypeSupport::metaDescriptor[] = {"<MetaData version=\"1.0.0\"><Module name=\"TSN\"><TypeDef name=\"serial_number\"><ULong/></TypeDef><Struct name=\"node_request\">",
+    metaDescriptor = new const char*[metaDescriptorArrLength];
+    memcpy(metaDescriptor, tmp, sizeof(tmp));
+}
+
+TSN::user_informationTypeSupportMetaHolder::~user_informationTypeSupportMetaHolder ()
+{
+    // Rely on parent destructor.
+}
+
+::DDS::OpenSplice::DataWriter *
+TSN::user_informationTypeSupportMetaHolder::create_datawriter ()
+{
+    return new TSN::user_informationDataWriter_impl();
+}
+
+::DDS::OpenSplice::DataReader *
+TSN::user_informationTypeSupportMetaHolder::create_datareader ()
+{
+    return new TSN::user_informationDataReader_impl();
+}
+
+::DDS::OpenSplice::DataReaderView *
+TSN::user_informationTypeSupportMetaHolder::create_view ()
+{
+    return new TSN::user_informationDataReaderView_impl();
+}
+
+// DDS TSN::user_information TypeSupport Object Body
+TSN::user_informationTypeSupport::user_informationTypeSupport () :
+        DDS::OpenSplice::TypeSupport()
+{
+    tsMetaHolder = new TSN::user_informationTypeSupportMetaHolder();
+}
+
+TSN::user_informationTypeSupport::~user_informationTypeSupport ()
+{
+    DDS::release(tsMetaHolder);
+}
+
+// DDS TSN::user_information DataWriter_impl Object Body
+TSN::user_informationDataWriter_impl::user_informationDataWriter_impl ()
+{
+    // Parent constructor takes care of everything.
+}
+
+TSN::user_informationDataWriter_impl::~user_informationDataWriter_impl ()
+{
+    // Parent destructor takes care of everything.
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataWriter_impl::init (
+        DDS::OpenSplice::Publisher *publisher,
+        DDS::OpenSplice::DomainParticipant *participant,
+        const DDS::DataWriterQos &qos,
+        DDS::OpenSplice::Topic *a_topic,
+        const char *name,
+        DDS::OpenSplice::cxxCopyIn copyIn,
+        DDS::OpenSplice::cxxCopyOut copyOut)
+{
+    return DDS::OpenSplice::FooDataWriter_impl::nlReq_init(publisher, participant, qos, a_topic, name, copyIn, copyOut);
+}
+
+::DDS::InstanceHandle_t
+TSN::user_informationDataWriter_impl::register_instance (
+    const TSN::user_information & instance_data) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::register_instance(&instance_data);
+}
+
+::DDS::InstanceHandle_t
+TSN::user_informationDataWriter_impl::register_instance_w_timestamp (
+    const user_information & instance_data,
+    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::register_instance_w_timestamp(&instance_data, source_timestamp);
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataWriter_impl::unregister_instance (
+    const TSN::user_information & instance_data,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::unregister_instance(&instance_data, handle);
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataWriter_impl::unregister_instance_w_timestamp (
+    const user_information & instance_data,
+    ::DDS::InstanceHandle_t handle,
+    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::unregister_instance_w_timestamp(&instance_data, handle, source_timestamp);
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataWriter_impl::write (
+    const TSN::user_information & instance_data,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::write(&instance_data, handle);
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataWriter_impl::write_w_timestamp (
+    const user_information & instance_data,
+    ::DDS::InstanceHandle_t handle,
+    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::write_w_timestamp(&instance_data, handle, source_timestamp);
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataWriter_impl::dispose (
+    const TSN::user_information & instance_data,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::dispose(&instance_data, handle);
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataWriter_impl::dispose_w_timestamp (
+    const user_information & instance_data,
+    ::DDS::InstanceHandle_t handle,
+    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::dispose_w_timestamp(&instance_data, handle, source_timestamp);
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataWriter_impl::writedispose (
+    const TSN::user_information & instance_data,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::writedispose(&instance_data, handle);
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataWriter_impl::writedispose_w_timestamp (
+    const user_information & instance_data,
+    ::DDS::InstanceHandle_t handle,
+    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::writedispose_w_timestamp(&instance_data, handle, source_timestamp);
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataWriter_impl::get_key_value (
+    user_information & key_holder,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::get_key_value(&key_holder, handle);
+}
+
+::DDS::InstanceHandle_t
+TSN::user_informationDataWriter_impl::lookup_instance (
+    const TSN::user_information & instance_data) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::lookup_instance(&instance_data);
+}
+
+// DDS TSN::user_information DataReader_impl Object Body
+TSN::user_informationDataReader_impl::user_informationDataReader_impl ()
+{
+    // Parent constructor takes care of everything.
+}
+
+TSN::user_informationDataReader_impl::~user_informationDataReader_impl ()
+{
+    // Parent destructor takes care of everything.
+}
+
+DDS::ReturnCode_t
+TSN::user_informationDataReader_impl::init (
+    DDS::OpenSplice::Subscriber *subscriber,
+    const DDS::DataReaderQos &qos,
+    DDS::OpenSplice::TopicDescription *a_topic,
+    const char *name,
+    DDS::OpenSplice::cxxCopyIn copyIn,
+    DDS::OpenSplice::cxxCopyOut copyOut)
+{
+    return DDS::OpenSplice::FooDataReader_impl::nlReq_init(
+            subscriber, qos, a_topic, name, copyIn, copyOut,
+            this->dataSeqAlloc, this->dataSeqLength, this->dataSeqGetBuffer, this->dataSeqCopyOut);
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReader_impl::read (
+    TSN::user_informationSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status = DDS::RETCODE_OK;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::read(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReader_impl::take (
+    TSN::user_informationSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status = DDS::RETCODE_OK;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::take(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReader_impl::read_w_condition (
+    TSN::user_informationSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status = DDS::RETCODE_OK;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::read_w_condition(&received_data, info_seq, max_samples, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReader_impl::take_w_condition (
+    TSN::user_informationSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status = DDS::RETCODE_OK;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::take_w_condition(&received_data, info_seq, max_samples, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReader_impl::read_next_sample (
+    TSN::user_information & received_data,
+    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReader_impl::read_next_sample(&received_data, sample_info);
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReader_impl::take_next_sample (
+    TSN::user_information & received_data,
+    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReader_impl::take_next_sample(&received_data, sample_info);
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReader_impl::read_instance (
+    TSN::user_informationSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::read_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReader_impl::take_instance (
+    TSN::user_informationSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::take_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReader_impl::read_next_instance (
+    TSN::user_informationSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::read_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReader_impl::take_next_instance (
+    TSN::user_informationSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::take_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReader_impl::read_next_instance_w_condition (
+    TSN::user_informationSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::read_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReader_impl::take_next_instance_w_condition (
+    TSN::user_informationSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::take_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReader_impl::return_loan (
+    TSN::user_informationSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t result = ::DDS::RETCODE_OK;
+
+    result = this->write_lock ();
+    if (result == DDS::RETCODE_OK) {
+        if ( received_data.length() > 0 ) {
+            if (received_data.length() == info_seq.length() &&
+                received_data.release() == info_seq.release() ) {
+                if (!received_data.release()) {
+                    result = DDS::OpenSplice::FooDataReader_impl::wlReq_return_loan( received_data.get_buffer(),
+                                                                                     info_seq.get_buffer() );
+                    if ( result == ::DDS::RETCODE_OK ) {
+                        if ( !received_data.release() ) {
+                            TSN::user_informationSeq::freebuf( received_data.get_buffer(false) );
+                            received_data.replace(0, 0, NULL, false);
+                            ::DDS::SampleInfoSeq::freebuf( info_seq.get_buffer(false) );
+                            info_seq.replace(0, 0, NULL, false);
+                        }
+                    }
+                }
+            } else {
+                result = ::DDS::RETCODE_PRECONDITION_NOT_MET;
+            }
+        }
+        this->unlock();
+    }
+    return result;
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReader_impl::get_key_value (
+    TSN::user_information & key_holder,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReader_impl::get_key_value(&key_holder, handle);
+}
+
+::DDS::InstanceHandle_t
+TSN::user_informationDataReader_impl::lookup_instance (
+    const TSN::user_information & instance) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReader_impl::lookup_instance(&instance);
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReader_impl::check_preconditions (
+    TSN::user_informationSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples)
+{
+    if ((max_samples < 0) && (max_samples != DDS::LENGTH_UNLIMITED)) {
+        return DDS::RETCODE_BAD_PARAMETER;
+    }
+
+    /* Rule 1 : The values of len, max_len, and owns
+     * for the two collections must be identical.
+     */
+    if ((received_data.length()  != info_seq.length())  ||
+        (received_data.maximum() != info_seq.maximum()) ||
+        (received_data.release() != info_seq.release()))
+    {
+        return DDS::RETCODE_PRECONDITION_NOT_MET;
+    }
+
+    /* Rule 4: If the input max_len>0 and the input owns==FALSE,
+     * then the read operation will fail.
+     */
+    if ((info_seq.maximum() > 0) &&
+        (info_seq.release() == false))
+    {
+        return DDS::RETCODE_PRECONDITION_NOT_MET;
+    }
+
+    /* Rule 5: If input max_len>0 and the input owns==TRUE,
+     * then the read operation will...
+     */
+    if (info_seq.maximum() > 0) { /* owns is true, because of rule 4. */
+        /* Rule 5a: If max_samples = LENGTH_UNLIMITED,
+         * then at most max_len values will be copied.
+         * Rule 5b: If max_samples <= max_len,
+         * then at most max_samples values will be copied.
+         */
+        /* Rule 5c: If max_samples > max_len,
+         * then the read operation will fail.
+         */
+        if ((max_samples != DDS::LENGTH_UNLIMITED) &&
+            ((DDS::ULong)max_samples > info_seq.maximum())) {
+            return DDS::RETCODE_PRECONDITION_NOT_MET;
+        }
+    }
+
+    if ((max_samples == 0) ||
+        ((info_seq.maximum() == 0) && (info_seq.release()))) {
+        return DDS::RETCODE_NO_DATA;
+    }
+
+    return DDS::RETCODE_OK;
+}
+
+void *
+TSN::user_informationDataReader_impl::dataSeqAlloc (
+    void * received_data,
+    DDS::ULong len)
+{
+    TSN::user_informationSeq *data_seq = reinterpret_cast<TSN::user_informationSeq *>(received_data);
+    data_seq->replace(len, len, data_seq->allocbuf(len), false);
+    return data_seq->get_buffer();
+}
+
+void *
+TSN::user_informationDataReader_impl::dataSeqGetBuffer (
+    void * received_data,
+    DDS::ULong index)
+{
+	TSN::user_informationSeq *data_seq = reinterpret_cast<TSN::user_informationSeq *>(received_data);
+	return &((*data_seq)[index]);
+}
+
+void
+TSN::user_informationDataReader_impl::dataSeqLength (
+    void * received_data,
+    DDS::ULong len)
+{
+    TSN::user_informationSeq *data_seq = reinterpret_cast<TSN::user_informationSeq *>(received_data);
+    data_seq->length(len);
+}
+
+void
+TSN::user_informationDataReader_impl::dataSeqCopyOut (
+    const void * from,
+    void * to)
+{
+    TSN::user_information *data = reinterpret_cast<TSN::user_information *>(to);
+    __TSN_user_information__copyOut(from, data);
+}
+
+void
+TSN::user_informationDataReader_impl::copyDataOut (
+    const void * from,
+    void * to)
+{
+    TSN::user_information *data = reinterpret_cast<TSN::user_information *>(to);
+    __TSN_user_information__copyOut(from, data);
+}
+
+
+// DDS TSN::user_information DataReaderView_impl Object Body
+TSN::user_informationDataReaderView_impl::user_informationDataReaderView_impl ()
+{
+    // Parent constructor takes care of everything.
+}
+
+TSN::user_informationDataReaderView_impl::~user_informationDataReaderView_impl ()
+{
+    // Parent destructor takes care of everything.
+}
+
+DDS::ReturnCode_t
+TSN::user_informationDataReaderView_impl::init (
+    DDS::OpenSplice::DataReader *reader,
+    const char *name,
+    const DDS::DataReaderViewQos &qos,
+    DDS::OpenSplice::cxxCopyIn copyIn,
+    DDS::OpenSplice::cxxCopyOut copyOut)
+{
+    return DDS::OpenSplice::FooDataReaderView_impl::nlReq_init(
+            reader, name, qos, copyIn, copyOut, TSN::user_informationDataReader_impl::dataSeqAlloc,
+            TSN::user_informationDataReader_impl::dataSeqLength);
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReaderView_impl::read (
+    TSN::user_informationSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::user_informationDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::read(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReaderView_impl::take (
+    TSN::user_informationSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::user_informationDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::take(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReaderView_impl::read_w_condition (
+    TSN::user_informationSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::user_informationDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::read_w_condition(&received_data, info_seq, max_samples, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReaderView_impl::take_w_condition (
+    TSN::user_informationSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::user_informationDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::take_w_condition(&received_data, info_seq, max_samples, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReaderView_impl::read_next_sample (
+    TSN::user_information & received_data,
+    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReaderView_impl::read_next_sample(&received_data, sample_info);
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReaderView_impl::take_next_sample (
+    TSN::user_information & received_data,
+    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReaderView_impl::take_next_sample(&received_data, sample_info);
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReaderView_impl::read_instance (
+    TSN::user_informationSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::user_informationDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::read_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReaderView_impl::take_instance (
+    TSN::user_informationSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::user_informationDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::take_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReaderView_impl::read_next_instance (
+    TSN::user_informationSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::user_informationDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::read_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReaderView_impl::take_next_instance (
+    TSN::user_informationSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::user_informationDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::take_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReaderView_impl::read_next_instance_w_condition (
+    TSN::user_informationSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::user_informationDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::read_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReaderView_impl::take_next_instance_w_condition (
+    TSN::user_informationSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::user_informationDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::take_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReaderView_impl::return_loan (
+    TSN::user_informationSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t result = ::DDS::RETCODE_OK;
+
+    result = this->write_lock ();
+    if (result == DDS::RETCODE_OK) {
+        if ( received_data.length() > 0 ) {
+            if (received_data.length() == info_seq.length() &&
+                received_data.release() == info_seq.release() ) {
+                if (!received_data.release()) {
+                    result = DDS::OpenSplice::FooDataReaderView_impl::wlReq_return_loan( received_data.get_buffer(),
+                                                           info_seq.get_buffer() );
+
+                    if ( result == ::DDS::RETCODE_OK ) {
+                        if ( !received_data.release() ) {
+                            TSN::user_informationSeq::freebuf( received_data.get_buffer(false) );
+                            received_data.replace(0, 0, NULL, false);
+                            ::DDS::SampleInfoSeq::freebuf( info_seq.get_buffer(false) );
+                            info_seq.replace(0, 0, NULL, false);
+                        }
+                    } else if ( result == ::DDS::RETCODE_NO_DATA ) {
+                        if ( received_data.release() ) {
+                            result = ::DDS::RETCODE_OK;
+                        } else {
+                            result = ::DDS::RETCODE_PRECONDITION_NOT_MET;
+                        }
+                    }
+                }
+            } else {
+                result = ::DDS::RETCODE_PRECONDITION_NOT_MET;
+            }
+        }
+        this->unlock();
+    }
+    return result;
+}
+
+::DDS::ReturnCode_t
+TSN::user_informationDataReaderView_impl::get_key_value (
+    TSN::user_information & key_holder,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReaderView_impl::get_key_value(&key_holder, handle);
+}
+
+::DDS::InstanceHandle_t
+TSN::user_informationDataReaderView_impl::lookup_instance (
+    const TSN::user_information & instance) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReaderView_impl::lookup_instance(&instance);
+}
+extern v_copyin_result
+__TSN_request__copyIn (
+    c_base base,
+    const struct TSN::request *from,
+    struct _TSN_request *to);
+
+extern void
+__TSN_request__copyOut (
+    const void *_from,
+    void *_to);
+
+// DDS TSN::request TypeSupportMetaHolder Object Body
+TSN::requestTypeSupportMetaHolder::requestTypeSupportMetaHolder () :
+        DDS::OpenSplice::TypeSupportMetaHolder ("TSN::request", "", "uuid")
+{
+    copyIn = (DDS::OpenSplice::cxxCopyIn) __TSN_request__copyIn;
+    copyOut = (DDS::OpenSplice::cxxCopyOut) __TSN_request__copyOut;
+    metaDescriptorArrLength = 5;
+    metaDescriptorLength = 504;
+    const char *tmp[] = {"<MetaData version=\"1.0.0\"><Module name=\"TSN\"><TypeDef name=\"serial_number\"><ULong/></TypeDef><Struct name=\"node_request\">",
 "<Member name=\"fulfiller_uuid\"><Array size=\"37\"><Char/></Array></Member><Member name=\"requested_posts\">",
 "<Sequence><Type name=\"serial_number\"/></Sequence></Member></Struct><Struct name=\"request\"><Member name=\"uuid\">",
 "<String length=\"37\"/></Member><Member name=\"user_requests\"><Sequence><Type name=\"node_request\"/>",
 "</Sequence></Member></Struct></Module></MetaData>"};
-const ::DDS::ULong (::TSN::requestTypeSupport::metaDescriptorArrLength) = 5;
-const char * ::TSN::responseTypeSupport::metaDescriptor[] = {"<MetaData version=\"1.0.0\"><Module name=\"TSN\"><TypeDef name=\"serial_number\"><ULong/></TypeDef><Struct name=\"response\">",
-"<Member name=\"uuid\"><String length=\"37\"/></Member><Member name=\"post_id\"><Type name=\"serial_number\"/>",
-"</Member><Member name=\"post_body\"><String/></Member><Member name=\"date_of_creation\"><Long/></Member>",
-"</Struct></Module></MetaData>"};
-const ::DDS::ULong (::TSN::responseTypeSupport::metaDescriptorArrLength) = 4;
+    metaDescriptor = new const char*[metaDescriptorArrLength];
+    memcpy(metaDescriptor, tmp, sizeof(tmp));
+}
+
+TSN::requestTypeSupportMetaHolder::~requestTypeSupportMetaHolder ()
+{
+    // Rely on parent destructor.
+}
+
+::DDS::OpenSplice::DataWriter *
+TSN::requestTypeSupportMetaHolder::create_datawriter ()
+{
+    return new TSN::requestDataWriter_impl();
+}
+
+::DDS::OpenSplice::DataReader *
+TSN::requestTypeSupportMetaHolder::create_datareader ()
+{
+    return new TSN::requestDataReader_impl();
+}
+
+::DDS::OpenSplice::DataReaderView *
+TSN::requestTypeSupportMetaHolder::create_view ()
+{
+    return new TSN::requestDataReaderView_impl();
+}
+
+// DDS TSN::request TypeSupport Object Body
+TSN::requestTypeSupport::requestTypeSupport () :
+        DDS::OpenSplice::TypeSupport()
+{
+    tsMetaHolder = new TSN::requestTypeSupportMetaHolder();
+}
+
+TSN::requestTypeSupport::~requestTypeSupport ()
+{
+    DDS::release(tsMetaHolder);
+}
+
+// DDS TSN::request DataWriter_impl Object Body
+TSN::requestDataWriter_impl::requestDataWriter_impl ()
+{
+    // Parent constructor takes care of everything.
+}
+
+TSN::requestDataWriter_impl::~requestDataWriter_impl ()
+{
+    // Parent destructor takes care of everything.
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataWriter_impl::init (
+        DDS::OpenSplice::Publisher *publisher,
+        DDS::OpenSplice::DomainParticipant *participant,
+        const DDS::DataWriterQos &qos,
+        DDS::OpenSplice::Topic *a_topic,
+        const char *name,
+        DDS::OpenSplice::cxxCopyIn copyIn,
+        DDS::OpenSplice::cxxCopyOut copyOut)
+{
+    return DDS::OpenSplice::FooDataWriter_impl::nlReq_init(publisher, participant, qos, a_topic, name, copyIn, copyOut);
+}
+
+::DDS::InstanceHandle_t
+TSN::requestDataWriter_impl::register_instance (
+    const TSN::request & instance_data) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::register_instance(&instance_data);
+}
+
+::DDS::InstanceHandle_t
+TSN::requestDataWriter_impl::register_instance_w_timestamp (
+    const request & instance_data,
+    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::register_instance_w_timestamp(&instance_data, source_timestamp);
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataWriter_impl::unregister_instance (
+    const TSN::request & instance_data,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::unregister_instance(&instance_data, handle);
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataWriter_impl::unregister_instance_w_timestamp (
+    const request & instance_data,
+    ::DDS::InstanceHandle_t handle,
+    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::unregister_instance_w_timestamp(&instance_data, handle, source_timestamp);
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataWriter_impl::write (
+    const TSN::request & instance_data,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::write(&instance_data, handle);
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataWriter_impl::write_w_timestamp (
+    const request & instance_data,
+    ::DDS::InstanceHandle_t handle,
+    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::write_w_timestamp(&instance_data, handle, source_timestamp);
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataWriter_impl::dispose (
+    const TSN::request & instance_data,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::dispose(&instance_data, handle);
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataWriter_impl::dispose_w_timestamp (
+    const request & instance_data,
+    ::DDS::InstanceHandle_t handle,
+    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::dispose_w_timestamp(&instance_data, handle, source_timestamp);
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataWriter_impl::writedispose (
+    const TSN::request & instance_data,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::writedispose(&instance_data, handle);
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataWriter_impl::writedispose_w_timestamp (
+    const request & instance_data,
+    ::DDS::InstanceHandle_t handle,
+    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::writedispose_w_timestamp(&instance_data, handle, source_timestamp);
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataWriter_impl::get_key_value (
+    request & key_holder,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::get_key_value(&key_holder, handle);
+}
+
+::DDS::InstanceHandle_t
+TSN::requestDataWriter_impl::lookup_instance (
+    const TSN::request & instance_data) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::lookup_instance(&instance_data);
+}
+
+// DDS TSN::request DataReader_impl Object Body
+TSN::requestDataReader_impl::requestDataReader_impl ()
+{
+    // Parent constructor takes care of everything.
+}
+
+TSN::requestDataReader_impl::~requestDataReader_impl ()
+{
+    // Parent destructor takes care of everything.
+}
+
+DDS::ReturnCode_t
+TSN::requestDataReader_impl::init (
+    DDS::OpenSplice::Subscriber *subscriber,
+    const DDS::DataReaderQos &qos,
+    DDS::OpenSplice::TopicDescription *a_topic,
+    const char *name,
+    DDS::OpenSplice::cxxCopyIn copyIn,
+    DDS::OpenSplice::cxxCopyOut copyOut)
+{
+    return DDS::OpenSplice::FooDataReader_impl::nlReq_init(
+            subscriber, qos, a_topic, name, copyIn, copyOut,
+            this->dataSeqAlloc, this->dataSeqLength, this->dataSeqGetBuffer, this->dataSeqCopyOut);
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReader_impl::read (
+    TSN::requestSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status = DDS::RETCODE_OK;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::read(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReader_impl::take (
+    TSN::requestSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status = DDS::RETCODE_OK;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::take(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReader_impl::read_w_condition (
+    TSN::requestSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status = DDS::RETCODE_OK;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::read_w_condition(&received_data, info_seq, max_samples, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReader_impl::take_w_condition (
+    TSN::requestSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status = DDS::RETCODE_OK;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::take_w_condition(&received_data, info_seq, max_samples, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReader_impl::read_next_sample (
+    TSN::request & received_data,
+    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReader_impl::read_next_sample(&received_data, sample_info);
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReader_impl::take_next_sample (
+    TSN::request & received_data,
+    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReader_impl::take_next_sample(&received_data, sample_info);
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReader_impl::read_instance (
+    TSN::requestSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::read_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReader_impl::take_instance (
+    TSN::requestSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::take_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReader_impl::read_next_instance (
+    TSN::requestSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::read_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReader_impl::take_next_instance (
+    TSN::requestSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::take_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReader_impl::read_next_instance_w_condition (
+    TSN::requestSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::read_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReader_impl::take_next_instance_w_condition (
+    TSN::requestSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::take_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReader_impl::return_loan (
+    TSN::requestSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t result = ::DDS::RETCODE_OK;
+
+    result = this->write_lock ();
+    if (result == DDS::RETCODE_OK) {
+        if ( received_data.length() > 0 ) {
+            if (received_data.length() == info_seq.length() &&
+                received_data.release() == info_seq.release() ) {
+                if (!received_data.release()) {
+                    result = DDS::OpenSplice::FooDataReader_impl::wlReq_return_loan( received_data.get_buffer(),
+                                                                                     info_seq.get_buffer() );
+                    if ( result == ::DDS::RETCODE_OK ) {
+                        if ( !received_data.release() ) {
+                            TSN::requestSeq::freebuf( received_data.get_buffer(false) );
+                            received_data.replace(0, 0, NULL, false);
+                            ::DDS::SampleInfoSeq::freebuf( info_seq.get_buffer(false) );
+                            info_seq.replace(0, 0, NULL, false);
+                        }
+                    }
+                }
+            } else {
+                result = ::DDS::RETCODE_PRECONDITION_NOT_MET;
+            }
+        }
+        this->unlock();
+    }
+    return result;
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReader_impl::get_key_value (
+    TSN::request & key_holder,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReader_impl::get_key_value(&key_holder, handle);
+}
+
+::DDS::InstanceHandle_t
+TSN::requestDataReader_impl::lookup_instance (
+    const TSN::request & instance) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReader_impl::lookup_instance(&instance);
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReader_impl::check_preconditions (
+    TSN::requestSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples)
+{
+    if ((max_samples < 0) && (max_samples != DDS::LENGTH_UNLIMITED)) {
+        return DDS::RETCODE_BAD_PARAMETER;
+    }
+
+    /* Rule 1 : The values of len, max_len, and owns
+     * for the two collections must be identical.
+     */
+    if ((received_data.length()  != info_seq.length())  ||
+        (received_data.maximum() != info_seq.maximum()) ||
+        (received_data.release() != info_seq.release()))
+    {
+        return DDS::RETCODE_PRECONDITION_NOT_MET;
+    }
+
+    /* Rule 4: If the input max_len>0 and the input owns==FALSE,
+     * then the read operation will fail.
+     */
+    if ((info_seq.maximum() > 0) &&
+        (info_seq.release() == false))
+    {
+        return DDS::RETCODE_PRECONDITION_NOT_MET;
+    }
+
+    /* Rule 5: If input max_len>0 and the input owns==TRUE,
+     * then the read operation will...
+     */
+    if (info_seq.maximum() > 0) { /* owns is true, because of rule 4. */
+        /* Rule 5a: If max_samples = LENGTH_UNLIMITED,
+         * then at most max_len values will be copied.
+         * Rule 5b: If max_samples <= max_len,
+         * then at most max_samples values will be copied.
+         */
+        /* Rule 5c: If max_samples > max_len,
+         * then the read operation will fail.
+         */
+        if ((max_samples != DDS::LENGTH_UNLIMITED) &&
+            ((DDS::ULong)max_samples > info_seq.maximum())) {
+            return DDS::RETCODE_PRECONDITION_NOT_MET;
+        }
+    }
+
+    if ((max_samples == 0) ||
+        ((info_seq.maximum() == 0) && (info_seq.release()))) {
+        return DDS::RETCODE_NO_DATA;
+    }
+
+    return DDS::RETCODE_OK;
+}
+
+void *
+TSN::requestDataReader_impl::dataSeqAlloc (
+    void * received_data,
+    DDS::ULong len)
+{
+    TSN::requestSeq *data_seq = reinterpret_cast<TSN::requestSeq *>(received_data);
+    data_seq->replace(len, len, data_seq->allocbuf(len), false);
+    return data_seq->get_buffer();
+}
+
+void *
+TSN::requestDataReader_impl::dataSeqGetBuffer (
+    void * received_data,
+    DDS::ULong index)
+{
+	TSN::requestSeq *data_seq = reinterpret_cast<TSN::requestSeq *>(received_data);
+	return &((*data_seq)[index]);
+}
+
+void
+TSN::requestDataReader_impl::dataSeqLength (
+    void * received_data,
+    DDS::ULong len)
+{
+    TSN::requestSeq *data_seq = reinterpret_cast<TSN::requestSeq *>(received_data);
+    data_seq->length(len);
+}
+
+void
+TSN::requestDataReader_impl::dataSeqCopyOut (
+    const void * from,
+    void * to)
+{
+    TSN::request *data = reinterpret_cast<TSN::request *>(to);
+    __TSN_request__copyOut(from, data);
+}
+
+void
+TSN::requestDataReader_impl::copyDataOut (
+    const void * from,
+    void * to)
+{
+    TSN::request *data = reinterpret_cast<TSN::request *>(to);
+    __TSN_request__copyOut(from, data);
+}
+
+
+// DDS TSN::request DataReaderView_impl Object Body
+TSN::requestDataReaderView_impl::requestDataReaderView_impl ()
+{
+    // Parent constructor takes care of everything.
+}
+
+TSN::requestDataReaderView_impl::~requestDataReaderView_impl ()
+{
+    // Parent destructor takes care of everything.
+}
+
+DDS::ReturnCode_t
+TSN::requestDataReaderView_impl::init (
+    DDS::OpenSplice::DataReader *reader,
+    const char *name,
+    const DDS::DataReaderViewQos &qos,
+    DDS::OpenSplice::cxxCopyIn copyIn,
+    DDS::OpenSplice::cxxCopyOut copyOut)
+{
+    return DDS::OpenSplice::FooDataReaderView_impl::nlReq_init(
+            reader, name, qos, copyIn, copyOut, TSN::requestDataReader_impl::dataSeqAlloc,
+            TSN::requestDataReader_impl::dataSeqLength);
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReaderView_impl::read (
+    TSN::requestSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::requestDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::read(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReaderView_impl::take (
+    TSN::requestSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::requestDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::take(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReaderView_impl::read_w_condition (
+    TSN::requestSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::requestDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::read_w_condition(&received_data, info_seq, max_samples, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReaderView_impl::take_w_condition (
+    TSN::requestSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::requestDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::take_w_condition(&received_data, info_seq, max_samples, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReaderView_impl::read_next_sample (
+    TSN::request & received_data,
+    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReaderView_impl::read_next_sample(&received_data, sample_info);
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReaderView_impl::take_next_sample (
+    TSN::request & received_data,
+    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReaderView_impl::take_next_sample(&received_data, sample_info);
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReaderView_impl::read_instance (
+    TSN::requestSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::requestDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::read_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReaderView_impl::take_instance (
+    TSN::requestSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::requestDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::take_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReaderView_impl::read_next_instance (
+    TSN::requestSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::requestDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::read_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReaderView_impl::take_next_instance (
+    TSN::requestSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::requestDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::take_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReaderView_impl::read_next_instance_w_condition (
+    TSN::requestSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::requestDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::read_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReaderView_impl::take_next_instance_w_condition (
+    TSN::requestSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::requestDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::take_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReaderView_impl::return_loan (
+    TSN::requestSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t result = ::DDS::RETCODE_OK;
+
+    result = this->write_lock ();
+    if (result == DDS::RETCODE_OK) {
+        if ( received_data.length() > 0 ) {
+            if (received_data.length() == info_seq.length() &&
+                received_data.release() == info_seq.release() ) {
+                if (!received_data.release()) {
+                    result = DDS::OpenSplice::FooDataReaderView_impl::wlReq_return_loan( received_data.get_buffer(),
+                                                           info_seq.get_buffer() );
+
+                    if ( result == ::DDS::RETCODE_OK ) {
+                        if ( !received_data.release() ) {
+                            TSN::requestSeq::freebuf( received_data.get_buffer(false) );
+                            received_data.replace(0, 0, NULL, false);
+                            ::DDS::SampleInfoSeq::freebuf( info_seq.get_buffer(false) );
+                            info_seq.replace(0, 0, NULL, false);
+                        }
+                    } else if ( result == ::DDS::RETCODE_NO_DATA ) {
+                        if ( received_data.release() ) {
+                            result = ::DDS::RETCODE_OK;
+                        } else {
+                            result = ::DDS::RETCODE_PRECONDITION_NOT_MET;
+                        }
+                    }
+                }
+            } else {
+                result = ::DDS::RETCODE_PRECONDITION_NOT_MET;
+            }
+        }
+        this->unlock();
+    }
+    return result;
+}
+
+::DDS::ReturnCode_t
+TSN::requestDataReaderView_impl::get_key_value (
+    TSN::request & key_holder,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReaderView_impl::get_key_value(&key_holder, handle);
+}
+
+::DDS::InstanceHandle_t
+TSN::requestDataReaderView_impl::lookup_instance (
+    const TSN::request & instance) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReaderView_impl::lookup_instance(&instance);
+}
+extern v_copyin_result
+__TSN_response__copyIn (
+    c_base base,
+    const struct TSN::response *from,
+    struct _TSN_response *to);
+
+extern void
+__TSN_response__copyOut (
+    const void *_from,
+    void *_to);
+
+// DDS TSN::response TypeSupportMetaHolder Object Body
+TSN::responseTypeSupportMetaHolder::responseTypeSupportMetaHolder () :
+        DDS::OpenSplice::TypeSupportMetaHolder ("TSN::response", "", "uuid")
+{
+    copyIn = (DDS::OpenSplice::cxxCopyIn) __TSN_response__copyIn;
+    copyOut = (DDS::OpenSplice::cxxCopyOut) __TSN_response__copyOut;
+    metaDescriptorArrLength = 6;
+    metaDescriptorLength = 687;
+    const char *tmp[] = {"<MetaData version=\"1.0.0\"><Module name=\"TSN\"><TypeDef name=\"serial_number\"><ULong/></TypeDef><Struct name=\"post_data\">",
+"<Member name=\"owner_uuid\"><Array size=\"37\"><Char/></Array></Member><Member name=\"post_id\"><Type name=\"serial_number\"/>",
+"</Member></Struct><Struct name=\"response\"><Member name=\"uuid\"><String length=\"37\"/></Member><Member name=\"post_id\">",
+"<Type name=\"serial_number\"/></Member><Member name=\"post_body\"><String/></Member><Member name=\"date_of_creation\">",
+"<Long/></Member><Member name=\"parent_post\"><Type name=\"post_data\"/></Member><Member name=\"child_posts\">",
+"<Sequence><Type name=\"post_data\"/></Sequence></Member></Struct></Module></MetaData>"};
+    metaDescriptor = new const char*[metaDescriptorArrLength];
+    memcpy(metaDescriptor, tmp, sizeof(tmp));
+}
+
+TSN::responseTypeSupportMetaHolder::~responseTypeSupportMetaHolder ()
+{
+    // Rely on parent destructor.
+}
+
+::DDS::OpenSplice::DataWriter *
+TSN::responseTypeSupportMetaHolder::create_datawriter ()
+{
+    return new TSN::responseDataWriter_impl();
+}
+
+::DDS::OpenSplice::DataReader *
+TSN::responseTypeSupportMetaHolder::create_datareader ()
+{
+    return new TSN::responseDataReader_impl();
+}
+
+::DDS::OpenSplice::DataReaderView *
+TSN::responseTypeSupportMetaHolder::create_view ()
+{
+    return new TSN::responseDataReaderView_impl();
+}
+
+// DDS TSN::response TypeSupport Object Body
+TSN::responseTypeSupport::responseTypeSupport () :
+        DDS::OpenSplice::TypeSupport()
+{
+    tsMetaHolder = new TSN::responseTypeSupportMetaHolder();
+}
+
+TSN::responseTypeSupport::~responseTypeSupport ()
+{
+    DDS::release(tsMetaHolder);
+}
+
+// DDS TSN::response DataWriter_impl Object Body
+TSN::responseDataWriter_impl::responseDataWriter_impl ()
+{
+    // Parent constructor takes care of everything.
+}
+
+TSN::responseDataWriter_impl::~responseDataWriter_impl ()
+{
+    // Parent destructor takes care of everything.
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataWriter_impl::init (
+        DDS::OpenSplice::Publisher *publisher,
+        DDS::OpenSplice::DomainParticipant *participant,
+        const DDS::DataWriterQos &qos,
+        DDS::OpenSplice::Topic *a_topic,
+        const char *name,
+        DDS::OpenSplice::cxxCopyIn copyIn,
+        DDS::OpenSplice::cxxCopyOut copyOut)
+{
+    return DDS::OpenSplice::FooDataWriter_impl::nlReq_init(publisher, participant, qos, a_topic, name, copyIn, copyOut);
+}
+
+::DDS::InstanceHandle_t
+TSN::responseDataWriter_impl::register_instance (
+    const TSN::response & instance_data) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::register_instance(&instance_data);
+}
+
+::DDS::InstanceHandle_t
+TSN::responseDataWriter_impl::register_instance_w_timestamp (
+    const response & instance_data,
+    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::register_instance_w_timestamp(&instance_data, source_timestamp);
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataWriter_impl::unregister_instance (
+    const TSN::response & instance_data,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::unregister_instance(&instance_data, handle);
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataWriter_impl::unregister_instance_w_timestamp (
+    const response & instance_data,
+    ::DDS::InstanceHandle_t handle,
+    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::unregister_instance_w_timestamp(&instance_data, handle, source_timestamp);
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataWriter_impl::write (
+    const TSN::response & instance_data,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::write(&instance_data, handle);
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataWriter_impl::write_w_timestamp (
+    const response & instance_data,
+    ::DDS::InstanceHandle_t handle,
+    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::write_w_timestamp(&instance_data, handle, source_timestamp);
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataWriter_impl::dispose (
+    const TSN::response & instance_data,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::dispose(&instance_data, handle);
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataWriter_impl::dispose_w_timestamp (
+    const response & instance_data,
+    ::DDS::InstanceHandle_t handle,
+    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::dispose_w_timestamp(&instance_data, handle, source_timestamp);
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataWriter_impl::writedispose (
+    const TSN::response & instance_data,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::writedispose(&instance_data, handle);
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataWriter_impl::writedispose_w_timestamp (
+    const response & instance_data,
+    ::DDS::InstanceHandle_t handle,
+    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::writedispose_w_timestamp(&instance_data, handle, source_timestamp);
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataWriter_impl::get_key_value (
+    response & key_holder,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::get_key_value(&key_holder, handle);
+}
+
+::DDS::InstanceHandle_t
+TSN::responseDataWriter_impl::lookup_instance (
+    const TSN::response & instance_data) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::lookup_instance(&instance_data);
+}
+
+// DDS TSN::response DataReader_impl Object Body
+TSN::responseDataReader_impl::responseDataReader_impl ()
+{
+    // Parent constructor takes care of everything.
+}
+
+TSN::responseDataReader_impl::~responseDataReader_impl ()
+{
+    // Parent destructor takes care of everything.
+}
+
+DDS::ReturnCode_t
+TSN::responseDataReader_impl::init (
+    DDS::OpenSplice::Subscriber *subscriber,
+    const DDS::DataReaderQos &qos,
+    DDS::OpenSplice::TopicDescription *a_topic,
+    const char *name,
+    DDS::OpenSplice::cxxCopyIn copyIn,
+    DDS::OpenSplice::cxxCopyOut copyOut)
+{
+    return DDS::OpenSplice::FooDataReader_impl::nlReq_init(
+            subscriber, qos, a_topic, name, copyIn, copyOut,
+            this->dataSeqAlloc, this->dataSeqLength, this->dataSeqGetBuffer, this->dataSeqCopyOut);
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReader_impl::read (
+    TSN::responseSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status = DDS::RETCODE_OK;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::read(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReader_impl::take (
+    TSN::responseSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status = DDS::RETCODE_OK;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::take(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReader_impl::read_w_condition (
+    TSN::responseSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status = DDS::RETCODE_OK;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::read_w_condition(&received_data, info_seq, max_samples, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReader_impl::take_w_condition (
+    TSN::responseSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status = DDS::RETCODE_OK;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::take_w_condition(&received_data, info_seq, max_samples, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReader_impl::read_next_sample (
+    TSN::response & received_data,
+    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReader_impl::read_next_sample(&received_data, sample_info);
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReader_impl::take_next_sample (
+    TSN::response & received_data,
+    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReader_impl::take_next_sample(&received_data, sample_info);
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReader_impl::read_instance (
+    TSN::responseSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::read_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReader_impl::take_instance (
+    TSN::responseSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::take_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReader_impl::read_next_instance (
+    TSN::responseSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::read_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReader_impl::take_next_instance (
+    TSN::responseSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::take_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReader_impl::read_next_instance_w_condition (
+    TSN::responseSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::read_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReader_impl::take_next_instance_w_condition (
+    TSN::responseSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::take_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReader_impl::return_loan (
+    TSN::responseSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t result = ::DDS::RETCODE_OK;
+
+    result = this->write_lock ();
+    if (result == DDS::RETCODE_OK) {
+        if ( received_data.length() > 0 ) {
+            if (received_data.length() == info_seq.length() &&
+                received_data.release() == info_seq.release() ) {
+                if (!received_data.release()) {
+                    result = DDS::OpenSplice::FooDataReader_impl::wlReq_return_loan( received_data.get_buffer(),
+                                                                                     info_seq.get_buffer() );
+                    if ( result == ::DDS::RETCODE_OK ) {
+                        if ( !received_data.release() ) {
+                            TSN::responseSeq::freebuf( received_data.get_buffer(false) );
+                            received_data.replace(0, 0, NULL, false);
+                            ::DDS::SampleInfoSeq::freebuf( info_seq.get_buffer(false) );
+                            info_seq.replace(0, 0, NULL, false);
+                        }
+                    }
+                }
+            } else {
+                result = ::DDS::RETCODE_PRECONDITION_NOT_MET;
+            }
+        }
+        this->unlock();
+    }
+    return result;
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReader_impl::get_key_value (
+    TSN::response & key_holder,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReader_impl::get_key_value(&key_holder, handle);
+}
+
+::DDS::InstanceHandle_t
+TSN::responseDataReader_impl::lookup_instance (
+    const TSN::response & instance) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReader_impl::lookup_instance(&instance);
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReader_impl::check_preconditions (
+    TSN::responseSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples)
+{
+    if ((max_samples < 0) && (max_samples != DDS::LENGTH_UNLIMITED)) {
+        return DDS::RETCODE_BAD_PARAMETER;
+    }
+
+    /* Rule 1 : The values of len, max_len, and owns
+     * for the two collections must be identical.
+     */
+    if ((received_data.length()  != info_seq.length())  ||
+        (received_data.maximum() != info_seq.maximum()) ||
+        (received_data.release() != info_seq.release()))
+    {
+        return DDS::RETCODE_PRECONDITION_NOT_MET;
+    }
+
+    /* Rule 4: If the input max_len>0 and the input owns==FALSE,
+     * then the read operation will fail.
+     */
+    if ((info_seq.maximum() > 0) &&
+        (info_seq.release() == false))
+    {
+        return DDS::RETCODE_PRECONDITION_NOT_MET;
+    }
+
+    /* Rule 5: If input max_len>0 and the input owns==TRUE,
+     * then the read operation will...
+     */
+    if (info_seq.maximum() > 0) { /* owns is true, because of rule 4. */
+        /* Rule 5a: If max_samples = LENGTH_UNLIMITED,
+         * then at most max_len values will be copied.
+         * Rule 5b: If max_samples <= max_len,
+         * then at most max_samples values will be copied.
+         */
+        /* Rule 5c: If max_samples > max_len,
+         * then the read operation will fail.
+         */
+        if ((max_samples != DDS::LENGTH_UNLIMITED) &&
+            ((DDS::ULong)max_samples > info_seq.maximum())) {
+            return DDS::RETCODE_PRECONDITION_NOT_MET;
+        }
+    }
+
+    if ((max_samples == 0) ||
+        ((info_seq.maximum() == 0) && (info_seq.release()))) {
+        return DDS::RETCODE_NO_DATA;
+    }
+
+    return DDS::RETCODE_OK;
+}
+
+void *
+TSN::responseDataReader_impl::dataSeqAlloc (
+    void * received_data,
+    DDS::ULong len)
+{
+    TSN::responseSeq *data_seq = reinterpret_cast<TSN::responseSeq *>(received_data);
+    data_seq->replace(len, len, data_seq->allocbuf(len), false);
+    return data_seq->get_buffer();
+}
+
+void *
+TSN::responseDataReader_impl::dataSeqGetBuffer (
+    void * received_data,
+    DDS::ULong index)
+{
+	TSN::responseSeq *data_seq = reinterpret_cast<TSN::responseSeq *>(received_data);
+	return &((*data_seq)[index]);
+}
+
+void
+TSN::responseDataReader_impl::dataSeqLength (
+    void * received_data,
+    DDS::ULong len)
+{
+    TSN::responseSeq *data_seq = reinterpret_cast<TSN::responseSeq *>(received_data);
+    data_seq->length(len);
+}
+
+void
+TSN::responseDataReader_impl::dataSeqCopyOut (
+    const void * from,
+    void * to)
+{
+    TSN::response *data = reinterpret_cast<TSN::response *>(to);
+    __TSN_response__copyOut(from, data);
+}
+
+void
+TSN::responseDataReader_impl::copyDataOut (
+    const void * from,
+    void * to)
+{
+    TSN::response *data = reinterpret_cast<TSN::response *>(to);
+    __TSN_response__copyOut(from, data);
+}
+
+
+// DDS TSN::response DataReaderView_impl Object Body
+TSN::responseDataReaderView_impl::responseDataReaderView_impl ()
+{
+    // Parent constructor takes care of everything.
+}
+
+TSN::responseDataReaderView_impl::~responseDataReaderView_impl ()
+{
+    // Parent destructor takes care of everything.
+}
+
+DDS::ReturnCode_t
+TSN::responseDataReaderView_impl::init (
+    DDS::OpenSplice::DataReader *reader,
+    const char *name,
+    const DDS::DataReaderViewQos &qos,
+    DDS::OpenSplice::cxxCopyIn copyIn,
+    DDS::OpenSplice::cxxCopyOut copyOut)
+{
+    return DDS::OpenSplice::FooDataReaderView_impl::nlReq_init(
+            reader, name, qos, copyIn, copyOut, TSN::responseDataReader_impl::dataSeqAlloc,
+            TSN::responseDataReader_impl::dataSeqLength);
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReaderView_impl::read (
+    TSN::responseSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::responseDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::read(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReaderView_impl::take (
+    TSN::responseSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::responseDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::take(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReaderView_impl::read_w_condition (
+    TSN::responseSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::responseDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::read_w_condition(&received_data, info_seq, max_samples, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReaderView_impl::take_w_condition (
+    TSN::responseSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::responseDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::take_w_condition(&received_data, info_seq, max_samples, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReaderView_impl::read_next_sample (
+    TSN::response & received_data,
+    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReaderView_impl::read_next_sample(&received_data, sample_info);
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReaderView_impl::take_next_sample (
+    TSN::response & received_data,
+    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReaderView_impl::take_next_sample(&received_data, sample_info);
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReaderView_impl::read_instance (
+    TSN::responseSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::responseDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::read_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReaderView_impl::take_instance (
+    TSN::responseSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::responseDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::take_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReaderView_impl::read_next_instance (
+    TSN::responseSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::responseDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::read_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReaderView_impl::take_next_instance (
+    TSN::responseSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::responseDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::take_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReaderView_impl::read_next_instance_w_condition (
+    TSN::responseSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::responseDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::read_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReaderView_impl::take_next_instance_w_condition (
+    TSN::responseSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::responseDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::take_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReaderView_impl::return_loan (
+    TSN::responseSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t result = ::DDS::RETCODE_OK;
+
+    result = this->write_lock ();
+    if (result == DDS::RETCODE_OK) {
+        if ( received_data.length() > 0 ) {
+            if (received_data.length() == info_seq.length() &&
+                received_data.release() == info_seq.release() ) {
+                if (!received_data.release()) {
+                    result = DDS::OpenSplice::FooDataReaderView_impl::wlReq_return_loan( received_data.get_buffer(),
+                                                           info_seq.get_buffer() );
+
+                    if ( result == ::DDS::RETCODE_OK ) {
+                        if ( !received_data.release() ) {
+                            TSN::responseSeq::freebuf( received_data.get_buffer(false) );
+                            received_data.replace(0, 0, NULL, false);
+                            ::DDS::SampleInfoSeq::freebuf( info_seq.get_buffer(false) );
+                            info_seq.replace(0, 0, NULL, false);
+                        }
+                    } else if ( result == ::DDS::RETCODE_NO_DATA ) {
+                        if ( received_data.release() ) {
+                            result = ::DDS::RETCODE_OK;
+                        } else {
+                            result = ::DDS::RETCODE_PRECONDITION_NOT_MET;
+                        }
+                    }
+                }
+            } else {
+                result = ::DDS::RETCODE_PRECONDITION_NOT_MET;
+            }
+        }
+        this->unlock();
+    }
+    return result;
+}
+
+::DDS::ReturnCode_t
+TSN::responseDataReaderView_impl::get_key_value (
+    TSN::response & key_holder,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReaderView_impl::get_key_value(&key_holder, handle);
+}
+
+::DDS::InstanceHandle_t
+TSN::responseDataReaderView_impl::lookup_instance (
+    const TSN::response & instance) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReaderView_impl::lookup_instance(&instance);
+}
+extern v_copyin_result
+__TSN_private_message__copyIn (
+    c_base base,
+    const struct TSN::private_message *from,
+    struct _TSN_private_message *to);
+
+extern void
+__TSN_private_message__copyOut (
+    const void *_from,
+    void *_to);
+
+// DDS TSN::private_message TypeSupportMetaHolder Object Body
+TSN::private_messageTypeSupportMetaHolder::private_messageTypeSupportMetaHolder () :
+        DDS::OpenSplice::TypeSupportMetaHolder ("TSN::private_message", "", "receiver_uuid")
+{
+    copyIn = (DDS::OpenSplice::cxxCopyIn) __TSN_private_message__copyIn;
+    copyOut = (DDS::OpenSplice::cxxCopyOut) __TSN_private_message__copyOut;
+    metaDescriptorArrLength = 4;
+    metaDescriptorLength = 344;
+    const char *tmp[] = {"<MetaData version=\"1.0.0\"><Module name=\"TSN\"><Struct name=\"private_message\"><Member name=\"receiver_uuid\">",
+"<String length=\"37\"/></Member><Member name=\"sender_uuid\"><Array size=\"37\"><Char/></Array></Member>",
+"<Member name=\"message_body\"><String/></Member><Member name=\"date_of_creation\"><Long/></Member></Struct>",
+"</Module></MetaData>"};
+    metaDescriptor = new const char*[metaDescriptorArrLength];
+    memcpy(metaDescriptor, tmp, sizeof(tmp));
+}
+
+TSN::private_messageTypeSupportMetaHolder::~private_messageTypeSupportMetaHolder ()
+{
+    // Rely on parent destructor.
+}
+
+::DDS::OpenSplice::DataWriter *
+TSN::private_messageTypeSupportMetaHolder::create_datawriter ()
+{
+    return new TSN::private_messageDataWriter_impl();
+}
+
+::DDS::OpenSplice::DataReader *
+TSN::private_messageTypeSupportMetaHolder::create_datareader ()
+{
+    return new TSN::private_messageDataReader_impl();
+}
+
+::DDS::OpenSplice::DataReaderView *
+TSN::private_messageTypeSupportMetaHolder::create_view ()
+{
+    return new TSN::private_messageDataReaderView_impl();
+}
+
+// DDS TSN::private_message TypeSupport Object Body
+TSN::private_messageTypeSupport::private_messageTypeSupport () :
+        DDS::OpenSplice::TypeSupport()
+{
+    tsMetaHolder = new TSN::private_messageTypeSupportMetaHolder();
+}
+
+TSN::private_messageTypeSupport::~private_messageTypeSupport ()
+{
+    DDS::release(tsMetaHolder);
+}
+
+// DDS TSN::private_message DataWriter_impl Object Body
+TSN::private_messageDataWriter_impl::private_messageDataWriter_impl ()
+{
+    // Parent constructor takes care of everything.
+}
+
+TSN::private_messageDataWriter_impl::~private_messageDataWriter_impl ()
+{
+    // Parent destructor takes care of everything.
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataWriter_impl::init (
+        DDS::OpenSplice::Publisher *publisher,
+        DDS::OpenSplice::DomainParticipant *participant,
+        const DDS::DataWriterQos &qos,
+        DDS::OpenSplice::Topic *a_topic,
+        const char *name,
+        DDS::OpenSplice::cxxCopyIn copyIn,
+        DDS::OpenSplice::cxxCopyOut copyOut)
+{
+    return DDS::OpenSplice::FooDataWriter_impl::nlReq_init(publisher, participant, qos, a_topic, name, copyIn, copyOut);
+}
+
+::DDS::InstanceHandle_t
+TSN::private_messageDataWriter_impl::register_instance (
+    const TSN::private_message & instance_data) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::register_instance(&instance_data);
+}
+
+::DDS::InstanceHandle_t
+TSN::private_messageDataWriter_impl::register_instance_w_timestamp (
+    const private_message & instance_data,
+    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::register_instance_w_timestamp(&instance_data, source_timestamp);
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataWriter_impl::unregister_instance (
+    const TSN::private_message & instance_data,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::unregister_instance(&instance_data, handle);
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataWriter_impl::unregister_instance_w_timestamp (
+    const private_message & instance_data,
+    ::DDS::InstanceHandle_t handle,
+    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::unregister_instance_w_timestamp(&instance_data, handle, source_timestamp);
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataWriter_impl::write (
+    const TSN::private_message & instance_data,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::write(&instance_data, handle);
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataWriter_impl::write_w_timestamp (
+    const private_message & instance_data,
+    ::DDS::InstanceHandle_t handle,
+    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::write_w_timestamp(&instance_data, handle, source_timestamp);
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataWriter_impl::dispose (
+    const TSN::private_message & instance_data,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::dispose(&instance_data, handle);
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataWriter_impl::dispose_w_timestamp (
+    const private_message & instance_data,
+    ::DDS::InstanceHandle_t handle,
+    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::dispose_w_timestamp(&instance_data, handle, source_timestamp);
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataWriter_impl::writedispose (
+    const TSN::private_message & instance_data,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::writedispose(&instance_data, handle);
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataWriter_impl::writedispose_w_timestamp (
+    const private_message & instance_data,
+    ::DDS::InstanceHandle_t handle,
+    const ::DDS::Time_t & source_timestamp) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::writedispose_w_timestamp(&instance_data, handle, source_timestamp);
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataWriter_impl::get_key_value (
+    private_message & key_holder,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::get_key_value(&key_holder, handle);
+}
+
+::DDS::InstanceHandle_t
+TSN::private_messageDataWriter_impl::lookup_instance (
+    const TSN::private_message & instance_data) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataWriter_impl::lookup_instance(&instance_data);
+}
+
+// DDS TSN::private_message DataReader_impl Object Body
+TSN::private_messageDataReader_impl::private_messageDataReader_impl ()
+{
+    // Parent constructor takes care of everything.
+}
+
+TSN::private_messageDataReader_impl::~private_messageDataReader_impl ()
+{
+    // Parent destructor takes care of everything.
+}
+
+DDS::ReturnCode_t
+TSN::private_messageDataReader_impl::init (
+    DDS::OpenSplice::Subscriber *subscriber,
+    const DDS::DataReaderQos &qos,
+    DDS::OpenSplice::TopicDescription *a_topic,
+    const char *name,
+    DDS::OpenSplice::cxxCopyIn copyIn,
+    DDS::OpenSplice::cxxCopyOut copyOut)
+{
+    return DDS::OpenSplice::FooDataReader_impl::nlReq_init(
+            subscriber, qos, a_topic, name, copyIn, copyOut,
+            this->dataSeqAlloc, this->dataSeqLength, this->dataSeqGetBuffer, this->dataSeqCopyOut);
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReader_impl::read (
+    TSN::private_messageSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status = DDS::RETCODE_OK;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::read(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReader_impl::take (
+    TSN::private_messageSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status = DDS::RETCODE_OK;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::take(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReader_impl::read_w_condition (
+    TSN::private_messageSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status = DDS::RETCODE_OK;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::read_w_condition(&received_data, info_seq, max_samples, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReader_impl::take_w_condition (
+    TSN::private_messageSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status = DDS::RETCODE_OK;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::take_w_condition(&received_data, info_seq, max_samples, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReader_impl::read_next_sample (
+    TSN::private_message & received_data,
+    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReader_impl::read_next_sample(&received_data, sample_info);
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReader_impl::take_next_sample (
+    TSN::private_message & received_data,
+    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReader_impl::take_next_sample(&received_data, sample_info);
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReader_impl::read_instance (
+    TSN::private_messageSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::read_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReader_impl::take_instance (
+    TSN::private_messageSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::take_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReader_impl::read_next_instance (
+    TSN::private_messageSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::read_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReader_impl::take_next_instance (
+    TSN::private_messageSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::take_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReader_impl::read_next_instance_w_condition (
+    TSN::private_messageSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::read_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReader_impl::take_next_instance_w_condition (
+    TSN::private_messageSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReader_impl::take_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReader_impl::return_loan (
+    TSN::private_messageSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t result = ::DDS::RETCODE_OK;
+
+    result = this->write_lock ();
+    if (result == DDS::RETCODE_OK) {
+        if ( received_data.length() > 0 ) {
+            if (received_data.length() == info_seq.length() &&
+                received_data.release() == info_seq.release() ) {
+                if (!received_data.release()) {
+                    result = DDS::OpenSplice::FooDataReader_impl::wlReq_return_loan( received_data.get_buffer(),
+                                                                                     info_seq.get_buffer() );
+                    if ( result == ::DDS::RETCODE_OK ) {
+                        if ( !received_data.release() ) {
+                            TSN::private_messageSeq::freebuf( received_data.get_buffer(false) );
+                            received_data.replace(0, 0, NULL, false);
+                            ::DDS::SampleInfoSeq::freebuf( info_seq.get_buffer(false) );
+                            info_seq.replace(0, 0, NULL, false);
+                        }
+                    }
+                }
+            } else {
+                result = ::DDS::RETCODE_PRECONDITION_NOT_MET;
+            }
+        }
+        this->unlock();
+    }
+    return result;
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReader_impl::get_key_value (
+    TSN::private_message & key_holder,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReader_impl::get_key_value(&key_holder, handle);
+}
+
+::DDS::InstanceHandle_t
+TSN::private_messageDataReader_impl::lookup_instance (
+    const TSN::private_message & instance) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReader_impl::lookup_instance(&instance);
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReader_impl::check_preconditions (
+    TSN::private_messageSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples)
+{
+    if ((max_samples < 0) && (max_samples != DDS::LENGTH_UNLIMITED)) {
+        return DDS::RETCODE_BAD_PARAMETER;
+    }
+
+    /* Rule 1 : The values of len, max_len, and owns
+     * for the two collections must be identical.
+     */
+    if ((received_data.length()  != info_seq.length())  ||
+        (received_data.maximum() != info_seq.maximum()) ||
+        (received_data.release() != info_seq.release()))
+    {
+        return DDS::RETCODE_PRECONDITION_NOT_MET;
+    }
+
+    /* Rule 4: If the input max_len>0 and the input owns==FALSE,
+     * then the read operation will fail.
+     */
+    if ((info_seq.maximum() > 0) &&
+        (info_seq.release() == false))
+    {
+        return DDS::RETCODE_PRECONDITION_NOT_MET;
+    }
+
+    /* Rule 5: If input max_len>0 and the input owns==TRUE,
+     * then the read operation will...
+     */
+    if (info_seq.maximum() > 0) { /* owns is true, because of rule 4. */
+        /* Rule 5a: If max_samples = LENGTH_UNLIMITED,
+         * then at most max_len values will be copied.
+         * Rule 5b: If max_samples <= max_len,
+         * then at most max_samples values will be copied.
+         */
+        /* Rule 5c: If max_samples > max_len,
+         * then the read operation will fail.
+         */
+        if ((max_samples != DDS::LENGTH_UNLIMITED) &&
+            ((DDS::ULong)max_samples > info_seq.maximum())) {
+            return DDS::RETCODE_PRECONDITION_NOT_MET;
+        }
+    }
+
+    if ((max_samples == 0) ||
+        ((info_seq.maximum() == 0) && (info_seq.release()))) {
+        return DDS::RETCODE_NO_DATA;
+    }
+
+    return DDS::RETCODE_OK;
+}
+
+void *
+TSN::private_messageDataReader_impl::dataSeqAlloc (
+    void * received_data,
+    DDS::ULong len)
+{
+    TSN::private_messageSeq *data_seq = reinterpret_cast<TSN::private_messageSeq *>(received_data);
+    data_seq->replace(len, len, data_seq->allocbuf(len), false);
+    return data_seq->get_buffer();
+}
+
+void *
+TSN::private_messageDataReader_impl::dataSeqGetBuffer (
+    void * received_data,
+    DDS::ULong index)
+{
+	TSN::private_messageSeq *data_seq = reinterpret_cast<TSN::private_messageSeq *>(received_data);
+	return &((*data_seq)[index]);
+}
+
+void
+TSN::private_messageDataReader_impl::dataSeqLength (
+    void * received_data,
+    DDS::ULong len)
+{
+    TSN::private_messageSeq *data_seq = reinterpret_cast<TSN::private_messageSeq *>(received_data);
+    data_seq->length(len);
+}
+
+void
+TSN::private_messageDataReader_impl::dataSeqCopyOut (
+    const void * from,
+    void * to)
+{
+    TSN::private_message *data = reinterpret_cast<TSN::private_message *>(to);
+    __TSN_private_message__copyOut(from, data);
+}
+
+void
+TSN::private_messageDataReader_impl::copyDataOut (
+    const void * from,
+    void * to)
+{
+    TSN::private_message *data = reinterpret_cast<TSN::private_message *>(to);
+    __TSN_private_message__copyOut(from, data);
+}
+
+
+// DDS TSN::private_message DataReaderView_impl Object Body
+TSN::private_messageDataReaderView_impl::private_messageDataReaderView_impl ()
+{
+    // Parent constructor takes care of everything.
+}
+
+TSN::private_messageDataReaderView_impl::~private_messageDataReaderView_impl ()
+{
+    // Parent destructor takes care of everything.
+}
+
+DDS::ReturnCode_t
+TSN::private_messageDataReaderView_impl::init (
+    DDS::OpenSplice::DataReader *reader,
+    const char *name,
+    const DDS::DataReaderViewQos &qos,
+    DDS::OpenSplice::cxxCopyIn copyIn,
+    DDS::OpenSplice::cxxCopyOut copyOut)
+{
+    return DDS::OpenSplice::FooDataReaderView_impl::nlReq_init(
+            reader, name, qos, copyIn, copyOut, TSN::private_messageDataReader_impl::dataSeqAlloc,
+            TSN::private_messageDataReader_impl::dataSeqLength);
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReaderView_impl::read (
+    TSN::private_messageSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::private_messageDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::read(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReaderView_impl::take (
+    TSN::private_messageSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::private_messageDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::take(&received_data, info_seq, max_samples, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReaderView_impl::read_w_condition (
+    TSN::private_messageSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::private_messageDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::read_w_condition(&received_data, info_seq, max_samples, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReaderView_impl::take_w_condition (
+    TSN::private_messageSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::private_messageDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::take_w_condition(&received_data, info_seq, max_samples, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReaderView_impl::read_next_sample (
+    TSN::private_message & received_data,
+    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReaderView_impl::read_next_sample(&received_data, sample_info);
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReaderView_impl::take_next_sample (
+    TSN::private_message & received_data,
+    ::DDS::SampleInfo & sample_info) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReaderView_impl::take_next_sample(&received_data, sample_info);
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReaderView_impl::read_instance (
+    TSN::private_messageSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::private_messageDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::read_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReaderView_impl::take_instance (
+    TSN::private_messageSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::private_messageDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::take_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReaderView_impl::read_next_instance (
+    TSN::private_messageSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::private_messageDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::read_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReaderView_impl::take_next_instance (
+    TSN::private_messageSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::SampleStateMask sample_states,
+    ::DDS::ViewStateMask view_states,
+    ::DDS::InstanceStateMask instance_states) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::private_messageDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::take_next_instance(&received_data, info_seq, max_samples, a_handle, sample_states, view_states, instance_states);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReaderView_impl::read_next_instance_w_condition (
+    TSN::private_messageSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::private_messageDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::read_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReaderView_impl::take_next_instance_w_condition (
+    TSN::private_messageSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq,
+    ::DDS::Long max_samples,
+    ::DDS::InstanceHandle_t a_handle,
+    ::DDS::ReadCondition_ptr a_condition) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t status;
+
+    status = TSN::private_messageDataReader_impl::check_preconditions(received_data, info_seq, max_samples);
+    if ( status == ::DDS::RETCODE_OK ) {
+        status = DDS::OpenSplice::FooDataReaderView_impl::take_next_instance_w_condition(&received_data, info_seq, max_samples, a_handle, a_condition);
+    }
+    return status;
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReaderView_impl::return_loan (
+    TSN::private_messageSeq & received_data,
+    ::DDS::SampleInfoSeq & info_seq) THROW_ORB_EXCEPTIONS
+{
+    ::DDS::ReturnCode_t result = ::DDS::RETCODE_OK;
+
+    result = this->write_lock ();
+    if (result == DDS::RETCODE_OK) {
+        if ( received_data.length() > 0 ) {
+            if (received_data.length() == info_seq.length() &&
+                received_data.release() == info_seq.release() ) {
+                if (!received_data.release()) {
+                    result = DDS::OpenSplice::FooDataReaderView_impl::wlReq_return_loan( received_data.get_buffer(),
+                                                           info_seq.get_buffer() );
+
+                    if ( result == ::DDS::RETCODE_OK ) {
+                        if ( !received_data.release() ) {
+                            TSN::private_messageSeq::freebuf( received_data.get_buffer(false) );
+                            received_data.replace(0, 0, NULL, false);
+                            ::DDS::SampleInfoSeq::freebuf( info_seq.get_buffer(false) );
+                            info_seq.replace(0, 0, NULL, false);
+                        }
+                    } else if ( result == ::DDS::RETCODE_NO_DATA ) {
+                        if ( received_data.release() ) {
+                            result = ::DDS::RETCODE_OK;
+                        } else {
+                            result = ::DDS::RETCODE_PRECONDITION_NOT_MET;
+                        }
+                    }
+                }
+            } else {
+                result = ::DDS::RETCODE_PRECONDITION_NOT_MET;
+            }
+        }
+        this->unlock();
+    }
+    return result;
+}
+
+::DDS::ReturnCode_t
+TSN::private_messageDataReaderView_impl::get_key_value (
+    TSN::private_message & key_holder,
+    ::DDS::InstanceHandle_t handle) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReaderView_impl::get_key_value(&key_holder, handle);
+}
+
+::DDS::InstanceHandle_t
+TSN::private_messageDataReaderView_impl::lookup_instance (
+    const TSN::private_message & instance) THROW_ORB_EXCEPTIONS
+{
+    return DDS::OpenSplice::FooDataReaderView_impl::lookup_instance(&instance);
+}

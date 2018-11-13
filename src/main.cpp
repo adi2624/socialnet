@@ -120,6 +120,8 @@ void set_params();
 void calculate_stats();
 
 void show_user();
+
+void send_message();
 /*////////////////////////////////////
 /
 /       MAIN
@@ -163,7 +165,8 @@ int OSPL_MAIN(int argc, char *argv[]) {
         std::cout << "5. Post" << std::endl;
         std::cout << "6. Show statistics" << std::endl;
         std::cout << "7. Request Post" << std::endl;
-        std::cout << "8. Exit" << std::endl;
+        std::cout << "8. Send message" << std::endl;
+        std::cout << "9. Exit" << std::endl;
         std::cout << "Enter your choice: ";
         std::cin >> user_action;
         user_action_num = stoi(user_action);
@@ -172,7 +175,6 @@ int OSPL_MAIN(int argc, char *argv[]) {
                 list_all_users();
                 break; 
             case 2:
-                std::cout << "TEST OVERLOAD: " << my_user.get_first_name() << std::endl;
 		        show_user();
                 break; //action for show user
             case 3:
@@ -188,11 +190,14 @@ int OSPL_MAIN(int argc, char *argv[]) {
                 calculate_stats();
                 break; //action for statistics
             case 7:
-		reqsend_instance=req_to_send.draft_request();
+		        reqsend_instance=req_to_send.draft_request();
                 req_to_send.publishEvent(reqsend_instance);
                 break;
+            case 8:
+                send_message();
+                break;
         }
-        if (user_action_num == 8)
+        if (user_action_num == 9)
         {
             runFlag=false;
             break;
@@ -535,4 +540,37 @@ void calculate_stats()
 void show_user()
 {
     std::cout << my_user << std::endl;
+}
+void send_message()
+{
+    TSN::private_message msg;
+    std::string answer;
+    std::string message_data;
+    std::cout << "Who would you like to send a message to: " << std::endl;
+    std::vector<User> users = Request::list_pub_users();
+    for(size_t i = 0; i < users.size(); i++)
+    {
+        std::cout << "User: " << i << std::endl;
+        std::cout << users[i] << std::endl;
+    }
+    std::cout << "Enter user number: ";
+    std::cin >> answer;
+    // check if answer is a number 
+    char * p;
+    strtol(answer.c_str(),&p,10);
+    while(p == 0)
+    {
+        std::cout << "Enter a valid number" << std::endl;
+        std::cin >> answer;
+        strtol(answer.c_str(), &p, 10);
+    }
+    std::cout << std::endl << "What would you like to say to user " << answer << "?" << std::endl;
+    std::cin >> message_data;
+    int index = std::stoi(answer);
+    strncpy(msg.sender_uuid,my_user.return_uuid(), 37);
+    strncpy(msg.receiver_uuid, users[index].return_uuid(), 37);
+    msg.message_body = message_data.c_str();
+    // TODO: IMPLEMENT TIME FUNCTION
+    //msg.data_of_creation = ;
+
 }

@@ -4,15 +4,14 @@
 //  
 //  File name: tsn.h
 //  Source: src/idl/tsn.idl
-//  Generated: Mon Nov 12 18:24:01 2018
-//  OpenSplice V6.4.140320OSS
+//  Generated: Tue Nov 13 13:09:09 2018
+//  OpenSplice 6.7.180404OSS
 //  
 //******************************************************************
 #ifndef _TSN_H_
 #define _TSN_H_
 
 #include "sacpp_mapping.h"
-#include "sacpp_DDS_DCPS.h"
 
 
 namespace TSN
@@ -20,7 +19,9 @@ namespace TSN
    struct user_information;
    struct node_request;
    struct request;
+   struct post_data;
    struct response;
+   struct private_message;
    typedef DDS::ULong serial_number;
    const DDS::ULong UUID_SIZE = (DDS::ULong) 37UL;
 
@@ -100,6 +101,26 @@ namespace TSN
    typedef DDS_DCPSStruct_var < request> request_var;
    typedef DDS_DCPSStruct_out < request> request_out;
 
+   struct post_data
+   {
+         typedef DDS::Char _owner_uuid_slice;
+         typedef DDS::Char _owner_uuid[37];
+         typedef _owner_uuid _owner_uuid_out;
+         static _owner_uuid_slice * _owner_uuid_alloc ();
+         static void _owner_uuid_free (_owner_uuid_slice *);
+         static void _owner_uuid_copy (_owner_uuid_slice* to, const _owner_uuid_slice* from);
+         static _owner_uuid_slice *_owner_uuid_dup (const _owner_uuid_slice* from);
+
+         struct _owner_uuid_uniq_ {};
+         typedef DDS_DCPS_FArray_var< _owner_uuid, _owner_uuid_slice, struct _owner_uuid_uniq_> _owner_uuid_var;
+         typedef DDS_DCPS_Array_forany< _owner_uuid, _owner_uuid_slice, struct _owner_uuid_uniq_> _owner_uuid_forany;
+         _owner_uuid owner_uuid;
+         DDS::ULong post_id;
+   };
+
+   typedef DDS_DCPSStruct_var < post_data> post_data_var;
+   typedef post_data&post_data_out;
+
    struct response
    {
          typedef DDS::Char _uuid_slice;
@@ -113,14 +134,53 @@ namespace TSN
          struct _uuid_uniq_ {};
          typedef DDS_DCPS_FArray_var< _uuid, _uuid_slice, struct _uuid_uniq_> _uuid_var;
          typedef DDS_DCPS_Array_forany< _uuid, _uuid_slice, struct _uuid_uniq_> _uuid_forany;
+         struct _child_posts_seq_uniq_ {};
+         typedef DDS_DCPSUFLSeq < post_data, struct _child_posts_seq_uniq_> _child_posts_seq;
+         typedef DDS_DCPSSequence_var < _child_posts_seq> _child_posts_seq_var;
+         typedef DDS_DCPSSequence_out < _child_posts_seq> _child_posts_seq_out;
          _uuid uuid;
          DDS::ULong post_id;
          DDS::String_mgr post_body;
          DDS::Long date_of_creation;
+         post_data parent_post;
+         _child_posts_seq child_posts;
    };
 
    typedef DDS_DCPSStruct_var < response> response_var;
    typedef DDS_DCPSStruct_out < response> response_out;
+
+   struct private_message
+   {
+         typedef DDS::Char _receiver_uuid_slice;
+         typedef DDS::Char _receiver_uuid[37];
+         typedef _receiver_uuid _receiver_uuid_out;
+         static _receiver_uuid_slice * _receiver_uuid_alloc ();
+         static void _receiver_uuid_free (_receiver_uuid_slice *);
+         static void _receiver_uuid_copy (_receiver_uuid_slice* to, const _receiver_uuid_slice* from);
+         static _receiver_uuid_slice *_receiver_uuid_dup (const _receiver_uuid_slice* from);
+
+         struct _receiver_uuid_uniq_ {};
+         typedef DDS_DCPS_FArray_var< _receiver_uuid, _receiver_uuid_slice, struct _receiver_uuid_uniq_> _receiver_uuid_var;
+         typedef DDS_DCPS_Array_forany< _receiver_uuid, _receiver_uuid_slice, struct _receiver_uuid_uniq_> _receiver_uuid_forany;
+         typedef DDS::Char _sender_uuid_slice;
+         typedef DDS::Char _sender_uuid[37];
+         typedef _sender_uuid _sender_uuid_out;
+         static _sender_uuid_slice * _sender_uuid_alloc ();
+         static void _sender_uuid_free (_sender_uuid_slice *);
+         static void _sender_uuid_copy (_sender_uuid_slice* to, const _sender_uuid_slice* from);
+         static _sender_uuid_slice *_sender_uuid_dup (const _sender_uuid_slice* from);
+
+         struct _sender_uuid_uniq_ {};
+         typedef DDS_DCPS_FArray_var< _sender_uuid, _sender_uuid_slice, struct _sender_uuid_uniq_> _sender_uuid_var;
+         typedef DDS_DCPS_Array_forany< _sender_uuid, _sender_uuid_slice, struct _sender_uuid_uniq_> _sender_uuid_forany;
+         _receiver_uuid receiver_uuid;
+         _sender_uuid sender_uuid;
+         DDS::String_mgr message_body;
+         DDS::Long date_of_creation;
+   };
+
+   typedef DDS_DCPSStruct_var < private_message> private_message_var;
+   typedef DDS_DCPSStruct_out < private_message> private_message_out;
 }
 template <>
 TSN::user_information::_uuid_slice* DDS_DCPS_ArrayHelper < TSN::user_information::_uuid, TSN::user_information::_uuid_slice, TSN::user_information::_uuid_uniq_>::alloc ();
@@ -141,13 +201,31 @@ void DDS_DCPS_ArrayHelper < TSN::request::_uuid, TSN::request::_uuid_slice, TSN:
 template <>
 void DDS_DCPS_ArrayHelper < TSN::request::_uuid, TSN::request::_uuid_slice, TSN::request::_uuid_uniq_>::free (TSN::request::_uuid_slice *ptr);
 template <>
+TSN::post_data::_owner_uuid_slice* DDS_DCPS_ArrayHelper < TSN::post_data::_owner_uuid, TSN::post_data::_owner_uuid_slice, TSN::post_data::_owner_uuid_uniq_>::alloc ();
+template <>
+void DDS_DCPS_ArrayHelper < TSN::post_data::_owner_uuid, TSN::post_data::_owner_uuid_slice, TSN::post_data::_owner_uuid_uniq_>::copy (TSN::post_data::_owner_uuid_slice *to, const TSN::post_data::_owner_uuid_slice* from);
+template <>
+void DDS_DCPS_ArrayHelper < TSN::post_data::_owner_uuid, TSN::post_data::_owner_uuid_slice, TSN::post_data::_owner_uuid_uniq_>::free (TSN::post_data::_owner_uuid_slice *ptr);
+template <>
 TSN::response::_uuid_slice* DDS_DCPS_ArrayHelper < TSN::response::_uuid, TSN::response::_uuid_slice, TSN::response::_uuid_uniq_>::alloc ();
 template <>
 void DDS_DCPS_ArrayHelper < TSN::response::_uuid, TSN::response::_uuid_slice, TSN::response::_uuid_uniq_>::copy (TSN::response::_uuid_slice *to, const TSN::response::_uuid_slice* from);
 template <>
 void DDS_DCPS_ArrayHelper < TSN::response::_uuid, TSN::response::_uuid_slice, TSN::response::_uuid_uniq_>::free (TSN::response::_uuid_slice *ptr);
+template <>
+TSN::private_message::_receiver_uuid_slice* DDS_DCPS_ArrayHelper < TSN::private_message::_receiver_uuid, TSN::private_message::_receiver_uuid_slice, TSN::private_message::_receiver_uuid_uniq_>::alloc ();
+template <>
+void DDS_DCPS_ArrayHelper < TSN::private_message::_receiver_uuid, TSN::private_message::_receiver_uuid_slice, TSN::private_message::_receiver_uuid_uniq_>::copy (TSN::private_message::_receiver_uuid_slice *to, const TSN::private_message::_receiver_uuid_slice* from);
+template <>
+void DDS_DCPS_ArrayHelper < TSN::private_message::_receiver_uuid, TSN::private_message::_receiver_uuid_slice, TSN::private_message::_receiver_uuid_uniq_>::free (TSN::private_message::_receiver_uuid_slice *ptr);
+template <>
+TSN::private_message::_sender_uuid_slice* DDS_DCPS_ArrayHelper < TSN::private_message::_sender_uuid, TSN::private_message::_sender_uuid_slice, TSN::private_message::_sender_uuid_uniq_>::alloc ();
+template <>
+void DDS_DCPS_ArrayHelper < TSN::private_message::_sender_uuid, TSN::private_message::_sender_uuid_slice, TSN::private_message::_sender_uuid_uniq_>::copy (TSN::private_message::_sender_uuid_slice *to, const TSN::private_message::_sender_uuid_slice* from);
+template <>
+void DDS_DCPS_ArrayHelper < TSN::private_message::_sender_uuid, TSN::private_message::_sender_uuid_slice, TSN::private_message::_sender_uuid_uniq_>::free (TSN::private_message::_sender_uuid_slice *ptr);
 
 
 
 
-#endif 
+#endif

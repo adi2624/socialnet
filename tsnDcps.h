@@ -4,15 +4,14 @@
 //  
 //  File name: tsnDcps.h
 //  Source: tsnDcps.idl
-//  Generated: Mon Nov 12 18:24:01 2018
-//  OpenSplice V6.4.140320OSS
+//  Generated: Tue Nov 13 13:09:09 2018
+//  OpenSplice 6.7.180404OSS
 //  
 //******************************************************************
 #ifndef _TSNDCPS_H_
 #define _TSNDCPS_H_
 
 #include "sacpp_mapping.h"
-#include "sacpp_DDS_DCPS.h"
 #include "tsn.h"
 #include "dds_dcps.h"
 
@@ -102,6 +101,34 @@ namespace TSN
    typedef responseDataReaderView * responseDataReaderView_ptr;
    typedef DDS_DCPSInterface_var < responseDataReaderView> responseDataReaderView_var;
    typedef DDS_DCPSInterface_out < responseDataReaderView> responseDataReaderView_out;
+
+
+   class private_messageTypeSupportInterface;
+
+   typedef private_messageTypeSupportInterface * private_messageTypeSupportInterface_ptr;
+   typedef DDS_DCPSInterface_var < private_messageTypeSupportInterface> private_messageTypeSupportInterface_var;
+   typedef DDS_DCPSInterface_out < private_messageTypeSupportInterface> private_messageTypeSupportInterface_out;
+
+
+   class private_messageDataWriter;
+
+   typedef private_messageDataWriter * private_messageDataWriter_ptr;
+   typedef DDS_DCPSInterface_var < private_messageDataWriter> private_messageDataWriter_var;
+   typedef DDS_DCPSInterface_out < private_messageDataWriter> private_messageDataWriter_out;
+
+
+   class private_messageDataReader;
+
+   typedef private_messageDataReader * private_messageDataReader_ptr;
+   typedef DDS_DCPSInterface_var < private_messageDataReader> private_messageDataReader_var;
+   typedef DDS_DCPSInterface_out < private_messageDataReader> private_messageDataReader_out;
+
+
+   class private_messageDataReaderView;
+
+   typedef private_messageDataReaderView * private_messageDataReaderView_ptr;
+   typedef DDS_DCPSInterface_var < private_messageDataReaderView> private_messageDataReaderView_var;
+   typedef DDS_DCPSInterface_out < private_messageDataReaderView> private_messageDataReaderView_out;
 
    struct user_informationSeq_uniq_ {};
    typedef DDS_DCPSUVLSeq < user_information, struct user_informationSeq_uniq_> user_informationSeq;
@@ -553,9 +580,159 @@ namespace TSN
       responseDataReaderView & operator = (const responseDataReaderView &);
    };
 
+   struct private_messageSeq_uniq_ {};
+   typedef DDS_DCPSUVLSeq < private_message, struct private_messageSeq_uniq_> private_messageSeq;
+   typedef DDS_DCPSSequence_var < private_messageSeq> private_messageSeq_var;
+   typedef DDS_DCPSSequence_out < private_messageSeq> private_messageSeq_out;
+   class private_messageTypeSupportInterface
+   :
+      virtual public DDS::TypeSupport
+   { 
+   public:
+      typedef private_messageTypeSupportInterface_ptr _ptr_type;
+      typedef private_messageTypeSupportInterface_var _var_type;
+
+      static private_messageTypeSupportInterface_ptr _duplicate (private_messageTypeSupportInterface_ptr obj);
+      DDS::Boolean _local_is_a (const char * id);
+
+      static private_messageTypeSupportInterface_ptr _narrow (DDS::Object_ptr obj);
+      static private_messageTypeSupportInterface_ptr _unchecked_narrow (DDS::Object_ptr obj);
+      static private_messageTypeSupportInterface_ptr _nil () { return 0; }
+      static const char * _local_id;
+      private_messageTypeSupportInterface_ptr _this () { return this; }
+
+
+   protected:
+      private_messageTypeSupportInterface () {};
+      ~private_messageTypeSupportInterface () {};
+   private:
+      private_messageTypeSupportInterface (const private_messageTypeSupportInterface &);
+      private_messageTypeSupportInterface & operator = (const private_messageTypeSupportInterface &);
+   };
+
+   class private_messageDataWriter
+   :
+      virtual public DDS::DataWriter
+   { 
+   public:
+      typedef private_messageDataWriter_ptr _ptr_type;
+      typedef private_messageDataWriter_var _var_type;
+
+      static private_messageDataWriter_ptr _duplicate (private_messageDataWriter_ptr obj);
+      DDS::Boolean _local_is_a (const char * id);
+
+      static private_messageDataWriter_ptr _narrow (DDS::Object_ptr obj);
+      static private_messageDataWriter_ptr _unchecked_narrow (DDS::Object_ptr obj);
+      static private_messageDataWriter_ptr _nil () { return 0; }
+      static const char * _local_id;
+      private_messageDataWriter_ptr _this () { return this; }
+
+      virtual DDS::LongLong register_instance (const private_message& instance_data) = 0;
+      virtual DDS::LongLong register_instance_w_timestamp (const private_message& instance_data, const DDS::Time_t& source_timestamp) = 0;
+      virtual DDS::Long unregister_instance (const private_message& instance_data, DDS::LongLong handle) = 0;
+      virtual DDS::Long unregister_instance_w_timestamp (const private_message& instance_data, DDS::LongLong handle, const DDS::Time_t& source_timestamp) = 0;
+      virtual DDS::Long write (const private_message& instance_data, DDS::LongLong handle) = 0;
+      virtual DDS::Long write_w_timestamp (const private_message& instance_data, DDS::LongLong handle, const DDS::Time_t& source_timestamp) = 0;
+      virtual DDS::Long dispose (const private_message& instance_data, DDS::LongLong handle) = 0;
+      virtual DDS::Long dispose_w_timestamp (const private_message& instance_data, DDS::LongLong handle, const DDS::Time_t& source_timestamp) = 0;
+      virtual DDS::Long writedispose (const private_message& instance_data, DDS::LongLong handle) = 0;
+      virtual DDS::Long writedispose_w_timestamp (const private_message& instance_data, DDS::LongLong handle, const DDS::Time_t& source_timestamp) = 0;
+      virtual DDS::Long get_key_value (private_message& key_holder, DDS::LongLong handle) = 0;
+      virtual DDS::LongLong lookup_instance (const private_message& instance_data) = 0;
+
+   protected:
+      private_messageDataWriter () {};
+      ~private_messageDataWriter () {};
+   private:
+      private_messageDataWriter (const private_messageDataWriter &);
+      private_messageDataWriter & operator = (const private_messageDataWriter &);
+   };
+
+   class private_messageDataReader
+   :
+      virtual public DDS::DataReader
+   { 
+   public:
+      typedef private_messageDataReader_ptr _ptr_type;
+      typedef private_messageDataReader_var _var_type;
+
+      static private_messageDataReader_ptr _duplicate (private_messageDataReader_ptr obj);
+      DDS::Boolean _local_is_a (const char * id);
+
+      static private_messageDataReader_ptr _narrow (DDS::Object_ptr obj);
+      static private_messageDataReader_ptr _unchecked_narrow (DDS::Object_ptr obj);
+      static private_messageDataReader_ptr _nil () { return 0; }
+      static const char * _local_id;
+      private_messageDataReader_ptr _this () { return this; }
+
+      virtual DDS::Long read (private_messageSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::ULong sample_states, DDS::ULong view_states, DDS::ULong instance_states) = 0;
+      virtual DDS::Long take (private_messageSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::ULong sample_states, DDS::ULong view_states, DDS::ULong instance_states) = 0;
+      virtual DDS::Long read_w_condition (private_messageSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::ReadCondition_ptr a_condition) = 0;
+      virtual DDS::Long take_w_condition (private_messageSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::ReadCondition_ptr a_condition) = 0;
+      virtual DDS::Long read_next_sample (private_message& received_data, DDS::SampleInfo& sample_info) = 0;
+      virtual DDS::Long take_next_sample (private_message& received_data, DDS::SampleInfo& sample_info) = 0;
+      virtual DDS::Long read_instance (private_messageSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::LongLong a_handle, DDS::ULong sample_states, DDS::ULong view_states, DDS::ULong instance_states) = 0;
+      virtual DDS::Long take_instance (private_messageSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::LongLong a_handle, DDS::ULong sample_states, DDS::ULong view_states, DDS::ULong instance_states) = 0;
+      virtual DDS::Long read_next_instance (private_messageSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::LongLong a_handle, DDS::ULong sample_states, DDS::ULong view_states, DDS::ULong instance_states) = 0;
+      virtual DDS::Long take_next_instance (private_messageSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::LongLong a_handle, DDS::ULong sample_states, DDS::ULong view_states, DDS::ULong instance_states) = 0;
+      virtual DDS::Long read_next_instance_w_condition (private_messageSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::LongLong a_handle, DDS::ReadCondition_ptr a_condition) = 0;
+      virtual DDS::Long take_next_instance_w_condition (private_messageSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::LongLong a_handle, DDS::ReadCondition_ptr a_condition) = 0;
+      virtual DDS::Long return_loan (private_messageSeq& received_data, DDS::SampleInfoSeq& info_seq) = 0;
+      virtual DDS::Long get_key_value (private_message& key_holder, DDS::LongLong handle) = 0;
+      virtual DDS::LongLong lookup_instance (const private_message& instance) = 0;
+
+   protected:
+      private_messageDataReader () {};
+      ~private_messageDataReader () {};
+   private:
+      private_messageDataReader (const private_messageDataReader &);
+      private_messageDataReader & operator = (const private_messageDataReader &);
+   };
+
+   class private_messageDataReaderView
+   :
+      virtual public DDS::DataReaderView
+   { 
+   public:
+      typedef private_messageDataReaderView_ptr _ptr_type;
+      typedef private_messageDataReaderView_var _var_type;
+
+      static private_messageDataReaderView_ptr _duplicate (private_messageDataReaderView_ptr obj);
+      DDS::Boolean _local_is_a (const char * id);
+
+      static private_messageDataReaderView_ptr _narrow (DDS::Object_ptr obj);
+      static private_messageDataReaderView_ptr _unchecked_narrow (DDS::Object_ptr obj);
+      static private_messageDataReaderView_ptr _nil () { return 0; }
+      static const char * _local_id;
+      private_messageDataReaderView_ptr _this () { return this; }
+
+      virtual DDS::Long read (private_messageSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::ULong sample_states, DDS::ULong view_states, DDS::ULong instance_states) = 0;
+      virtual DDS::Long take (private_messageSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::ULong sample_states, DDS::ULong view_states, DDS::ULong instance_states) = 0;
+      virtual DDS::Long read_w_condition (private_messageSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::ReadCondition_ptr a_condition) = 0;
+      virtual DDS::Long take_w_condition (private_messageSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::ReadCondition_ptr a_condition) = 0;
+      virtual DDS::Long read_next_sample (private_message& received_data, DDS::SampleInfo& sample_info) = 0;
+      virtual DDS::Long take_next_sample (private_message& received_data, DDS::SampleInfo& sample_info) = 0;
+      virtual DDS::Long read_instance (private_messageSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::LongLong a_handle, DDS::ULong sample_states, DDS::ULong view_states, DDS::ULong instance_states) = 0;
+      virtual DDS::Long take_instance (private_messageSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::LongLong a_handle, DDS::ULong sample_states, DDS::ULong view_states, DDS::ULong instance_states) = 0;
+      virtual DDS::Long read_next_instance (private_messageSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::LongLong a_handle, DDS::ULong sample_states, DDS::ULong view_states, DDS::ULong instance_states) = 0;
+      virtual DDS::Long take_next_instance (private_messageSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::LongLong a_handle, DDS::ULong sample_states, DDS::ULong view_states, DDS::ULong instance_states) = 0;
+      virtual DDS::Long read_next_instance_w_condition (private_messageSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::LongLong a_handle, DDS::ReadCondition_ptr a_condition) = 0;
+      virtual DDS::Long take_next_instance_w_condition (private_messageSeq& received_data, DDS::SampleInfoSeq& info_seq, DDS::Long max_samples, DDS::LongLong a_handle, DDS::ReadCondition_ptr a_condition) = 0;
+      virtual DDS::Long return_loan (private_messageSeq& received_data, DDS::SampleInfoSeq& info_seq) = 0;
+      virtual DDS::Long get_key_value (private_message& key_holder, DDS::LongLong handle) = 0;
+      virtual DDS::LongLong lookup_instance (const private_message& instance) = 0;
+
+   protected:
+      private_messageDataReaderView () {};
+      ~private_messageDataReaderView () {};
+   private:
+      private_messageDataReaderView (const private_messageDataReaderView &);
+      private_messageDataReaderView & operator = (const private_messageDataReaderView &);
+   };
+
 }
 
 
 
 
-#endif 
+#endif

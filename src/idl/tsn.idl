@@ -54,7 +54,14 @@ module TSN
     };
     #pragma keylist request uuid
     #pragma cats request uuid
-
+    
+    // Post data struct containing the specific information about a post to be able
+    // issue a node request for it. Also helps to make post threads appear more coherent.
+    struct post_data
+    {
+        char owner_uuid[UUID_SIZE];
+        serial_number post_id;
+    };
 
     // A response to a Request, containing data for a single post. These are sent out at most
     // once per second.
@@ -65,10 +72,27 @@ module TSN
         serial_number post_id;
         string post_body;
         long date_of_creation;              // When post was made in seconds since 1/1/1970
+        
+        post_data parent_post;              // Structure holding UUID and serial of the parent post, if applicable
+
+        sequence<post_data> child_posts;            // Sequence of structures holding children UUID and correspond 
+                                                    // serials, if applicable
     };
     #pragma keylist response uuid
     #pragma cats response uuid
-
+    
+    // A private message from one node to another, which should be displayed immediately upono receipt.
+    // Nodes will only display private messages addressed to that node.
+    struct private_message
+    {
+        char receiver_uuid[UUID_SIZE];  // UUID of the message receiving node
+        char sender_uuid[UUID_SIZE];    // To know who sent the message
+        string message_body;
+        long date_of_creation;          // When message was made in seconds since 1/1/1970
+    };
+    #pragma keylist private_message receiver_uuid
+    #pragma cats private_message receiver_uuid
+    
     /* The participant is "", like
           mgr.createParticipant("");"
       Topic requirements:
