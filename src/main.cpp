@@ -319,22 +319,19 @@ TSN::user_information initialize_user(bool * is_initialized) {
 
     std::ifstream myfile;
     myfile.open("my_user.tsn", ios::in);
-    bool is_empty = true;
-    while (!myfile.eof()) {
-        std::string data;
-        myfile >> data;
-        if (data == "")            //CODE TO CHECK IF FILE IS EMPTY
-        {
-            break;
-        }
-        is_empty = false;
-        std::cout << "ENTERED LOOP" << std::endl;
+    myfile.seekg(0, std::ios::end);
+    if(myfile.good())
+    {
+        // temporary fix while i change my_user data
+        user_information msgInstance;
+        // get user information somehow
+        User temp = Request::list_pub_users()[0];
+        return User::make_instance_user_information(temp);
+        
     }
-    *(is_initialized) = true;
-    myfile.close();
-
-    if (is_empty) {
-
+    
+    if (myfile.tellg() == 0 || !myfile.good()) {
+        *is_initialized = true;
         std::string temp_user;
         cout << "Enter your first name: " << std::endl;
         std::cin >> temp_user;

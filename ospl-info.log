@@ -1,0 +1,440 @@
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:00:58 MST 2018
+Description : u_domainNew:Database allocated on heap
+Node        : edgar-B250M-DS3H
+Process     : main <19934>
+Thread      : spliced 7f00d9d8e700
+Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1542070858.425643064
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:00:58 MST 2018
+Description : ---------------------------------------------------------------
+              -- The service is using the following configuration settings --
+              ---------------------------------------------------------------
+              Domain (id)          : ospl_sp_ddsi (0)
+              Storage              : 10240 Kbytes
+              Storage threshold    : 1024 Kbytes
+              Storage address      : Not available
+              Locking              : default
+              Memory mode          : Heap memory
+              Builtin topics       : true
+              Priority inheritance : false
+Node        : edgar-B250M-DS3H
+Process     : main <19934>
+Thread      : spliced 7f00d9d8e700
+Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1542070858.428340550
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:00:58 MST 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'splicedaemon' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : edgar-B250M-DS3H
+Process     : main <19934>
+Thread      : spliced 7f00d9d8e700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1542070858.428784891
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:00:58 MST 2018
+Description : SOAP service is reachable via port 43905
+Node        : edgar-B250M-DS3H
+Process     : main <19934>
+Thread      : cmsoap 7f00d7633700
+Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1542070858.430301073
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:00:58 MST 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'cmsoap' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : edgar-B250M-DS3H
+Process     : main <19934>
+Thread      : cmsoap 7f00d7633700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1542070858.430763157
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:00:58 MST 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'ddsi2' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : edgar-B250M-DS3H
+Process     : main <19934>
+Thread      : ddsi2 7f00d6f64700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1542070858.432208243
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:00:58 MST 2018
+Description : The durability service can by identified by ID: 680002061
+Node        : edgar-B250M-DS3H
+Process     : main <19934>
+Thread      : durability 7f00d72d3700
+Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1542070858.434465802
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:05 MST 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'durability' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : edgar-B250M-DS3H
+Process     : main <19934>
+Thread      : durability 7f00d72d3700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1542070865.443296410
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:17 MST 2018
+Description : Termination request (signal 2) received from PID 19934 (self), UID 1000
+Node        : edgar-B250M-DS3H
+Process     : main <19934>
+Thread      : signalHandler 7f00d814a700
+Internals   : V6.4.140320OSS/24b1387/24b1387/signalHandlerThread/os_signalHandler.c/503/0/1542070877.580604648
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:19 MST 2018
+Description : u_domainNew:Database allocated on heap
+Node        : edgar-B250M-DS3H
+Process     : main <20004>
+Thread      : spliced 7f833ad8b700
+Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1542070879.500626377
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:19 MST 2018
+Description : ---------------------------------------------------------------
+              -- The service is using the following configuration settings --
+              ---------------------------------------------------------------
+              Domain (id)          : ospl_sp_ddsi (0)
+              Storage              : 10240 Kbytes
+              Storage threshold    : 1024 Kbytes
+              Storage address      : Not available
+              Locking              : default
+              Memory mode          : Heap memory
+              Builtin topics       : true
+              Priority inheritance : false
+Node        : edgar-B250M-DS3H
+Process     : main <20004>
+Thread      : spliced 7f833ad8b700
+Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1542070879.503132036
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:19 MST 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'splicedaemon' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : edgar-B250M-DS3H
+Process     : main <20004>
+Thread      : spliced 7f833ad8b700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1542070879.503640182
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:19 MST 2018
+Description : SOAP service is reachable via port 33743
+Node        : edgar-B250M-DS3H
+Process     : main <20004>
+Thread      : cmsoap 7f8338630700
+Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1542070879.504295624
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:19 MST 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'cmsoap' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : edgar-B250M-DS3H
+Process     : main <20004>
+Thread      : cmsoap 7f8338630700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1542070879.504418225
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:19 MST 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'ddsi2' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : edgar-B250M-DS3H
+Process     : main <20004>
+Thread      : ddsi2 7f83381be700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1542070879.506398806
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:19 MST 2018
+Description : The durability service can by identified by ID: 2120907208
+Node        : edgar-B250M-DS3H
+Process     : main <20004>
+Thread      : durability 7f83382d0700
+Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1542070879.508714283
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:26 MST 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'durability' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : edgar-B250M-DS3H
+Process     : main <20004>
+Thread      : durability 7f83382d0700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1542070886.513594755
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:28 MST 2018
+Description : Termination request (signal 2) received from PID 20004 (self), UID 1000
+Node        : edgar-B250M-DS3H
+Process     : main <20004>
+Thread      : signalHandler 7f8339147700
+Internals   : V6.4.140320OSS/24b1387/24b1387/signalHandlerThread/os_signalHandler.c/503/0/1542070888.873558072
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:37 MST 2018
+Description : u_domainNew:Database allocated on heap
+Node        : edgar-B250M-DS3H
+Process     : main <20081>
+Thread      : spliced 7f3234b73700
+Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1542070897.943251556
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:37 MST 2018
+Description : ---------------------------------------------------------------
+              -- The service is using the following configuration settings --
+              ---------------------------------------------------------------
+              Domain (id)          : ospl_sp_ddsi (0)
+              Storage              : 10240 Kbytes
+              Storage threshold    : 1024 Kbytes
+              Storage address      : Not available
+              Locking              : default
+              Memory mode          : Heap memory
+              Builtin topics       : true
+              Priority inheritance : false
+Node        : edgar-B250M-DS3H
+Process     : main <20081>
+Thread      : spliced 7f3234b73700
+Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1542070897.945788751
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:37 MST 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'splicedaemon' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : edgar-B250M-DS3H
+Process     : main <20081>
+Thread      : spliced 7f3234b73700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1542070897.946226231
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:37 MST 2018
+Description : SOAP service is reachable via port 34145
+Node        : edgar-B250M-DS3H
+Process     : main <20081>
+Thread      : cmsoap 7f3232418700
+Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1542070897.947719089
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:37 MST 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'cmsoap' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : edgar-B250M-DS3H
+Process     : main <20081>
+Thread      : cmsoap 7f3232418700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1542070897.948176245
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:37 MST 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'ddsi2' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : edgar-B250M-DS3H
+Process     : main <20081>
+Thread      : ddsi2 7f3231d16700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1542070897.950346345
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:37 MST 2018
+Description : The durability service can by identified by ID: 1295374090
+Node        : edgar-B250M-DS3H
+Process     : main <20081>
+Thread      : durability 7f32320b8700
+Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1542070897.952228714
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:44 MST 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'durability' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : edgar-B250M-DS3H
+Process     : main <20081>
+Thread      : durability 7f32320b8700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1542070904.961125074
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:46 MST 2018
+Description : Termination request (signal 2) received from PID 20081 (self), UID 1000
+Node        : edgar-B250M-DS3H
+Process     : main <20081>
+Thread      : signalHandler 7f3232f2f700
+Internals   : V6.4.140320OSS/24b1387/24b1387/signalHandlerThread/os_signalHandler.c/503/0/1542070906.281238595
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:48 MST 2018
+Description : u_domainNew:Database allocated on heap
+Node        : edgar-B250M-DS3H
+Process     : main <20144>
+Thread      : spliced 7f667c4b2700
+Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1542070908.464559031
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:48 MST 2018
+Description : ---------------------------------------------------------------
+              -- The service is using the following configuration settings --
+              ---------------------------------------------------------------
+              Domain (id)          : ospl_sp_ddsi (0)
+              Storage              : 10240 Kbytes
+              Storage threshold    : 1024 Kbytes
+              Storage address      : Not available
+              Locking              : default
+              Memory mode          : Heap memory
+              Builtin topics       : true
+              Priority inheritance : false
+Node        : edgar-B250M-DS3H
+Process     : main <20144>
+Thread      : spliced 7f667c4b2700
+Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1542070908.476357497
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:48 MST 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'splicedaemon' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : edgar-B250M-DS3H
+Process     : main <20144>
+Thread      : spliced 7f667c4b2700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1542070908.477892193
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:48 MST 2018
+Description : SOAP service is reachable via port 38485
+Node        : edgar-B250M-DS3H
+Process     : main <20144>
+Thread      : cmsoap 7f6679d57700
+Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1542070908.480512519
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:48 MST 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'cmsoap' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : edgar-B250M-DS3H
+Process     : main <20144>
+Thread      : cmsoap 7f6679d57700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1542070908.480927959
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:48 MST 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'ddsi2' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : edgar-B250M-DS3H
+Process     : main <20144>
+Thread      : ddsi2 7f6679677700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1542070908.488950193
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:48 MST 2018
+Description : The durability service can by identified by ID: 1280448915
+Node        : edgar-B250M-DS3H
+Process     : main <20144>
+Thread      : durability 7f66799f7700
+Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1542070908.498667266
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:01:55 MST 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'durability' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : edgar-B250M-DS3H
+Process     : main <20144>
+Thread      : durability 7f66799f7700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1542070915.508020412
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:02:00 MST 2018
+Description : Termination request (signal 2) received from PID 20144 (self), UID 1000
+Node        : edgar-B250M-DS3H
+Process     : main <20144>
+Thread      : signalHandler 7f667a86e700
+Internals   : V6.4.140320OSS/24b1387/24b1387/signalHandlerThread/os_signalHandler.c/503/0/1542070920.600627126
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:02:03 MST 2018
+Description : u_domainNew:Database allocated on heap
+Node        : edgar-B250M-DS3H
+Process     : main <20216>
+Thread      : spliced 7f5fc2f27700
+Internals   : V6.4.140320OSS/24b1387/24b1387/user::u_domain::u_domainNew/u_domain.c/706/0/1542070923.397184238
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:02:03 MST 2018
+Description : ---------------------------------------------------------------
+              -- The service is using the following configuration settings --
+              ---------------------------------------------------------------
+              Domain (id)          : ospl_sp_ddsi (0)
+              Storage              : 10240 Kbytes
+              Storage threshold    : 1024 Kbytes
+              Storage address      : Not available
+              Locking              : default
+              Memory mode          : Heap memory
+              Builtin topics       : true
+              Priority inheritance : false
+Node        : edgar-B250M-DS3H
+Process     : main <20216>
+Thread      : spliced 7f5fc2f27700
+Internals   : V6.4.140320OSS/24b1387/24b1387/The OpenSplice domain service/u_domain.c/827/0/1542070923.399907896
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:02:03 MST 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'splicedaemon' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : edgar-B250M-DS3H
+Process     : main <20216>
+Thread      : spliced 7f5fc2f27700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1542070923.400295250
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:02:03 MST 2018
+Description : SOAP service is reachable via port 42829
+Node        : edgar-B250M-DS3H
+Process     : main <20216>
+Thread      : cmsoap 7f5fc07cc700
+Internals   : V6.4.140320OSS/24b1387/24b1387/CM SOAP Service/cms_service.c/410/0/1542070923.401378217
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:02:03 MST 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'cmsoap' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : edgar-B250M-DS3H
+Process     : main <20216>
+Thread      : cmsoap 7f5fc07cc700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1542070923.401512502
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:02:03 MST 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'ddsi2' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : edgar-B250M-DS3H
+Process     : main <20216>
+Thread      : ddsi2 7f5f8bfff700
+Internals   : V6.4.140320OSS/24b1387/24b1387/v_serviceChangeState/v_service.c/329/0/1542070923.403826848
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:02:03 MST 2018
+Description : The durability service can by identified by ID: 632028625
+Node        : edgar-B250M-DS3H
+Process     : main <20216>
+Thread      : durability 7f5fc046c700
+Internals   : V6.4.140320OSS/24b1387/24b1387/DurabilityService/d_durability.c/476/0/1542070923.405853187
+========================================================================================
+Report      : INFO
+Date        : Mon Nov 12 18:02:07 MST 2018
+Description : Termination request (signal 2) received from PID 20216 (self), UID 1000
+Node        : edgar-B250M-DS3H
+Process     : main <20216>
+Thread      : signalHandler 7f5fc12e3700
+Internals   : V6.4.140320OSS/24b1387/24b1387/signalHandlerThread/os_signalHandler.c/503/0/1542070927.732575247
