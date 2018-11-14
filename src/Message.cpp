@@ -19,7 +19,7 @@ void Message::publishEvent(TSN::private_message& msg)
              private_messageDataWriter_var,
              private_messageDataWriter,
              private_messageDataReader_var,
-             private_messageDataReader> res =
+             private_messageDataReader> message_ =
              dds_io<private_message,
              private_messageSeq,
              private_messageTypeSupport_var,
@@ -29,7 +29,7 @@ void Message::publishEvent(TSN::private_message& msg)
              private_messageDataReader_var,
              private_messageDataReader>
              ( (char*) "private_message", true , true );
-     res.publish(msg);
+     message_.publish(msg);
 
 }
 void Message::dispose()
