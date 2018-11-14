@@ -189,7 +189,7 @@ int OSPL_MAIN(int argc, char *argv[]) {
         std::cout << "6. Show statistics" << std::endl;
         std::cout << "7. Request Post" << std::endl;
         std::cout << "8. Send message" << std::endl;
-        std::cout << "9. Exit" << std::endl;
+         std::cout << "9. Exit" << std::endl;
         std::cout << "Enter your choice: ";
         std::cin >> user_action;
         std::cout << "DEBUG: *" << user_action << "*!!!!!!" << std::endl;
@@ -218,7 +218,8 @@ int OSPL_MAIN(int argc, char *argv[]) {
                 req_to_send.publishEvent(reqsend_instance);
                 break;
             case 8:
-                send_message();
+                std::thread bleh (send_message);
+                bleh.join();
                 break;
         }
         if (user_action_num == 9)
