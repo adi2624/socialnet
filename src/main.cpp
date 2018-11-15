@@ -406,6 +406,7 @@ TSN::user_information initialize_user(bool * is_initialized) {
         for (auto i = 0; i < static_cast<int>(my_user.get_interests().size()); i++) {
             msgInstance.interests[i] = my_user.get_interests().at(i).c_str();
         }
+
         return msgInstance;
     }
 
