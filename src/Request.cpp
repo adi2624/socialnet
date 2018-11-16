@@ -34,15 +34,16 @@ std::vector<User> Request::list_pub_users()
            temp_uuid = temp_line.substr(pos_uuid + 6, 37);
            temp_date = temp_line.substr(pos_date + 6, 9);
            temp_postNo = temp_line.substr(pos_postNum + 10);
+           std::cout << "REQUEST DATE:" << temp_date << std::endl;
+           std::cout << "REQUEST POST:" << temp_postNo << std::endl;
+           unsigned long long post_no = static_cast<unsigned long long> (stol(temp_postNo));
+           my_user.set_number_of_highest_post(post_no);
            my_user.set_first_name(temp_fname);
            my_user.set_last_name(temp_lname);
            my_user.set_user_uuid(temp_uuid);
-           my_user.set_date_of_birth(temp_date);
+           my_user.set_date_of_birth(stol(temp_date));
            name_user.push_back(my_user);
         }
-
-
-
     }
     file.close();
     return name_user;
