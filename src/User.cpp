@@ -1,10 +1,17 @@
 #include "User.h"
+#include <sstream>
 #include<fstream>
+#include <ostream>
 #include<iostream>
 
 void User::set_interests(std::vector<std::string> input_interests) 
 { 
     interests = input_interests; 
+    std::cout << "SETTING INTEREST: " << std::endl;
+    for(size_t i = 0; i < input_interests.size(); i++)
+    {
+        std::cout << input_interests[i] << std::endl;
+    }
 }
 
 std::vector<std::string> User::get_interests() 
@@ -156,10 +163,28 @@ void User::set_date_of_birth(std::string date)
     t.tm_mday = day;
     time_t time = mktime(&t);
     date_of_birth = static_cast<long>(time);
+    std::cout << "SETTING BIRTHDATE: " << date_of_birth << std::endl;
 }
 void User::set_post_singular(std::string data)
 {
     Post temp;
     temp.enter_post_data(data);
     user_posts.push_back(temp);
+    std::cout << "SETTING POST: " << temp.get_post_data() << std::endl;  
+}
+void User::update_user_information_file()
+{
+     std::ifstream in("users.tsn");
+     if(in)
+     {
+         system("cp users.tsn users.tmp");
+         system("sed '$ d' users.tmp > users.tsn");
+         system("rm -f users.tmp");
+         this->write_to_file();
+     }
+     else
+     {
+         std::cerr<<"File not found";
+     }
+
 }

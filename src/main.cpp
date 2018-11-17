@@ -140,11 +140,12 @@ void get_content()
 {
     while(1)
     {
-        receive_request();
         receive_userinfo();
         receive_response();
         receive_message();
-        sleep(10);
+        TSN::user_information temp = User::make_instance_user_information(my_user);
+        my_user.publishEvent(temp);
+        sleep(30);
     }
 }
 /*////////////////////////////////////
@@ -178,7 +179,6 @@ int OSPL_MAIN(int argc, char *argv[]) {
     std::thread update_content(get_content);
     user_action_num = -1;
     while (user_action_num != 9) {
-        
         std::string user_action;
         std::cout << "What would you like to do?" << std::endl;
         std::cout << "1. List users" << std::endl;
@@ -189,11 +189,14 @@ int OSPL_MAIN(int argc, char *argv[]) {
         std::cout << "6. Show statistics" << std::endl;
         std::cout << "7. Request Post" << std::endl;
         std::cout << "8. Send message" << std::endl;
-         std::cout << "9. Exit" << std::endl;
+        std::cout << "9. Exit" << std::endl;
         std::cout << "Enter your choice: ";
+        cin.clear();
         std::cin >> user_action;
         std::cout << "DEBUG: *" << user_action << "*!!!!!!" << std::endl;
         user_action_num = stoi(user_action);
+        //Update User Values every loop 
+        my_user.update_user_information_file(); 
         switch (user_action_num) {
             case 1:
                 list_all_users();
@@ -230,7 +233,6 @@ int OSPL_MAIN(int argc, char *argv[]) {
 
     }
     std::cout << "FLAG: " << user_is_initiated << std::endl;
-    post_count = sno + 1 ; // keep track of post count
     set_params();
     /*
     req_thread.join();
@@ -512,6 +514,8 @@ void make_post(char string[37], int sno) {
     getline(std::cin, post_text);
     my_user.set_post_singular(post_text);
     myfile << "SNO:" << sno << " POST:" << post_text << endl;
+    post_count++;
+    my_user.set_number_of_highest_post(post_count);
     myfile.close();
 }
 void resync() {

@@ -10,6 +10,7 @@
 class User
 {
 public:
+    void update_user_information_file();
     static TSN::user_information make_instance_user_information(User new_user);
     void set_interests(std::vector<std::string> input_interests);
     std::vector<std::string> get_interests();
