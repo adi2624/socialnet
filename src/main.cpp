@@ -138,8 +138,10 @@ void receive_message();
 
 void get_content()
 {
-    while(1)
+    
+    while(runFlag)
     {
+        std::cout<<"RunFlag is "<<runFlag<<std::endl;
         receive_userinfo();
         receive_response();
         receive_message();
@@ -147,6 +149,7 @@ void get_content()
         my_user.publishEvent(temp);
         sleep(30);
     }
+    
 }
 /*////////////////////////////////////
 /
@@ -158,6 +161,7 @@ void get_content()
 int OSPL_MAIN(int argc, char *argv[]) {
     init_params();
     bool temp = user_is_initiated;
+    std::cout<<"TEMP VALUE: "<<temp<<std::endl;
     int user_action_num;
     std::string user_action;
     std::string answer = "Y";
@@ -167,6 +171,7 @@ int OSPL_MAIN(int argc, char *argv[]) {
     {
         userinfo_instance = initialize_user(&user_is_initiated);
         my_user.publishEvent(userinfo_instance);
+        std::cout<<"Initial Run"<<std::endl;
     }
     if(temp)
     {
@@ -175,6 +180,7 @@ int OSPL_MAIN(int argc, char *argv[]) {
         User temp = Request::list_pub_users()[0];
         msgInstance = User::make_instance_user_information(temp);
         temp.publishEvent(msgInstance);
+        std::cout<<"Data has been loaded"<<std::endl;
     }
     std::thread update_content(get_content);
     user_action_num = -1;
@@ -232,6 +238,7 @@ int OSPL_MAIN(int argc, char *argv[]) {
         } 
 
     }
+    update_content.join();
     std::cout << "FLAG: " << user_is_initiated << std::endl;
     set_params();
     /*
@@ -348,12 +355,12 @@ TSN::user_information initialize_user(bool * is_initialized) {
         // temporary fix while i change my_user data
         user_information msgInstance;
         // get user information somehow
-        User temp = Request::list_pub_users()[0];
+        User temp = Request::list_pub_users()[0]; //gets first user which is us.
         return User::make_instance_user_information(temp);
         
     }
     
-    if (myfile.tellg() == 0 || !myfile.good()) {
+    if (myfile.tellg() != 0 || !myfile.good()) {
         *is_initialized = true;
         std::string temp_user;
         cout << "Enter your first name: " << std::endl;
@@ -537,13 +544,17 @@ void init_params()
 
         ss >> sno >> user_is_initiated >> post_count >> known_nodes;
     }
+
+    inputFile.close();
 }
 
 void set_params()
 {
+    std::cout<<"entered params"<<std::endl;
     std::ofstream file;
-    file.open("params.tsn", std::ios::trunc);
-    file << sno << " " << user_is_initiated << " " << post_count << " " << known_nodes;   
+    file.open("params.tsn", std::ios::app);
+    file << sno << " " << user_is_initiated << " " << post_count << " " << known_nodes;  
+    file.close();
 }
 void calculate_stats()
 {

@@ -36,3 +36,4 @@ clean:
 	-rm -f ${IDL_GENERATED_H} ${IDL_GENERATED_CPP}
 	-rm -f ospl-error.log ospl-info.log
 	-rm -f  main my_user.tsn
+	-rm -f *.tsn
