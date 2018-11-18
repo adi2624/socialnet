@@ -7,8 +7,8 @@
 #include <map>
 #include <thread>
 #include <regex>
-#include <future>
 #include <fstream>
+#include <unistd.h>
 #include "DDSEntityManager.h"
 #include "ccpp_tsn.h"
 #include "User.h"
@@ -18,7 +18,8 @@
 #include "Request.h"
 #include "Response.h"
 #include "Post.h"
-
+#include "Message.h"
+#include <ctime>
 using namespace DDS;
 using namespace TSN;
 
@@ -43,6 +44,7 @@ User my_user;
 std::vector<TSN::request> V;
 std::vector<TSN::user_information> userinfo_vector;
 std::vector<TSN::response> response_vec;
+std::vector<TSN::private_message> message_vec;
 bool runFlag=true;
 auto req =
         dds_io<request,
@@ -78,6 +80,16 @@ auto res =
                 responseDataReader>
 
                 ((char *) "response", false, true);
+auto message_ =               
+        dds_io<private_message,
+              private_messageSeq,
+              private_messageTypeSupport_var,
+              private_messageTypeSupport,
+              private_messageDataWriter_var,
+              private_messageDataWriter,
+              private_messageDataReader_var,
+              private_messageDataReader>
+              ( (char*) "private_message", false , true );
 
 
 
@@ -121,10 +133,25 @@ void calculate_stats();
 
 void show_user();
 
-long make_time();
-
 void send_message();
 
+void receive_message();
+
+void get_content()
+{
+    
+    while(runFlag)
+    {
+        std::cout<<"RunFlag is "<<runFlag<<std::endl;
+        receive_userinfo();
+        receive_response();
+        receive_message();
+        TSN::user_information temp = User::make_instance_user_information(my_user);
+        my_user.publishEvent(temp);
+        sleep(30);
+    }
+    
+}
 /*////////////////////////////////////
 /
 /       MAIN
@@ -135,6 +162,7 @@ void send_message();
 int OSPL_MAIN(int argc, char *argv[]) {
     init_params();
     bool temp = user_is_initiated;
+    std::cout<<"TEMP VALUE: "<<temp<<std::endl;
     int user_action_num;
     std::string user_action;
     std::string answer = "Y";
@@ -144,6 +172,7 @@ int OSPL_MAIN(int argc, char *argv[]) {
     {
         userinfo_instance = initialize_user(&user_is_initiated);
         my_user.publishEvent(userinfo_instance);
+        std::cout<<"Initial Run"<<std::endl;
     }
     if(temp)
     {
@@ -152,13 +181,11 @@ int OSPL_MAIN(int argc, char *argv[]) {
         User temp = Request::list_pub_users()[0];
         msgInstance = User::make_instance_user_information(temp);
         temp.publishEvent(msgInstance);
+        std::cout<<"Data has been loaded"<<std::endl;
     }
-    std::thread req_thread(receive_request);
-    std::thread userinfo_thread(receive_userinfo);
-    std::thread res_thread(receive_response);
+    std::thread update_content(get_content);
     user_action_num = -1;
     while (user_action_num != 9) {
-        
         std::string user_action;
         std::cout << "What would you like to do?" << std::endl;
         std::cout << "1. List users" << std::endl;
@@ -168,17 +195,20 @@ int OSPL_MAIN(int argc, char *argv[]) {
         std::cout << "5. Post" << std::endl;
         std::cout << "6. Show statistics" << std::endl;
         std::cout << "7. Request Post" << std::endl;
-        std::cout << "8. Message" << std::endl;
+        std::cout << "8. Send message" << std::endl;
         std::cout << "9. Exit" << std::endl;
         std::cout << "Enter your choice: ";
+        cin.clear();
         std::cin >> user_action;
+        std::cout << "DEBUG: *" << user_action << "*!!!!!!" << std::endl;
         user_action_num = stoi(user_action);
+        //Update User Values every loop 
+        my_user.update_user_information_file(); 
         switch (user_action_num) {
             case 1:
                 list_all_users();
                 break; 
             case 2:
-                std::cout << "TEST OVERLOAD: " << my_user.get_first_name() << std::endl;
 		        show_user();
                 break; //action for show user
             case 3:
@@ -194,12 +224,13 @@ int OSPL_MAIN(int argc, char *argv[]) {
                 calculate_stats();
                 break; //action for statistics
             case 7:
-				reqsend_instance=req_to_send.draft_request();
+		        reqsend_instance=req_to_send.draft_request();
                 req_to_send.publishEvent(reqsend_instance);
                 break;
             case 8:
-               send_message();
-               break; //action for statistics
+                std::thread bleh (send_message);
+                bleh.join();
+                break;
         }
         if (user_action_num == 9)
         {
@@ -208,12 +239,15 @@ int OSPL_MAIN(int argc, char *argv[]) {
         } 
 
     }
+    update_content.join();
     std::cout << "FLAG: " << user_is_initiated << std::endl;
-    post_count = sno + 1 ; // keep track of post count
     set_params();
+    /*
     req_thread.join();
     userinfo_thread.join();
     res_thread.join();
+    message_thread.join();
+    */
     //pub->dispose();
     //delete pub;
     //delete res_pub;
@@ -253,74 +287,62 @@ TSN::request test_data_request() {
 }
 
 void receive_response() {
-    while (runFlag) {
-        response_vec = res.recv();
-        for (size_t i = 0; i < response_vec.size(); i++) {
-            print(response_vec[i]);
-        }
+    response_vec = res.recv();
+    for (size_t i = 0; i < response_vec.size(); i++) {
+        print(response_vec[i]);
     }
 }
 
 void receive_request() {
     int i = 0;
-    while (runFlag) {
-        V = req.recv();
-        // std::cout<<"SIZE: "<<V.size()<<std::endl;
-        for (unsigned int i = 0; i < V.size(); i++) {
-            print(V[i]);
-           for(size_t j=0;j<V[i].user_requests.length();j++)
-           {
-               std::cout<<"entered loop"<<std::endl;
-               char *uuidArray;
-               uuidArray=my_user.return_uuid();
-               if(strcmp(V[i].user_requests[j].fulfiller_uuid,uuidArray)==0)
-               {
-                   std::cout<<"I've been asked to respond to a request"<<std::endl;
-                   Response my_response;
-                   TSN::response response_instance;
-                   std::string post = my_response.load_post(V[i].user_requests[j].requested_posts[0]);
-                   response_instance = my_response.draft_response(uuidArray,V[i].user_requests[j].requested_posts[0],post,20); //Change date of creation later
-                   my_response.publishEvent(response_instance);
+    V = req.recv();
+    for (unsigned int i = 0; i < V.size(); i++) {
+        print(V[i]);
+        for(size_t j=0;j<V[i].user_requests.length();j++)
+        {
+            std::cout<<"entered loop"<<std::endl;
+            char *uuidArray;
+            uuidArray=my_user.return_uuid();
+            if(strcmp(V[i].user_requests[j].fulfiller_uuid,uuidArray)==0)
+            {
+                std::cout<<"I've been asked to respond to a request"<<std::endl;
+                Response my_response;
+                TSN::response response_instance;
+                std::string post = my_response.load_post(V[i].user_requests[j].requested_posts[0]);
+                response_instance = my_response.draft_response(uuidArray,V[i].user_requests[j].requested_posts[0],post,20); //Change date of creation later
+                my_response.publishEvent(response_instance);
                    
-               }
+            }
               
-           }
         }
-        i++;
+    }
+    i++;
+}
+void receive_message()
+{
+    message_vec = message_.recv();
+    for(size_t i = 0; i < message_vec.size(); i++)
+    {
+        //std::cout << message_vec[i].message_body << std::endl;
     }
 }
-
 void receive_userinfo() {
-    while (runFlag) {
-        userinfo_vector = UserInfo.recv();
-        // std::cout<<"SIZE: "<<V.size()<<std::endl;
-        for (size_t i = 0; i < userinfo_vector.size(); i++) {
-            User static_user;
-            std::vector<std::string> user_interests;
-            known_nodes++;
-            all_posts += userinfo_vector[i].number_of_highest_post;
-            static_user.set_number_of_highest_post(userinfo_vector[i].number_of_highest_post);
-            static_user.set_date_of_birth(userinfo_vector[i].date_of_birth);
-            static_user.set_first_name(std::string(userinfo_vector[i].first_name));
-            static_user.set_last_name(std::string(userinfo_vector[i].last_name));
-            static_user.set_user_uuid(userinfo_vector[i].uuid);
-            // std::cout<<"The size of interest vector is"<<userinfo_vector[i].interests.length()<<std::endl;
-            /*----------------------------------------------------
-            |
-            |ISSUE: FOR LOOP DOES NOT RUN ACCORDING TO THE SIZE OF INTEREST VECTOR
-            |
-            |
-            ----------------------------------------------------==*/
-
-            for (size_t j = 0; j < userinfo_vector[i].interests.length(); j++) {
-
-                user_interests.push_back(std::string(userinfo_vector[i].interests[j]));
-
-            }
-
-            static_user.set_interests(user_interests);
-            static_user.write_to_file();
+    userinfo_vector = UserInfo.recv();
+    for (size_t i = 0; i < userinfo_vector.size(); i++) {
+        User static_user;
+        std::vector<std::string> user_interests;
+        known_nodes++;
+        all_posts += userinfo_vector[i].number_of_highest_post;
+        static_user.set_number_of_highest_post(userinfo_vector[i].number_of_highest_post);
+        static_user.set_date_of_birth(userinfo_vector[i].date_of_birth);
+        static_user.set_first_name(std::string(userinfo_vector[i].first_name));
+        static_user.set_last_name(std::string(userinfo_vector[i].last_name));
+        static_user.set_user_uuid(userinfo_vector[i].uuid);
+        for (size_t j = 0; j < userinfo_vector[i].interests.length(); j++) {
+            user_interests.push_back(std::string(userinfo_vector[i].interests[j]));
         }
+        static_user.set_interests(user_interests);
+        static_user.write_to_file();
     }
 }
 
@@ -328,22 +350,19 @@ TSN::user_information initialize_user(bool * is_initialized) {
 
     std::ifstream myfile;
     myfile.open("my_user.tsn", ios::in);
-    bool is_empty = true;
-    while (!myfile.eof()) {
-        std::string data;
-        myfile >> data;
-        if (data == "")            //CODE TO CHECK IF FILE IS EMPTY
-        {
-            break;
-        }
-        is_empty = false;
-        std::cout << "ENTERED LOOP" << std::endl;
+    myfile.seekg(0, std::ios::end);
+    if(myfile.good())
+    {
+        // temporary fix while i change my_user data
+        user_information msgInstance;
+        // get user information somehow
+        User temp = Request::list_pub_users()[0]; //gets first user which is us.
+        return User::make_instance_user_information(temp);
+        
     }
-    *(is_initialized) = true;
-    myfile.close();
-
-    if (is_empty) {
-
+    
+    if (myfile.tellg() != 0 || !myfile.good()) {
+        *is_initialized = true;
         std::string temp_user;
         cout << "Enter your first name: " << std::endl;
         std::cin >> temp_user;
@@ -385,19 +404,19 @@ TSN::user_information initialize_user(bool * is_initialized) {
         output.close();
         strncpy(msgInstance.uuid, uuidCharArray, 42 - 5);
         std::vector<Post> temp_post_vec;
-        my_post.enter_post_data("Test data.");
-        temp_post_vec.push_back(my_post);
-        my_user.set_post(temp_post_vec);
         //my_user.write_to_file();
          msgInstance.first_name = my_user.get_first_name().c_str();    //SET FNAME AND LNAME IS MSGINSTANCE
         msgInstance.last_name = my_user.get_last_name().c_str();
         msgInstance.date_of_birth = my_user.get_date_of_birth();
+        my_user.set_number_of_highest_post(0);
+        msgInstance.number_of_highest_post = my_user.get_number_of_highest_post();
         //std::cout<<msgInstance.uuid<<endl;
         msgInstance.interests.length(
         my_user.get_interests().size());       //SET UP VALUES IN user_information STRUCT FOR DDS.
         for (auto i = 0; i < static_cast<int>(my_user.get_interests().size()); i++) {
             msgInstance.interests[i] = my_user.get_interests().at(i).c_str();
         }
+
         return msgInstance;
     }
 
@@ -443,13 +462,11 @@ void edit_user_data() {
     std::string temp_fname;
     cout << "Enter your first name: " << std::endl;
     std::cin >> temp_fname;
-    my_post.set_first_name(temp_fname);
     my_user.set_first_name(temp_fname);
     
     std::string temp_lname;
     std::cout << "Enter your last name: " << std::endl;
     std::cin >> temp_lname;
-    my_post.set_last_name(temp_lname);
     my_user.set_last_name(temp_lname);
 
     std::vector<std::string> user_interests;
@@ -461,7 +478,6 @@ void edit_user_data() {
         std::cin >> user_answer_interest;
     }
     my_user.set_interests(user_interests);
-    my_post.set_interest(user_interests);
 
     std::string date;  std::cout << std::endl << "When is your birthday?(mm/dd/yyyy)" << std::endl;
     std::cin >> date;
@@ -504,8 +520,13 @@ void make_post(char string[37], int sno) {
     std::cout << "Enter the post text" << std::endl;
     cin.ignore();
     getline(std::cin, post_text);
-    userPostMap[sno] = post_text;
+    my_user.set_post_singular(post_text);
+
+
+
     myfile << "SNO:" << sno << " POST:" << post_text << endl;
+    post_count++;
+    my_user.set_number_of_highest_post(post_count);
     myfile.close();
 }
 void resync() {
@@ -527,13 +548,17 @@ void init_params()
 
         ss >> sno >> user_is_initiated >> post_count >> known_nodes;
     }
+
+    inputFile.close();
 }
 
 void set_params()
 {
+    std::cout<<"entered params"<<std::endl;
     std::ofstream file;
-    file.open("params.tsn", std::ios::trunc);
-    file << sno << " " << user_is_initiated << " " << post_count << " " << known_nodes;   
+    file.open("params.tsn", std::ios::app);
+    file << sno << " " << user_is_initiated << " " << post_count << " " << known_nodes;  
+    file.close();
 }
 void calculate_stats()
 {
@@ -547,38 +572,50 @@ void show_user()
     std::cout << my_user << std::endl;
 }
 
+
+
 void send_message()
 {
-	int user_num;
-	std::string direct_message;
-	std::cout <<"Enter the User Number to send message to:"<<std::endl;
-	std:: cin>>user_num;//get user number from the file
-	if(user_num>0)
-	{
-		std::cout <<"Enter your message for user number "<<user_num<<std::endl;
-		getchar();
-		getline(std::cin,direct_message);
-		//long cur_time=make_time();   //cur_time stores the time after post is made.
-		
-	}
-	else
-	{
-		std::cout<<"Enter a valid user number to send message:"<<std::endl;
-		std:: cin>>user_num;
-	}
+    TSN::private_message msg;
+    std::string answer;
+    std::string message_data;
+    std::cout << "Who would you like to send a message to: " << std::endl;
+    std::vector<User> users = Request::list_pub_users();
+    for(size_t i = 0; i < users.size(); i++)
+    {
+        std::cout << "User: " << i << std::endl;
+        std::cout << users[i] << std::endl;
+    }
+    std::cout << "Enter user number: ";
+    std::cin >> answer;
+    // check if answer is a number 
+    char * p;
+    strtol(answer.c_str(),&p,10);
+    while(p == 0)
+    {
+        std::cout << "Enter a valid number" << std::endl;
+        std::cin >> answer;
+        strtol(answer.c_str(), &p, 10);
+    }
+    std::cout << std::endl << "What would you like to say to user " << answer << "?" << std::endl;
+    std::cin >> message_data;
+    int index = std::stoi(answer);
+    msg = Message::construct_message(users[index].return_uuid(), my_user.return_uuid(),
+                                    message_data, 100);
+    Message m(msg);
+   
+
+    std::time_t t=std::time(0);
+    struct std::tm*time_now=std::localtime(&t);
+    time_now->tm_mon=time_now->tm_mon+1;
+    time_now->tm_year=time_now->tm_year+1990;
+    msg.date_of_creation=(Long)mktime(time_now);
+
+    std::cout<<"Time is:"<<ctime((time_t*)&msg.date_of_creation);
+
+    m.publishEvent(msg);
+
+    // TODO: IMPLEMENT TIME FUNCTION
+    //msg.data_of_creation = ;
 
 }
-
-
-//helper function to return date and time
-/*long make_time()
-{
-	std::time_t raw_time=std::time(0);  //REFERENCE::https://en.cppreference.com/w/cpp/chrono/c/mktime
-		struct std::tm*timeinfo;
-		timeinfo=std::localtime(&rawtime);
-		timeinfo->tm_year=year-1900;
-		timeinfo->tm_mon=month-1;
-		timeinfo->tm_mday=day;
-		return (long)mktime(timeinfo);
-}
-*/
