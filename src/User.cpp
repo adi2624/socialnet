@@ -7,10 +7,10 @@
 void User::set_interests(std::vector<std::string> input_interests) 
 { 
     interests = input_interests; 
-    std::cout << "SETTING INTEREST: " << std::endl;
+   // std::cout << "SETTING INTEREST: " << std::endl;
     for(size_t i = 0; i < input_interests.size(); i++)
     {
-        std::cout << input_interests[i] << std::endl;
+       // std::cout << input_interests[i] << std::endl;
     }
 }
 
@@ -129,6 +129,7 @@ void User::publishEvent(TSN::user_information msgInstance)
                           user_informationDataReader>
 
                           ( (char*) "user_information", true     , true );
+                          /*
                           cout << "=== [Publisher] writing a message containing :" << endl;
     cout << "    userID  : " << msgInstance.uuid << endl;
     cout << "    Name :"   << msgInstance.first_name << " " << msgInstance.last_name << "\"" << endl;
@@ -136,6 +137,7 @@ void User::publishEvent(TSN::user_information msgInstance)
 {
     cout << "Interests: \"" << msgInstance.interests[i]<<std::endl;
 }
+*/
     
     
 

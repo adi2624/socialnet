@@ -42,7 +42,8 @@ std::vector<User> Request::list_pub_users()
           while (pos<temp_interest.length())
            {
               if(temp_interest.at(pos)==' ')
-              {
+              { 
+                  
                   interests_vector.push_back(temp_interest.substr(current_pos,(pos-current_pos)));
                   current_pos=pos;
               }
@@ -116,8 +117,9 @@ void Request::publishEvent(TSN::request reqsend_instance) {
 
                           ( (char*) "request", true , true );
                 //        topic name,         publish, subscribe
-                cout<<"Debug"<<std::endl;
+               // cout<<"Debug"<<std::endl;
 		req.publish(reqsend_instance);
+        std::cout<<"Publishing successful"<<std::endl;
 }
 
 void Request::dispose() {

@@ -22,6 +22,12 @@
 using namespace DDS;
 using namespace TSN;
 
+
+
+//NOTE: A NON CLEAN EXIT WILL BREAK THE FUNCTIONALITY OF THE PROGRAM.
+
+
+
 /*===============================
  *
  *      GLOBALS :(
@@ -144,8 +150,9 @@ void get_content()
     
     while(runFlag)
     {
-        std::cout<<"RunFlag is "<<runFlag<<std::endl;
+       // std::cout<<"RunFlag is "<<runFlag<<std::endl;
         receive_userinfo();
+        receive_request();
         receive_response();
         receive_message();
         TSN::user_information temp = User::make_instance_user_information(my_user);
@@ -165,7 +172,6 @@ void get_content()
 int OSPL_MAIN(int argc, char *argv[]) {
     init_params();
     bool temp = user_is_initiated;
-    std::cout<<"TEMP VALUE: "<<temp<<std::endl;
     int user_action_num;
     std::string user_action;
     std::string answer = "Y";
@@ -175,7 +181,6 @@ int OSPL_MAIN(int argc, char *argv[]) {
     {
         userinfo_instance = initialize_user(&user_is_initiated);
         my_user.publishEvent(userinfo_instance);
-        std::cout<<"Initial Run"<<std::endl;
 
         
     }
@@ -185,11 +190,8 @@ int OSPL_MAIN(int argc, char *argv[]) {
         user_information msgInstance;
         // get user information somehow
         my_user = Request::list_pub_users()[0];
-        std::cout<<"FNAME:"<<my_user.get_first_name()<<std::endl;
-        std::cout<<"Interests"<<my_user.get_interests().at(0)<<my_user.get_interests().at(1)<<std::endl;
         msgInstance = User::make_instance_user_information(my_user);
         my_user.publishEvent(msgInstance);
-        std::cout<<"Data has been loaded from previous runs"<<std::endl;
     }
     std::thread update_content(get_content);
     user_action_num = -1;
@@ -208,7 +210,6 @@ int OSPL_MAIN(int argc, char *argv[]) {
         std::cout << "Enter your choice: ";
         cin.clear();
         std::cin >> user_action;
-        std::cout << "DEBUG: *" << user_action << "*!!!!!!" << std::endl;
         user_action_num = stoi(user_action);
         //Update User Values every loop 
         my_user.update_user_information_file(); 
@@ -248,7 +249,7 @@ int OSPL_MAIN(int argc, char *argv[]) {
 
     }
     update_content.join();
-    std::cout << "FLAG: " << user_is_initiated << std::endl;
+  //  std::cout << "FLAG: " << user_is_initiated << std::endl;
     set_params();
     /*
     req_thread.join();
@@ -311,11 +312,14 @@ void receive_request() {
             std::cout<<"entered loop"<<std::endl;
             char *uuidArray;
             uuidArray=my_user.return_uuid();
-            if(strcmp(V[i].user_requests[j].fulfiller_uuid,uuidArray)==0)
+            //std::cout<<"The string length of fulfiller uuid :"<<strlen(V[i].user_requests[j].fulfiller_uuid)<<std::endl;
+            //std::cout<<"The UUID "<<strlen(uuidArray)<<std::endl;
+            if(strncmp(V[i].user_requests[j].fulfiller_uuid,uuidArray,36)==0)
             {
                 std::cout<<"I've been asked to respond to a request"<<std::endl;
                 Response my_response;
                 TSN::response response_instance;
+                std::cout<< "The post number thats was requested is "<<V[i].user_requests[j].requested_posts[0];
                 std::string post = my_response.load_post(V[i].user_requests[j].requested_posts[0]);
                 response_instance = my_response.draft_response(uuidArray,V[i].user_requests[j].requested_posts[0],post,20); //Change date of creation later
                 my_response.publishEvent(response_instance);
@@ -360,7 +364,7 @@ void receive_userinfo() {
         }
         else 
         {
-            std::cout<<"Skipping write to file"<<std::endl;
+           // std::cout<<"Skipping write to file"<<std::endl;
         }
     }
 }
@@ -570,7 +574,7 @@ void init_params()
 
 void set_params()
 {
-    std::cout<<"entered params"<<std::endl;
+   // std::cout<<"entered params"<<std::endl;
     std::ofstream file;
     file.open("params.tsn", std::ios::app);
     file << sno << " " << user_is_initiated << " " << post_count << " " << known_nodes;  
