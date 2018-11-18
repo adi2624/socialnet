@@ -190,6 +190,7 @@ int OSPL_MAIN(int argc, char *argv[]) {
         user_information msgInstance;
         // get user information somehow
         my_user = Request::list_pub_users()[0];
+        std::cout<<"Loaded USER "<<my_user.get_first_name()<<" "<<my_user.get_last_name()<<my_user.return_uuid()<<std::endl;
         msgInstance = User::make_instance_user_information(my_user);
         my_user.publishEvent(msgInstance);
     }
@@ -309,7 +310,7 @@ void receive_request() {
         print(V[i]);
         for(size_t j=0;j<V[i].user_requests.length();j++)
         {
-            std::cout<<"entered loop"<<std::endl;
+            //std::cout<<"entered loop"<<std::endl;
             char *uuidArray;
             uuidArray=my_user.return_uuid();
             //std::cout<<"The string length of fulfiller uuid :"<<strlen(V[i].user_requests[j].fulfiller_uuid)<<std::endl;

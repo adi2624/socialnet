@@ -30,8 +30,8 @@ std::vector<User> Request::list_pub_users()
            std::string temp_date;
            std::string temp_postNo;
            std::string temp_interest;
-           temp_fname = temp_line.substr(pos_fname + 6, pos_lname - 7);
-           temp_lname = temp_line.substr(pos_lname + 6, pos_interests - 20);
+           temp_fname = temp_line.substr(pos_fname + 6, pos_lname -(pos_fname+6));
+           temp_lname = temp_line.substr(pos_lname + 6, pos_interests -(pos_lname + 6));
            temp_uuid = temp_line.substr(pos_uuid + 6, 37);
            temp_date = temp_line.substr(pos_date + 6, 9);
            temp_postNo = temp_line.substr(pos_postNum + 10);
@@ -50,6 +50,7 @@ std::vector<User> Request::list_pub_users()
                pos++;
            }
            unsigned long long post_no = static_cast<unsigned long long> (stol(temp_postNo));
+           std::cout<<"Loaded last name :"<<temp_lname<<std::endl;
            my_user.set_number_of_highest_post(post_no);
            my_user.set_first_name(temp_fname);
            my_user.set_last_name(temp_lname);
