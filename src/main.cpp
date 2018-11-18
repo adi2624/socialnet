@@ -29,6 +29,8 @@ using namespace TSN;
  *===============================
  */
 bool user_is_initiated = false;
+bool is_first_run=true;
+int receive_counter=0;
 int sno = 0;    
 long post_count = 0;
 long known_nodes = 0;
@@ -139,6 +141,7 @@ void receive_message();
 void get_content()
 {
     
+    
     while(runFlag)
     {
         std::cout<<"RunFlag is "<<runFlag<<std::endl;
@@ -147,7 +150,8 @@ void get_content()
         receive_message();
         TSN::user_information temp = User::make_instance_user_information(my_user);
         my_user.publishEvent(temp);
-        sleep(30);
+        sleep(3);
+        receive_counter++;
     }
     
 }
@@ -172,15 +176,20 @@ int OSPL_MAIN(int argc, char *argv[]) {
         userinfo_instance = initialize_user(&user_is_initiated);
         my_user.publishEvent(userinfo_instance);
         std::cout<<"Initial Run"<<std::endl;
+
+        
     }
     if(temp)
     {
+        is_first_run =false;
         user_information msgInstance;
         // get user information somehow
-        User temp = Request::list_pub_users()[0];
-        msgInstance = User::make_instance_user_information(temp);
-        temp.publishEvent(msgInstance);
-        std::cout<<"Data has been loaded"<<std::endl;
+        my_user = Request::list_pub_users()[0];
+        std::cout<<"FNAME:"<<my_user.get_first_name()<<std::endl;
+        std::cout<<"Interests"<<my_user.get_interests().at(0)<<my_user.get_interests().at(1)<<std::endl;
+        msgInstance = User::make_instance_user_information(my_user);
+        my_user.publishEvent(msgInstance);
+        std::cout<<"Data has been loaded from previous runs"<<std::endl;
     }
     std::thread update_content(get_content);
     user_action_num = -1;
@@ -341,7 +350,18 @@ void receive_userinfo() {
             user_interests.push_back(std::string(userinfo_vector[i].interests[j]));
         }
         static_user.set_interests(user_interests);
+        if((strcmp(static_user.return_uuid(),my_user.return_uuid())!=0))
+        {
         static_user.write_to_file();
+        }
+         else if(strcmp(static_user.return_uuid(),my_user.return_uuid())==0 && is_first_run==true && receive_counter==0)
+        {
+            static_user.write_to_file();
+        }
+        else 
+        {
+            std::cout<<"Skipping write to file"<<std::endl;
+        }
     }
 }
 

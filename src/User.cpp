@@ -131,7 +131,12 @@ void User::publishEvent(TSN::user_information msgInstance)
                           ( (char*) "user_information", true     , true );
                           cout << "=== [Publisher] writing a message containing :" << endl;
     cout << "    userID  : " << msgInstance.uuid << endl;
-    cout << "    Name : \"" << msgInstance.first_name << " " << msgInstance.last_name << "\"" << endl;
+    cout << "    Name :"   << msgInstance.first_name << " " << msgInstance.last_name << "\"" << endl;
+    for(unsigned int i=0; i<msgInstance.interests.length();i++)
+{
+    cout << "Interests: \"" << msgInstance.interests[i]<<std::endl;
+}
+    
     
 
      UserInfo.publish(msgInstance);

@@ -1,0 +1,94 @@
+========================================================================================
+Report      : INFO
+Date        : Sat Nov 17 22:27:29 CST 2018
+Description : ---------------------------------------------------------------
+              -- The service is using the following configuration settings --
+              ---------------------------------------------------------------
+              Domain (id)          : ospl_sp_ddsi (0)
+              Storage              : 0 Kbytes
+              Storage threshold    : 1024 Kbytes
+              Storage address      : Not available
+              Locking              : default
+              Memory mode          : Heap memory
+              Builtin topics       : true
+              Priority inheritance : false
+              SystemId             : 1887568415 from [1,2147483647]
+Node        : aditya-MacBookPro
+Process     : main <22315>
+Thread      : spliced 7f324a399700
+Internals   : 6.7.180404OSS/de8c6f4/de8c6f4/The OpenSplice domain service/u_domain.c/659/0/1542515249.047712716/0
+========================================================================================
+Report      : INFO
+Date        : Sat Nov 17 22:27:29 CST 2018
+Description : Service cmsoap disabled
+Node        : aditya-MacBookPro
+Process     : main <22315>
+Thread      : spliced 7f324a399700
+Internals   : 6.7.180404OSS/de8c6f4/de8c6f4/OpenSplice domain service/sr_componentInfo.c/447/0/1542515249.048144493/0
+========================================================================================
+Report      : INFO
+Date        : Sat Nov 17 22:27:29 CST 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'splicedaemon' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : aditya-MacBookPro
+Process     : main <22315>
+Thread      : spliced 7f324a399700
+Internals   : 6.7.180404OSS/de8c6f4/de8c6f4/v_serviceChangeState/v_service.c/295/0/1542515249.049411095/0
+========================================================================================
+Report      : INFO
+Date        : Sat Nov 17 22:27:29 CST 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'ddsi2' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : aditya-MacBookPro
+Process     : main <22315>
+Thread      : ddsi2 7f322fce1700
+Internals   : 6.7.180404OSS/de8c6f4/de8c6f4/v_serviceChangeState/v_service.c/295/0/1542515249.058943564/0
+========================================================================================
+Report      : INFO
+Date        : Sat Nov 17 22:27:43 CST 2018
+Description : ---------------------------------------------------------------
+              -- The service is using the following configuration settings --
+              ---------------------------------------------------------------
+              Domain (id)          : ospl_sp_ddsi (0)
+              Storage              : 0 Kbytes
+              Storage threshold    : 1024 Kbytes
+              Storage address      : Not available
+              Locking              : default
+              Memory mode          : Heap memory
+              Builtin topics       : true
+              Priority inheritance : false
+              SystemId             : 1510182761 from [1,2147483647]
+Node        : aditya-MacBookPro
+Process     : main <22371>
+Thread      : spliced 7f529bff8700
+Internals   : 6.7.180404OSS/de8c6f4/de8c6f4/The OpenSplice domain service/u_domain.c/659/0/1542515263.702893396/0
+========================================================================================
+Report      : INFO
+Date        : Sat Nov 17 22:27:43 CST 2018
+Description : Service cmsoap disabled
+Node        : aditya-MacBookPro
+Process     : main <22371>
+Thread      : spliced 7f529bff8700
+Internals   : 6.7.180404OSS/de8c6f4/de8c6f4/OpenSplice domain service/sr_componentInfo.c/447/0/1542515263.703237649/0
+========================================================================================
+Report      : INFO
+Date        : Sat Nov 17 22:27:43 CST 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'splicedaemon' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : aditya-MacBookPro
+Process     : main <22371>
+Thread      : spliced 7f529bff8700
+Internals   : 6.7.180404OSS/de8c6f4/de8c6f4/v_serviceChangeState/v_service.c/295/0/1542515263.704279588/0
+========================================================================================
+Report      : INFO
+Date        : Sat Nov 17 22:27:43 CST 2018
+Description : ++++++++++++++++++++++++++++++++++++++++++++++++
+              ++ The service 'ddsi2' is now operational. 
+              ++++++++++++++++++++++++++++++++++++++++++++++++
+Node        : aditya-MacBookPro
+Process     : main <22371>
+Thread      : ddsi2 7f5299988700
+Internals   : 6.7.180404OSS/de8c6f4/de8c6f4/v_serviceChangeState/v_service.c/295/0/1542515263.709442349/0
