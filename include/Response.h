@@ -20,7 +20,7 @@ public:
     Response();
     void publishEvent(TSN::response response_instance);
     TSN::response draft_response(char* uuid,unsigned long post_no,std::string post_body, long doc);
-    std::string load_post(int post_no);
+    static std::string load_post(int post_no);
     void dispose();
 };
 #endif //SOCIALNET_RESPONSE_H

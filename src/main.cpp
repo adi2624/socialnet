@@ -168,31 +168,28 @@ void get_content()
 /
 /
 ////////////////////////////////// */
-
 int OSPL_MAIN(int argc, char *argv[]) {
     init_params();
     bool temp = user_is_initiated;
     int user_action_num;
+    std::ifstream file;
+    file.open("my_user.tsn");
+    file.seekg(0, std::ios::end);
     std::string user_action;
     std::string answer = "Y";
-    // we only need to initialize user once
     user_information userinfo_instance;
-    if(!user_is_initiated)
+    std::cout << "FILE IS GOOD: " << file.good() << std::endl;
+    std::cout << "SIZE: " << file.tellg() << std::endl;
+    
+    if(!file.good() && file.tellg() == -1)
     {
         userinfo_instance = initialize_user(&user_is_initiated);
         my_user.publishEvent(userinfo_instance);
-
-        
     }
-    if(temp)
+    else 
     {
-        is_first_run =false;
-        user_information msgInstance;
-        // get user information somehow
-        my_user = Request::list_pub_users()[0];
-        std::cout<<"Loaded USER "<<my_user.get_first_name()<<" "<<my_user.get_last_name()<<my_user.return_uuid()<<std::endl;
-        msgInstance = User::make_instance_user_information(my_user);
-        my_user.publishEvent(msgInstance);
+        my_user = User::populate_my_user();
+        std::cout << my_user << std::endl;
     }
     std::thread update_content(get_content);
     user_action_num = -1;
@@ -252,6 +249,7 @@ int OSPL_MAIN(int argc, char *argv[]) {
     update_content.join();
   //  std::cout << "FLAG: " << user_is_initiated << std::endl;
     set_params();
+    file.close();
     /*
     req_thread.join();
     userinfo_thread.join();
@@ -357,7 +355,7 @@ void receive_userinfo() {
         static_user.set_interests(user_interests);
         if((strcmp(static_user.return_uuid(),my_user.return_uuid())!=0))
         {
-        static_user.write_to_file();
+            static_user.write_to_file();
         }
          else if(strcmp(static_user.return_uuid(),my_user.return_uuid())==0 && is_first_run==true && receive_counter==0)
         {
@@ -544,7 +542,7 @@ void make_post(char string[37], int sno) {
     std::cout << "Enter the post text" << std::endl;
     cin.ignore();
     getline(std::cin, post_text);
-    my_user.set_post_singular(post_text);
+    my_user.set_post_singular(post_text, sno);
     myfile << "SNO:" << sno << " POST:" << post_text << endl;
     post_count++;
     my_user.set_number_of_highest_post(post_count);

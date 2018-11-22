@@ -10,6 +10,7 @@
 class User
 {
 public:
+    static User populate_my_user();
     void update_user_information_file();
     static TSN::user_information make_instance_user_information(User new_user);
     void set_interests(std::vector<std::string> input_interests);
@@ -24,7 +25,7 @@ public:
     void set_number_of_highest_post(unsigned long long posts) { number_of_highest_post = posts; }
     unsigned long long get_number_of_highest_post() { return number_of_highest_post; }
     void set_post(std::vector<Post> post);
-    void set_post_singular(std::string data);
+    void set_post_singular(std::string data, int sno);
     std::vector<Post> get_post() { return user_posts; }
     void set_user_information();
     void write_to_file();

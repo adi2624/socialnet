@@ -172,10 +172,11 @@ void User::set_date_of_birth(std::string date)
     date_of_birth = static_cast<long>(time);
     std::cout << "SETTING BIRTHDATE: " << date_of_birth << std::endl;
 }
-void User::set_post_singular(std::string data)
+void User::set_post_singular(std::string data, int sno)
 {
     Post temp;
     temp.enter_post_data(data);
+    temp.set_serial_number(sno);
     user_posts.push_back(temp);
     std::cout << "SETTING POST: " << temp.get_post_data() << std::endl;  
 }
@@ -194,4 +195,68 @@ void User::update_user_information_file()
          std::cerr<<"File not found";
      }
 
+}
+User User::populate_my_user()
+{
+    std::vector <std::string> my_interests;
+    std::vector <Post> posts;
+    User my_user;
+    std::ifstream file;
+    file.open("users.tsn");
+    std::ifstream post_file;
+    post_file.open("my_user.tsn");
+    std::string test;
+    std::string serial_number, post_data, garbage, fname, lname, uuid, interest, birthdate, post_num;
+    while(std::getline(file, test))
+    {
+        std::stringstream iss(test);
+        getline(iss, garbage ,' ');
+        getline(iss,fname,' ');
+        getline(iss, garbage,  ' ');
+        getline(iss, lname, ' ');
+        getline(iss, garbage, ' ');
+        getline(iss, interest, ' ');
+        if(interest != "UUID:") my_interests.push_back(interest);
+        while(!(interest == "UUID:"))
+        {
+            getline(iss, interest, ' ');
+            if(interest != "UUID:" && ) my_interests.push_back(interest);
+        }
+        getline(iss, uuid, ' ');
+        getline(iss, garbage, ' ');
+        getline(iss, birthdate, ' ');
+        getline(iss, garbage , ' ');
+        getline(iss, post_num, ' ');
+        break;
+    }
+    // use count variable to avoid the first line which we dont need
+    int count = 0;
+    while(std::getline(post_file, test))
+    {
+        if(count != 0)
+        {
+            Post my_post;
+            int sno;
+            std::stringstream iss(test);
+            std::getline(iss, serial_number , ' ');
+            std::getline(iss, post_data, '\n');
+            sno = stoi(serial_number.substr(4));
+            post_data = post_data.substr(5);
+            my_post.set_serial_number(sno);
+            my_post.enter_post_data(post_data);
+            posts.push_back(my_post);
+        }
+        count++;
+    }
+    my_user.set_first_name(fname);
+    my_user.set_last_name(lname);
+    my_user.set_user_uuid(uuid);
+    int highest = stoi(post_num);
+    my_user.set_number_of_highest_post(static_cast<unsigned long long>(highest));
+    my_user.set_interests(my_interests);
+    my_user.set_post(posts);
+    my_user.set_date_of_birth(stol(birthdate));
+    file.close();
+    post_file.close();
+    return my_user;
 }

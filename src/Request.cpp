@@ -1,6 +1,5 @@
-
 #include "Request.h"
-
+#include "Response.h"
 
 using namespace TSN;
 
@@ -51,6 +50,10 @@ std::vector<User> Request::list_pub_users()
            }
            unsigned long long post_no = static_cast<unsigned long long> (stol(temp_postNo));
            std::cout<<"Loaded last name :"<<temp_lname<<std::endl;
+           for(unsigned long long i = 1; i <= post_no; i++)
+           {
+               my_user.set_post_singular(Response::load_post(i), static_cast<int>(i));
+           }
            my_user.set_number_of_highest_post(post_no);
            my_user.set_first_name(temp_fname);
            my_user.set_last_name(temp_lname);
@@ -61,6 +64,9 @@ std::vector<User> Request::list_pub_users()
         }
     }
     file.close();
+    std::ifstream post_file;
+    post_file.open("my_user.tsn");
+    
     return name_user;
 }
 
