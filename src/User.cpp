@@ -220,7 +220,7 @@ User User::populate_my_user()
         while(!(interest == "UUID:"))
         {
             getline(iss, interest, ' ');
-            if(interest != "UUID:" && ) my_interests.push_back(interest);
+            if(interest != "UUID:") my_interests.push_back(interest);
         }
         getline(iss, uuid, ' ');
         getline(iss, garbage, ' ');
