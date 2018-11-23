@@ -6,68 +6,45 @@ using namespace TSN;
 
 std::vector<User> Request::list_pub_users() 
 {
-
-    std::vector<User> name_user;        //EXPORT A VECTOR OF USERS AFTER LOADING ALL USERS FROM USERS.TSN
-    std::string temp_line;
-    std::ifstream file("users.tsn");
-    while (!file.eof()) 
+    std::vector<User> users;
+    std::vector <std::string> my_interests;
+    std::ifstream file;
+    file.open("users.tsn");
+    std::ifstream post_file;
+    std::string test;
+    std::string serial_number, post_data, garbage, fname, lname, uuid, interest, birthdate, post_num;
+    while(std::getline(file, test))
     {
         User my_user;
-        std::getline(file, temp_line);
-        //std::cout << temp_line << std::endl;
-        if (temp_line != "")        //Don't run loop on empty newline.
+        std::stringstream iss(test);
+        getline(iss, garbage ,' ');
+        getline(iss,fname,' ');
+        getline(iss, garbage,  ' ');
+        getline(iss, lname, ' ');
+        getline(iss, garbage, ' ');
+        getline(iss, interest, ' ');
+        if(interest != "UUID:") my_interests.push_back(interest);
+        while(!(interest == "UUID:"))
         {
-           std::size_t pos_lname = temp_line.find("LNAME");
-           std::size_t pos_fname = temp_line.find("FNAME");
-           std::size_t pos_interests = temp_line.find("Inter");
-           std::size_t pos_uuid = temp_line.find("UUID:");
-           std::size_t pos_date = temp_line.find("DATE:");
-           std::size_t pos_postNum = temp_line.find("POST_NUM:");
-	       std::string temp_fname;
-           std::string temp_lname;
-           std::string temp_uuid;
-           std::string temp_date;
-           std::string temp_postNo;
-           std::string temp_interest;
-           temp_fname = temp_line.substr(pos_fname + 6, pos_lname -(pos_fname+6));
-           temp_lname = temp_line.substr(pos_lname + 6, pos_interests -(pos_lname + 6));
-           temp_uuid = temp_line.substr(pos_uuid + 6, 37);
-           temp_date = temp_line.substr(pos_date + 6, 9);
-           temp_postNo = temp_line.substr(pos_postNum + 10);
-           temp_interest = temp_line.substr(pos_interests+11,pos_uuid-(pos_interests+11));
-           size_t pos=0;
-           size_t current_pos=0;
-           std::vector<std::string> interests_vector;
-          while (pos<temp_interest.length())
-           {
-              if(temp_interest.at(pos)==' ')
-              { 
-                  
-                  interests_vector.push_back(temp_interest.substr(current_pos,(pos-current_pos)));
-                  current_pos=pos;
-              }
-               pos++;
-           }
-           unsigned long long post_no = static_cast<unsigned long long> (stol(temp_postNo));
-           std::cout<<"Loaded last name :"<<temp_lname<<std::endl;
-           for(unsigned long long i = 1; i <= post_no; i++)
-           {
-               my_user.set_post_singular(Response::load_post(i), static_cast<int>(i));
-           }
-           my_user.set_number_of_highest_post(post_no);
-           my_user.set_first_name(temp_fname);
-           my_user.set_last_name(temp_lname);
-           my_user.set_user_uuid(temp_uuid);
-           my_user.set_date_of_birth(stol(temp_date));
-           my_user.set_interests(interests_vector);
-           name_user.push_back(my_user);
+            getline(iss, interest, ' ');
+            if(interest != "UUID:") my_interests.push_back(interest);
         }
+        getline(iss, uuid, ' ');
+        getline(iss, garbage, ' ');
+        getline(iss, birthdate, ' ');
+        getline(iss, garbage , ' ');
+        getline(iss, post_num, ' ');
+        my_user.set_first_name(fname);
+        my_user.set_last_name(lname);
+        my_user.set_user_uuid(uuid);
+        int highest = stoi(post_num);
+        my_user.set_number_of_highest_post(static_cast<unsigned long long>(highest));
+        my_user.set_interests(my_interests);
+        my_user.set_date_of_birth(stol(birthdate));
+        users.push_back(my_user);
     }
     file.close();
-    std::ifstream post_file;
-    post_file.open("my_user.tsn");
-    
-    return name_user;
+    return users;
 }
 
 void Request::initPublisher(char uuid[], TSN::node_request &temp) {
