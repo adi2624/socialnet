@@ -29,6 +29,7 @@ public:
     Request();
     void publishEvent(TSN::request reqsend_instance);
     static std::vector<User> list_pub_users() ;
+    static User show_user_request(User to_print);
     TSN::request draft_request();
     void dispose();
 };

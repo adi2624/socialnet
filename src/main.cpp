@@ -1,3 +1,4 @@
+#include <future>
 #include <string>
 #include <sstream>
 #include <stdlib.h>
@@ -112,7 +113,9 @@ TSN::response test_data_response();
 
 TSN::user_information initialize_user(bool *);
 
-std::vector<std::string> list_all_users();
+std::vector<Post> get_posts(unsigned long long number_of_posts, User to_request);
+
+void list_all_users();
 
 void receive_request();
 
@@ -328,6 +331,14 @@ void receive_request() {
     }
     i++;
 }
+void list_all_users()
+{
+    std::vector<User> temp = Request::list_pub_users();
+    for(size_t i = 0; i < temp.size(); i++)
+    {
+        std::cout << temp[i] << std::endl;
+    }
+}
 void receive_message()
 {
     message_vec = message_.recv();
@@ -530,21 +541,6 @@ void edit_user_data() {
 
 }
 
-std::vector<std::string> list_all_users() {
-    std::ifstream users_file("users.tsn");
-    std::string input, fname, lname;
-    std::vector<std::string> users_vector;
-    while (!users_file.eof()) {
-        std::getline(users_file, input);
-        std::stringstream ss;
-        ss << input;
-        ss >> fname >> lname;
-        fname = fname.substr(1);
-        users_vector.push_back(fname + " " + lname);
-    }
-
-    return users_vector;
-}
 void make_post(char string[37], int sno) {
     std::ofstream myfile;
     myfile.open("my_user.tsn", ios::app);
@@ -598,7 +594,51 @@ void calculate_stats()
 
 void show_user()
 {
-    std::cout << my_user << std::endl;
+    std::string user;
+    std::cout << "Choose which user:" << std::endl;
+    std::vector<User> temp = Request::list_pub_users();
+    for(size_t i = 0; i < temp.size(); i++)
+    {
+        std::cout << "USER " << i << std::endl;
+        std::cout << temp[i] << std::endl;
+    }
+    std::cout << "Choice: ";
+    cin.sync();
+    std::getline(std::cin, user);
+    int user_idx = stoi(user);
+    std::vector<Post> user_posts;
+    std::future<std::vector<Post>> answer = std::async(std::launch::async,get_posts, 
+                                                        temp[user_idx].get_number_of_highest_post(), temp[user_idx]);
+    std::vector<Post> returns = answer.get();
+    temp[user_idx].set_post(returns);
+    std::cout << "AQUIE ESTAMOS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+    std::cout << temp[user_idx] << std::endl;
+}
+std::vector<Post> get_posts(unsigned long long number_of_posts, User to_request)
+{
+    std::vector<TSN::response> responses;
+    std::vector<Post> temp_posts;
+    Request new_req;
+    request user_request;
+    node_request request_posts;
+    strcpy(request_posts.fulfiller_uuid, to_request.return_uuid());
+    request_posts.requested_posts.length(number_of_posts);
+    for(int i = 0; i < static_cast<int>(number_of_posts); i++) request_posts.requested_posts[i] = i;
+    strcpy(user_request.uuid, my_user.return_uuid());
+    user_request.user_requests.length(1);
+    user_request.user_requests[0] = request_posts;
+    new_req.publishEvent(user_request);
+    responses = res.recv();
+    for(size_t i = 0; i < responses.size(); i++)
+    {
+        std::string post_body(responses[i].post_body);
+        Post new_post;
+        new_post.set_serial_number(responses[i].post_id);
+        new_post.enter_post_data(post_body);
+        new_post.set_date_of_creation(responses[i].date_of_creation);
+        temp_posts.push_back(new_post);
+    }
+    return temp_posts;
 }
 void send_message()
 {
@@ -628,13 +668,11 @@ void send_message()
     std::cout << std::endl << "What would you like to say to user " << answer << "?" << std::endl;
     std::cin.sync();
     std::getline(std::cin, message_data);
-    std::cout << "ANSWER IS: "<< answer << std::endl;
-    std::cout << "MESSAGE DATA: " << message_data << std::endl;
+    long result = static_cast<long>(std::time(nullptr));
+    msg.date_of_creation = result;
     int index = std::stoi(answer);
     msg = Message::construct_message(users[index].return_uuid(), my_user.return_uuid(),
-                                    message_data, 100);
+                                    message_data, result);
     Message m(msg);
     m.publishEvent(msg);
-    // TODO: IMPLEMENT TIME FUNCTION
-    //msg.data_of_creation = ;
 }
