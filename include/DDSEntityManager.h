@@ -1,7 +1,6 @@
 
 #ifndef _DDSENTITYMGR_
-  #define _DDSENTITYMGR_
-
+#define _DDSENTITYMGR_
 
   #include "ccpp_dds_dcps.h"
   #include "CheckStatus.h"
