@@ -1,4 +1,4 @@
-#include "include/testFunctions.h"
+#include "testFunctions.h"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/uuid/uuid.hpp>
@@ -49,6 +49,6 @@ BOOST_AUTO_TEST_CASE(testMakePosts)
 
     BOOST_TEST_PASSPOINT();
     std::cout << "Posts can be saved on disk: Pass" << std::endl;
-    
+
 }
 
