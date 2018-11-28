@@ -7,6 +7,9 @@
 
 #include "include/User.h"
 #include "include/Post.h"
+#include "include/Request.h"
+#include "include/Response.h"
+#include "src/main.cpp"
 #include <boost/test/unit_test.hpp>
 #include <boost/random.hpp>
 #include <cstdint>
