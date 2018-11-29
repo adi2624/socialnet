@@ -50,14 +50,5 @@ BOOST_AUTO_TEST_CASE(testMakePosts)
     BOOST_TEST_PASSPOINT();
     std::cout << "Posts can be saved on disk: Pass" << std::endl;
 
-    //delete sample user and users posts from file
-
-
-
-
-
-
-
-
 }
 
