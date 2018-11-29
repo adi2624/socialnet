@@ -151,7 +151,6 @@ void get_content()
 {
     while(runFlag)
     {
-        std::cout<<"RunFlag is "<<runFlag<<std::endl;
         receive_userinfo();
         receive_request();
         receive_response();
@@ -318,12 +317,16 @@ void receive_request() {
             {
                 std::cout<<"I've been asked to respond to a request"<<std::endl;
                 Response my_response;
+                Post my_post;
                 TSN::response response_instance;
-                std::cout<< "The post number thats was requested is "<<V[i].user_requests[j].requested_posts[0];
-                std::string post = my_response.load_post(V[i].user_requests[j].requested_posts[0]);
-                response_instance = my_response.draft_response(uuidArray,V[i].user_requests[j].requested_posts[0],post,20); //Change date of creation later
-                my_response.publishEvent(response_instance);
-                   
+                std::cout << "Response size:" << V[i].user_requests[j].requested_posts.length() << std::endl;
+                for(size_t k = 0; k < V[i].user_requests[j].requested_posts.length(); k++)
+                {
+                    std::cout<< "The post number thats was requested is "<<V[i].user_requests[j].requested_posts[k] << std::endl;
+                    std::string post = my_response.load_post(V[i].user_requests[j].requested_posts[k]);
+                    response_instance = my_response.draft_response(uuidArray,V[i].user_requests[j].requested_posts[k],post,20); //Change date of creation later
+                    my_response.publishEvent(response_instance);
+                }
             }
               
         }

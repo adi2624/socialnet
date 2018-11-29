@@ -122,11 +122,13 @@ void Request::dispose() {
 
 TSN::request Request::draft_request()
 {
+    std::vector<int> serial_number;
     std::vector<User> name_user = list_pub_users();
     std::cout << "Please select user from below to send a request to :" << std::endl;
     std::string temp;
     int input;
-    for (int i = 0; i < static_cast<int>(name_user.size()); i++) {
+    for (int i = 0; i < static_cast<int>(name_user.size()); i++) 
+    {
         std::cout << "USER " << i + 1 << std::endl;
         std::cout << "FNAME: " << name_user.at(i).get_first_name() << std::endl;
         std::cout << "LNAME: " << name_user.at(i).get_last_name() << std::endl;
@@ -141,22 +143,30 @@ TSN::request Request::draft_request()
     strcpy(user_request.fulfiller_uuid, name_user.at(input - 1).return_uuid());
     std::cout << "The received request was for UUID:" << user_request.fulfiller_uuid
               << std::endl; //OUTPUT THE UUID of the Intended Receiver.
-    std::cout << "Enter the serial no of the post that you want from this user" << std::endl;
+    std::cout << "Enter the posts id you wish to request, type end to enter:" << std::endl;
     std::cin.sync();
     std::getline(std::cin, temp);
-    input = stoi(temp);
-    user_request.requested_posts.length(1);
-    user_request.requested_posts[0] = input;
-   // std::cout << user_request.requested_posts[0];
-    //LOAD LOCAL USER'S UUID FROM HELLO.TSN
+    int length = 0 ;
+    while(!(temp == "end"))
+    {
+        std::cout << "*" << temp << "*" << std::endl;
+        input = stoi(temp);
+        serial_number.push_back(input);
+        length++;
+        std::cin.sync();
+        std::getline(std::cin, temp);
+    }
+    user_request.requested_posts.length(length);
+    for(int i = 0; i < length; i++) 
+    {
+        user_request.requested_posts[i] = serial_number[i];
+    }
     std::ifstream input_file;
     input_file.open("my_user.tsn", ios::in);
     char uuidCharArray2[42];                //user.request.uuid is the UUID of the user we want the post from. user_request2.uuid is our UUID.
     input_file.getline(uuidCharArray2, 42);
-    //std::cout<<uuidCharArray2<<std::endl;
     request this_user_request2;
     strncpy(this_user_request2.uuid, uuidCharArray2+5, 37);
-    //std::cout<<"UUIDend of aeeay: "<<this_user_request2.uuid<<std::endl;
     this_user_request2.user_requests.length(1);
     this_user_request2.user_requests[0] = user_request;   
     input_file.close();
