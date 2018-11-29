@@ -8,7 +8,7 @@
 
 BOOST_AUTO_TEST_CASE(testMakePosts)
 {
-    boost::uuid:uuid sampleUUID = boost::uuids::random_generator()();
+    boost::uuids::uuid sampleUUID = boost::uuids::random_generator()();
     std::string uuid = boost::lexical_cast<std::string>(sampleUUID);
 
     vector<std::string> interests;
@@ -18,8 +18,8 @@ BOOST_AUTO_TEST_CASE(testMakePosts)
     User dummy_user;
     dummy_user.set_first_name("dummy");
     dummy_user.set_last_name("user");
-    dummy_user.set_user_uuid(sampleUUID);
-    dummy_user.set_user_interests(interests);
+    dummy_user.set_user_uuid(uuid);
+    dummy_user.set_interests(interests);
 
     BOOST_TEST_PASSPOINT();
     std::cout << "User can be created: PASS" << std::endl;
@@ -27,11 +27,11 @@ BOOST_AUTO_TEST_CASE(testMakePosts)
     //make post and send it to post class
     //write post to users saved post
     std::time_t startTime = std::time(0);
-    boost::random::mt19937 num{static_cast<std::uint32_t>(ttime)};
+    boost::random::mt19937 num{static_cast<std::uint32_t>(startTime)};
     boost::random::uniform_int_distribution<> range{1, 150};
     int postContent = range(num);
     
-    int i = 0
+    int i = 0;
     std::string samplePost = " ";
     for(i = 0; i < postContent; i++)
     {
