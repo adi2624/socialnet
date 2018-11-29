@@ -29,7 +29,7 @@ COMMON_CPP= src/CheckStatus.cpp src/DDSEntityManager.cpp src/User.cpp
 COMMON_H= $ include/CheckStatus.h include/DDSEntityManager.h include/dds_io.h
 
 USER_H =
-main:${IDL_GENERATED_H} ${IDL_GENERATED_CPP} src/main.cpp src/Request.cpp src/Response.cpp src/Message.cpp
+main:${IDL_GENERATED_H} ${IDL_GENERATED_CPP} src/Post.cpp src/main.cpp src/Request.cpp src/Response.cpp src/Message.cpp
 	g++ -o $@ ${CFLAGS} ${CXXFLAGS} $^ ${LIBS} ${COMMON_CPP} -pthread
 clean:
 	-rm -f UserInformation Response Request

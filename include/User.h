@@ -39,13 +39,13 @@ public:
     {
         std::string str(t.return_uuid());
         out << str << std::endl;
-        out << t.get_first_name() << " " << t.get_last_name() << " " << t.get_date_of_birth() << std::endl;
+        out << t.get_first_name() << " " << t.get_last_name() << " Born: " << t.get_date_of_birth() << std::endl;
         out << "Interests: " << std::endl;
         for(size_t i = 0; i < t.get_interests().size(); i++)
         {
             out << t.get_interests().at(i) << std::endl;
         }
-        out << "Posts: " << std::endl;
+        out << "Posts Total :"  << number_of_highest_post << std::endl;
         for(size_t i = 0; i < t.get_post().size(); i++)
         {
             out << t.get_post().at(i).get_post_data() << std::endl;

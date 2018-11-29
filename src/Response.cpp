@@ -1,6 +1,8 @@
 #include "Response.h"
 #include "dds_io.h"
+#include "Post.h"
 #include<fstream>
+#include <sstream>
 using namespace TSN;
 void Response::initPublisher(std::string uuid, response& res_instance)
 {
@@ -71,42 +73,37 @@ TSN::response Response::draft_response(char* uuid,unsigned long post_no,std::str
         resp_instance.post_body=post_body.c_str();
 
     
-    std::cout<<"HELLO"<<resp_instance.post_body<<std::endl;
     resp_instance.date_of_creation=doc;
     return resp_instance;
 
 }
-std::string Response::load_post(int post_no) {
-    int number = 0, i = 0;
-    std::string line, post;
-    std::ifstream get_post("my_user.tsn");
-    if (!get_post.is_open())
-        perror("error while opening file");
-    //get_post.open("hello.tsn",ios::in);
-    if (get_post.bad())
-        perror("error while reading file");
-    while (std::getline(get_post, line)) {
-        std::istringstream iss(line);
-        std::string c;                          //GET LINE AND PUSH INTO STRINGSTREAM.
-        c = iss.str();
-        //std::cout<<"String received "<<c<<endl;  //Debugging string
-        std::size_t pos = c.find("SNO:");
-        std::size_t pos2 = c.find("POST:");           //FIND DATA after POST:
-        if (i != 0)      //IGNORE UUID AT TOP OF FILE
-        {
-            std::string number_string = c.substr(pos + 4, pos2 - 4);
-           // std::cout<<"Number String "<<number_string<<std::endl;   //please.ignore(#debug) FIND NUMBER BETWEEN SNO: and POST:
-            number = std::stoi(number_string);
-        }
-        i++;
-        if (number == post_no-1 && i!=1) {
-            std::string final_post_text = c.substr(pos2 + 4);
-           // std::cout << "Final text:" << final_post_text << std::endl;   //RETURN FOUND POST DATA
-            return final_post_text;
-        }
+std::string Response::load_post(int post_no) 
+{
+    std::ifstream post_file;
+    post_file.open("my_user.tsn");
+    int count = 0;
+    std::string test;
+    std::string serial_number;
+    std::string post_data;
+    while(std::getline(post_file, test))
+     {
+         if(count != 0 && count == post_no)
+         {
+             Post my_post;
+             int sno;
+             std::stringstream iss(test);
+             std::getline(iss, serial_number , ' ');
+             std::getline(iss, post_data, '\n');
+             sno = stoi(serial_number.substr(4));
+             post_data = post_data.substr(5);
+             my_post.set_serial_number(sno);
+             my_post.enter_post_data(post_data);
+             return post_data;
+         }
+         count++;
+     }
+     post_file.close();
 
-    }
-    return "Fail";
 }
 
 void Response::dispose()

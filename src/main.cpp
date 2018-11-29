@@ -151,14 +151,13 @@ void get_content()
 {
     while(runFlag)
     {
-       // std::cout<<"RunFlag is "<<runFlag<<std::endl;
+        std::cout<<"RunFlag is "<<runFlag<<std::endl;
         receive_userinfo();
         receive_request();
         receive_response();
         receive_message();
         TSN::user_information temp = User::make_instance_user_information(my_user);
         my_user.publishEvent(temp);
-        sleep(3);
         receive_counter++;
     }
 }
@@ -579,7 +578,6 @@ void init_params()
 
 void set_params()
 {
-   // std::cout<<"entered params"<<std::endl;
     std::ofstream file;
     file.open("params.tsn", std::ios::app);
     file << sno << " " << user_is_initiated << " " << post_count << " " << known_nodes;  
@@ -607,11 +605,11 @@ void show_user()
     std::getline(std::cin, user);
     int user_idx = stoi(user);
     std::vector<Post> user_posts;
+    
     std::future<std::vector<Post>> answer = std::async(std::launch::async,get_posts, 
                                                         temp[user_idx].get_number_of_highest_post(), temp[user_idx]);
     std::vector<Post> returns = answer.get();
     temp[user_idx].set_post(returns);
-    std::cout << "AQUIE ESTAMOS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
     std::cout << temp[user_idx] << std::endl;
 }
 std::vector<Post> get_posts(unsigned long long number_of_posts, User to_request)
@@ -623,7 +621,11 @@ std::vector<Post> get_posts(unsigned long long number_of_posts, User to_request)
     node_request request_posts;
     strcpy(request_posts.fulfiller_uuid, to_request.return_uuid());
     request_posts.requested_posts.length(number_of_posts);
-    for(int i = 0; i < static_cast<int>(number_of_posts); i++) request_posts.requested_posts[i] = i;
+    int post = 1;
+    for(int i = 0; i < static_cast<int>(number_of_posts); i++) 
+    {
+        request_posts.requested_posts[i] = post++;
+    }
     strcpy(user_request.uuid, my_user.return_uuid());
     user_request.user_requests.length(1);
     user_request.user_requests[0] = request_posts;
