@@ -32,7 +32,7 @@ USER_H =
 main:${IDL_GENERATED_H} ${IDL_GENERATED_CPP} src/main.cpp src/Request.cpp src/Response.cpp src/Message.cpp
 	g++ -o $@ ${CFLAGS} ${CXXFLAGS} $^ ${LIBS} ${COMMON_CPP} -pthread
 
-test: ${IDL_GENERATED_H} ${IDL_GENERATED_CPP} testing/testPosts.cpp
+test: ${IDL_GENERATED_H} ${IDL_GENERATED_CPP} testing/testUsers.cpp testing/testPosts.cpp
 	g++ -o $@ ${CFLAGS} ${CXXFLAGS} $^ ${LIBS} ${COMMON_CPP} -lboost_unit_test_framework
 clean:
 	-rm -f UserInformation Response Request
