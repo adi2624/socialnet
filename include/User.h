@@ -37,6 +37,11 @@ public:
     TSN::user_information initialize();
     void publishEvent(TSN::user_information msgInstance);
     std::string get_post_from_map(int sno);
+    bool is_in_map(int sno) 
+    { 
+        auto iter = post_map.find(sno);
+        return iter != post_map.end();
+    }
     friend ostream& operator << (ostream& out, User t)
     {
         std::string str(t.return_uuid());

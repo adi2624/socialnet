@@ -167,6 +167,8 @@ void get_content()
 bool is_request_to_send(TSN::request req);
 
 void grab_posts(User user_to_request);
+
+void participate_thread();
 /*////////////////////////////////////
 /
 /       MAIN
@@ -182,10 +184,7 @@ int OSPL_MAIN(int argc, char *argv[]) {
     file.seekg(0, std::ios::end);
     std::string user_action;
     std::string answer = "Y";
-    user_information userinfo_instance;
-    std::cout << "FILE IS GOOD: " << file.good() << std::endl;
-    std::cout << "SIZE: " << file.tellg() << std::endl;
-    
+    user_information userinfo_instance;    
     if(!file.good() && file.tellg() == -1)
     {
         userinfo_instance = initialize_user(&user_is_initiated);
@@ -210,7 +209,7 @@ int OSPL_MAIN(int argc, char *argv[]) {
         std::cout << "7. Request Post" << std::endl;
         std::cout << "8. Send message" << std::endl;
         std::cout << "9. Reply to thread" << std::endl;
-        std::cout << "10. Reply to thread" << std::endl;
+        std::cout << "10. Quit" << std::endl;
         std::cout << "Enter your choice: ";
         cin.clear();
         std::cin.sync();
@@ -264,6 +263,7 @@ int OSPL_MAIN(int argc, char *argv[]) {
                             }
                             for(int j = 0; j < static_cast<int>(reqsend_instance.user_requests[i].requested_posts.length()); j++)
                             {
+                                std::cout << "Post:" << std::endl;
                                 std::cout << found.get_post_from_map(reqsend_instance.user_requests[i].requested_posts[j]) << std::endl;
                             }
                         }
@@ -276,6 +276,7 @@ int OSPL_MAIN(int argc, char *argv[]) {
                 send_message();
                 break;
             case 9:
+                participate_thread();
                 break;
         }
         if (user_action_num == 10)
@@ -343,7 +344,12 @@ void receive_response() {
         {
             std::string data(response_vec[i].post_body);
             int id= (int)response_vec[i].post_id;
-            located->second.set_post_singular(data, id);
+            if(!(located->second.is_in_map(id)))
+            {
+                std::cout << "SETTTING" << std::endl;
+                User temp_t = located->second;
+                temp_t.set_post_singular(data,id);
+            }
         }
     }
 }
@@ -655,13 +661,17 @@ void show_user()
     cin.sync();
     std::getline(std::cin, user);
     int user_idx = stoi(user);
-    std::vector<Post> user_posts;
-    
-    std::future<std::vector<Post>> answer = std::async(std::launch::async,get_posts, 
-                                                        temp[user_idx].get_number_of_highest_post(), temp[user_idx]);
-    std::vector<Post> returns = answer.get();
-    temp[user_idx].set_post(returns);
-    std::cout << temp[user_idx] << std::endl;
+    auto locate = user_hash_map.find(temp[user_idx].return_uuid());
+    if(locate != user_hash_map.end())
+    {
+        User temp_user_t = locate->second;
+        std::cout << "POSTS" << std::endl;
+        std::vector<Post> bleh=temp_user_t.get_post();
+        for(size_t i =0; i < bleh.size();i++)
+        {
+            std::cout << bleh[i].get_post_data() << std::endl;
+        }
+    }
 }
 std::vector<Post> get_posts(unsigned long long number_of_posts, User to_request)
 {
@@ -747,6 +757,7 @@ void grab_posts(User user_to_request)
     std::string locate(user_uuid);
     if(user_hash_map.find(locate) == user_hash_map.end() && user_to_request.get_number_of_highest_post() != 0)
     {
+        std::cout << "HERE" << std::endl;
         node_request temp_request_t;
         strcpy(temp_request_t.fulfiller_uuid, user_uuid);
         request temp_request;
@@ -762,15 +773,14 @@ void grab_posts(User user_to_request)
         temp_request.user_requests.length(1);
         temp_request.user_requests[0] = temp_request_t;
         req_to_send.publishEvent(temp_request);
-        std::string s(user_uuid);
-        std::string string_uuid(user_uuid);
-        user_hash_map.insert({string_uuid, user_to_request});
+        user_hash_map.insert({locate, user_to_request});
     }
     else if(user_to_request.get_number_of_highest_post() != 0)
     {
         std::map<std::string, User>::iterator it = user_hash_map.find(locate);
         User found_user = it->second;
-        if(found_user.get_number_of_highest_post() > user_to_request.get_number_of_highest_post())
+        std::cout << found_user.get_number_of_highest_post() << "COMPARED: " << user_to_request.get_number_of_highest_post();
+        if(found_user.get_number_of_highest_post() < user_to_request.get_number_of_highest_post())
         {
             node_request temp_request_t;
             strcpy(temp_request_t.fulfiller_uuid, user_uuid);
@@ -787,8 +797,14 @@ void grab_posts(User user_to_request)
             temp_request.user_requests[0] = temp_request_t;
             req_to_send.publishEvent(temp_request);
             std::string s(user_uuid);
-            std::string string_uuid(user_uuid);
-            user_hash_map.insert({string_uuid, user_to_request});
+            auto it = user_hash_map.find(locate);
+            if(it != user_hash_map.end())
+                it->second = user_to_request;
         }
     }
+}
+
+void participate_thread()
+{
+    show_user();
 }
