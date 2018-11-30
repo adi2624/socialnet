@@ -553,7 +553,6 @@ TSN::user_information initialize_user(bool * is_initialized) {
         msgInstance.date_of_birth = my_user.get_date_of_birth();
         my_user.set_number_of_highest_post(0);
         msgInstance.number_of_highest_post = my_user.get_number_of_highest_post();
-        //std::cout<<msgInstance.uuid<<endl;
         msgInstance.interests.length(
         my_user.get_interests().size());       //SET UP VALUES IN user_information STRUCT FOR DDS.
         for (auto i = 0; i < static_cast<int>(my_user.get_interests().size()); i++) {
@@ -584,9 +583,6 @@ void print(TSN::user_information D)
     ss << "               " << D.uuid << " "
               << D.first_name << " "
               << D.last_name << std::endl;
-    for (unsigned int i = 0; i < D.interests.length(); i++) {
-        std::cout << "(" << D.interests[i] << ") ";
-    }
     ss << std::endl;
     print_queue.push(ss.str());
 }
