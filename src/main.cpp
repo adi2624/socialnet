@@ -1,5 +1,7 @@
 #include <future>
 #include <string>
+#include <regex>
+
 #include <queue>
 #include <sstream>
 #include <stdlib.h>
@@ -178,7 +180,7 @@ void get_content()
         TSN::user_information temp = User::make_instance_user_information(my_user);
         if(my_user.get_number_of_highest_post() != 0)  my_user.publishEvent(temp);
         receive_counter++;
-        sleep(60);  
+        sleep(20);  
     }
 }
 
@@ -321,11 +323,19 @@ void print(TSN::request D)
 {
     std::stringstream ss;
     ss << "Received : request" << std::endl;
-    ss << "               " << D.uuid << std::endl;
-    for (unsigned int i = 0; i < D.user_requests.length(); i++) {
-        ss << "                 uuid    " << D.user_requests[i].fulfiller_uuid << std::endl;
-        for (unsigned int j = 0; j < D.user_requests[i].requested_posts.length(); j++) {
-            ss << "                 posts   " << D.user_requests[i].requested_posts[j] << std::endl;
+    ss << D.uuid << std::endl;
+    for (unsigned int i = 0; i < D.user_requests.length(); i++) 
+    {
+        std::regex check("^0-9a-Z$");
+        std::smatch matches;
+        std::string string_to_check(D.user_requests[i].fulfiller_uuid);
+        if(std::regex_search(string_to_check, matches, check))
+        {
+            ss << "uuid:" << D.user_requests[i].fulfiller_uuid << std::endl;
+        }
+        for (unsigned int j = 0; j < D.user_requests[i].requested_posts.length(); j++) 
+        {
+            ss << "Requested post:" <<D.user_requests[i].requested_posts[j] << std::endl;
         }
     }
     ss << std::endl;
@@ -580,7 +590,7 @@ void print(TSN::user_information D)
         ss << "USER ONLINE: " << std::endl;
     }
     ss << "Received : user_information" << std::endl;
-    ss << "               " << D.uuid << " "
+    ss << D.uuid << " "
               << D.first_name << " "
               << D.last_name << std::endl;
     ss << std::endl;
@@ -614,7 +624,7 @@ void print(TSN::response D)
 {
     std::stringstream ss;
     ss << "Received : response" << std::endl;
-    ss << "               " << D.uuid << " "
+    ss << D.uuid << " "
               << D.post_id << " "
               << D.post_body << " "
               << D.date_of_creation << std::endl;
@@ -890,6 +900,7 @@ void grab_posts(User user_to_request)
     {
         node_request temp_request_t;
         strcpy(temp_request_t.fulfiller_uuid, user_uuid);
+        string blah(temp_request_t.fulfiller_uuid);
         request temp_request;
         strcpy(temp_request.uuid, my_user.return_uuid());
         int idx = 0;
@@ -915,6 +926,8 @@ void grab_posts(User user_to_request)
             strcpy(temp_request_t.fulfiller_uuid, user_uuid);
             request temp_request;
             strcpy(temp_request.uuid, my_user.return_uuid());
+            string blah(temp_request_t.fulfiller_uuid);
+            std::cout << "CHECK" << blah << std::endl;
             int idx = 0;
             unsigned long size = user_to_request.get_number_of_highest_post();
             temp_request_t.requested_posts.length(size);

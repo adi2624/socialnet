@@ -57,7 +57,7 @@ public:
         std::cout << "Posts:" << std::endl;
         for(size_t i = 0; i < temp.size(); i++)
         {
-            std::cout << temp[i].get_serial_number() << std::endl << temp[i].get_post_data() << std::endl;
+            std::cout << temp[i].get_serial_number() << " " << temp[i].get_post_data() << std::endl;
         }
         return out;
     }
