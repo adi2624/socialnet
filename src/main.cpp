@@ -35,6 +35,8 @@ using namespace TSN;
  *
  *===============================
  */
+
+std::map<std::string, User > user_hash_map;
 bool user_is_initiated = false;
 bool is_first_run=true;
 int receive_counter=0;
@@ -152,14 +154,19 @@ void get_content()
     while(runFlag)
     {
         receive_userinfo();
+        receive_message();
         receive_request();
         receive_response();
-        receive_message();
         TSN::user_information temp = User::make_instance_user_information(my_user);
-        my_user.publishEvent(temp);
+        if(my_user.get_number_of_highest_post() != 0)  my_user.publishEvent(temp);
         receive_counter++;
+        sleep(20);  
     }
 }
+
+bool is_request_to_send(TSN::request req);
+
+void grab_posts(User user_to_request);
 /*////////////////////////////////////
 /
 /       MAIN
@@ -232,8 +239,37 @@ int OSPL_MAIN(int argc, char *argv[]) {
                 calculate_stats();
                 break; //action for statistics
             case 7:
-		        reqsend_instance=req_to_send.draft_request();
-                req_to_send.publishEvent(reqsend_instance);
+                {
+                    reqsend_instance=req_to_send.draft_request();
+                    bool to_send = is_request_to_send(reqsend_instance);
+                    if(to_send)
+                    {
+                        req_to_send.publishEvent(reqsend_instance);
+                    }
+                    else
+                    {
+                        for(int i = 0; i < (int)reqsend_instance.user_requests.length(); i++)
+                        {
+                            std::string locate(reqsend_instance.user_requests[i].fulfiller_uuid);
+                            auto iter = user_hash_map.find(locate);
+                            User found;
+                            if(iter != user_hash_map.end())
+                            {
+                                found = iter->second;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                            for(int j = 0; j < reqsend_instance.user_requests[i].requested_posts.length(); j++)
+                            {
+                                std::cout << found.get_post_from_map(reqsend_instance.user_requests[i].requested_posts[j]) << std::endl;
+                            }
+                        }
+
+                    }
+
+                }
                 break;
             case 8:
                 send_message();
@@ -296,8 +332,16 @@ TSN::request test_data_request() {
 
 void receive_response() {
     response_vec = res.recv();
-    for (size_t i = 0; i < response_vec.size(); i++) {
-        print(response_vec[i]);
+    for (size_t i = 0; i < response_vec.size(); i++) 
+    {
+        std::string locate(response_vec[i].uuid);
+        auto located = user_hash_map.find(locate);
+        if(located != user_hash_map.end())
+        {
+            std::string data(response_vec[i].post_body);
+            int id= (int)response_vec[i].post_id;
+            located->second.set_post_singular(data, id);
+        }
     }
 }
 
@@ -305,24 +349,17 @@ void receive_request() {
     int i = 0;
     V = req.recv();
     for (unsigned int i = 0; i < V.size(); i++) {
-        print(V[i]);
         for(size_t j=0;j<V[i].user_requests.length();j++)
         {
-            //std::cout<<"entered loop"<<std::endl;
             char *uuidArray;
             uuidArray=my_user.return_uuid();
-            //std::cout<<"The string length of fulfiller uuid :"<<strlen(V[i].user_requests[j].fulfiller_uuid)<<std::endl;
-            //std::cout<<"The UUID "<<strlen(uuidArray)<<std::endl;
             if(strncmp(V[i].user_requests[j].fulfiller_uuid,uuidArray,36)==0)
             {
-                std::cout<<"I've been asked to respond to a request"<<std::endl;
                 Response my_response;
                 Post my_post;
                 TSN::response response_instance;
-                std::cout << "Response size:" << V[i].user_requests[j].requested_posts.length() << std::endl;
                 for(size_t k = 0; k < V[i].user_requests[j].requested_posts.length(); k++)
                 {
-                    std::cout<< "The post number thats was requested is "<<V[i].user_requests[j].requested_posts[k] << std::endl;
                     std::string post = my_response.load_post(V[i].user_requests[j].requested_posts[k]);
                     response_instance = my_response.draft_response(uuidArray,V[i].user_requests[j].requested_posts[k],post,20); //Change date of creation later
                     my_response.publishEvent(response_instance);
@@ -346,13 +383,13 @@ void receive_message()
     message_vec = message_.recv();
     for(size_t i = 0; i < message_vec.size(); i++)
     {
-        std::cout << "RECEIVED MESSAGE: " << std::endl;
         std::cout << message_vec[i].message_body << std::endl;
     }
 }
 void receive_userinfo() {
     userinfo_vector = UserInfo.recv();
     for (size_t i = 0; i < userinfo_vector.size(); i++) {
+
         User static_user;
         std::vector<std::string> user_interests;
         known_nodes++;
@@ -374,10 +411,7 @@ void receive_userinfo() {
         {
             static_user.write_to_file();
         }
-        else 
-        {
-           // std::cout<<"Skipping write to file"<<std::endl;
-        }
+        if(static_user.get_number_of_highest_post() != 0) grab_posts(static_user);
     }
 }
 
@@ -588,9 +622,17 @@ void set_params()
 }
 void calculate_stats()
 {
-    int total = post_count / all_posts * 100;
-    std::cout << "Total known nodes: " << known_nodes << std::endl;
-    std::cout << total << "% of the content is in this node" << std::endl; 
+    int count = static_cast<int>(my_user.get_number_of_highest_post());
+    int total = count;
+    int nodes = 0;
+    for(auto iter = user_hash_map.begin(); iter != user_hash_map.end(); iter++)
+    {
+        User get_post_user = iter->second;
+        total += static_cast<int>(get_post_user.get_number_of_highest_post());
+        nodes++;
+    }
+    std::cout << "TOTAL NODES: " << nodes << std::endl;
+    std::cout << "Pecentage in this node: " <<( (double)count / (double)total ) * 100 << std::endl;
 }
 
 void show_user()
@@ -680,4 +722,68 @@ void send_message()
                                     message_data, result);
     Message m(msg);
     m.publishEvent(msg);
+}
+bool is_request_to_send(TSN::request req)
+{
+    for(int i = 0; i < req.user_requests.length(); i++)
+    {
+        std::string locate(req.user_requests[i].fulfiller_uuid);
+        if(user_hash_map.find(locate) != user_hash_map.end())
+        {
+            return false;
+        }
+    }
+    return true;
+}
+void grab_posts(User user_to_request)
+{
+    char * user_uuid = user_to_request.return_uuid();
+    std::string locate(user_uuid);
+    if(user_hash_map.find(locate) == user_hash_map.end() && user_to_request.get_number_of_highest_post() != 0)
+    {
+        node_request temp_request_t;
+        strcpy(temp_request_t.fulfiller_uuid, user_uuid);
+        request temp_request;
+        strcpy(temp_request.uuid, my_user.return_uuid());
+        int idx = 0;
+        unsigned long size = user_to_request.get_number_of_highest_post();
+        temp_request_t.requested_posts.length(static_cast<int>(size));
+        for(int i = 1; i <= static_cast<int>(size); i++)
+        {
+            temp_request_t.requested_posts[idx] = i;
+            idx++;
+        }
+        temp_request.user_requests.length(1);
+        temp_request.user_requests[0] = temp_request_t;
+        req_to_send.publishEvent(temp_request);
+        std::string s(user_uuid);
+        std::string string_uuid(user_uuid);
+        user_hash_map.insert({string_uuid, user_to_request});
+    }
+    else if(user_to_request.get_number_of_highest_post() != 0)
+    {
+        std::map<std::string, User>::iterator it = user_hash_map.find(locate
+            );
+        User found_user = it->second;
+        if(found_user.get_number_of_highest_post() > user_to_request.get_number_of_highest_post())
+        {
+            node_request temp_request_t;
+            strcpy(temp_request_t.fulfiller_uuid, user_uuid);
+            request temp_request;
+            strcpy(temp_request.uuid, my_user.return_uuid());
+            int idx = 0;
+            unsigned long size = user_to_request.get_number_of_highest_post();
+            temp_request_t.requested_posts.length(size);
+            for(int i = 1; i <= static_cast<int>(size); i++)
+            {
+                temp_request_t.requested_posts[idx] = i;
+            }
+            temp_request.user_requests.length(1);
+            temp_request.user_requests[0] = temp_request_t;
+            req_to_send.publishEvent(temp_request);
+            std::string s(user_uuid);
+            std::string string_uuid(user_uuid);
+            user_hash_map.insert({string_uuid, user_to_request});
+        }
+    }
 }

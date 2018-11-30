@@ -3,6 +3,7 @@
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
+#include <map>
 #include "Post.h"
 #include "DDSEntityManager.h"
 #include "ccpp_tsn.h"
@@ -35,6 +36,7 @@ public:
     char * return_uuid();
     TSN::user_information initialize();
     void publishEvent(TSN::user_information msgInstance);
+    std::string get_post_from_map(int sno);
     friend ostream& operator << (ostream& out, User t)
     {
         std::string str(t.return_uuid());
@@ -53,6 +55,7 @@ public:
         return out;
     }
 private:
+    std::map<int, std::string> post_map;
     unsigned long long number_of_highest_post;
     long date_of_birth;
 	std::vector<std::string> interests;

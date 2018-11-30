@@ -164,10 +164,10 @@ TSN::request Request::draft_request()
     std::ifstream input_file;
     input_file.open("my_user.tsn", ios::in);
     char uuidCharArray2[42];                //user.request.uuid is the UUID of the user we want the post from. user_request2.uuid is our UUID.
-    input_file.getline(uuidCharArray2, 42);
+    input_file.getline(uuidCharArray2,42);
     request this_user_request2;
     strncpy(this_user_request2.uuid, uuidCharArray2+5, 37);
-    this_user_request2.user_requests.length(1);
+    this_user_request2.user_requests.length(3);
     this_user_request2.user_requests[0] = user_request;   
     input_file.close();
     return this_user_request2;     

@@ -7,11 +7,6 @@
 void User::set_interests(std::vector<std::string> input_interests) 
 { 
     interests = input_interests; 
-   // std::cout << "SETTING INTEREST: " << std::endl;
-    for(size_t i = 0; i < input_interests.size(); i++)
-    {
-       // std::cout << input_interests[i] << std::endl;
-    }
 }
 
 std::vector<std::string> User::get_interests() 
@@ -41,6 +36,10 @@ std::string User::get_last_name()
  void User::set_post(std::vector<Post> post) 
 { 
     user_posts = post; 
+    for(size_t i = 0; i < post.size(); i++)
+    {
+    	post_map.insert({post[i].get_serial_number(), post[i].get_post_data()});
+    }
 }
 
 
@@ -129,18 +128,6 @@ void User::publishEvent(TSN::user_information msgInstance)
                           user_informationDataReader>
 
                           ( (char*) "user_information", true     , true );
-                          /*
-                          cout << "=== [Publisher] writing a message containing :" << endl;
-    cout << "    userID  : " << msgInstance.uuid << endl;
-    cout << "    Name :"   << msgInstance.first_name << " " << msgInstance.last_name << "\"" << endl;
-    for(unsigned int i=0; i<msgInstance.interests.length();i++)
-{
-    cout << "Interests: \"" << msgInstance.interests[i]<<std::endl;
-}
-*/
-    
-    
-
      UserInfo.publish(msgInstance);
 
 //        topic name,         publish, subscribe
@@ -151,6 +138,7 @@ TSN::user_information User::make_instance_user_information(User new_user)
     strncpy(temp.uuid, new_user.return_uuid(), 37);
     temp.first_name = new_user.get_first_name().c_str();
     temp.last_name = new_user.get_last_name().c_str();
+    temp.number_of_highest_post = new_user.get_number_of_highest_post();
     temp.date_of_birth = new_user.get_date_of_birth();
     temp.interests.length(new_user.get_interests().size());
     for(size_t i = 0; i < new_user.get_interests().size(); i++)
@@ -170,7 +158,6 @@ void User::set_date_of_birth(std::string date)
     t.tm_mday = day;
     time_t time = mktime(&t);
     date_of_birth = static_cast<long>(time);
-    std::cout << "SETTING BIRTHDATE: " << date_of_birth << std::endl;
 }
 void User::set_post_singular(std::string data, int sno)
 {
@@ -178,7 +165,7 @@ void User::set_post_singular(std::string data, int sno)
     temp.enter_post_data(data);
     temp.set_serial_number(sno);
     user_posts.push_back(temp);
-    std::cout << "SETTING POST: " << temp.get_post_data() << std::endl;  
+    post_map.insert({sno, data});
 }
 void User::update_user_information_file()
 {
@@ -259,4 +246,16 @@ User User::populate_my_user()
     file.close();
     post_file.close();
     return my_user;
+}
+std::string User::get_post_from_map(int sno)
+{
+	auto locate = post_map.find(sno);
+	if(locate != post_map.end())
+	{
+		return locate->second;
+	}
+	else
+	{
+		return "Fail";
+	}
 }

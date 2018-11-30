@@ -80,7 +80,7 @@ module TSN
     };
     #pragma keylist response uuid
     #pragma cats response uuid
-    
+     
     // A private message from one node to another, which should be displayed immediately upono receipt.
     // Nodes will only display private messages addressed to that node.
     struct private_message

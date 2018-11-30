@@ -68,14 +68,9 @@ TSN::response Response::draft_response(char* uuid,unsigned long post_no,std::str
     }
     std::cout<<"RESP UUID: "<<resp_instance.uuid<<std::endl;
     resp_instance.post_id=post_no;
-    
-  
-        resp_instance.post_body=post_body.c_str();
-
-    
+    resp_instance.post_body=post_body.c_str();
     resp_instance.date_of_creation=doc;
     return resp_instance;
-
 }
 std::string Response::load_post(int post_no) 
 {
