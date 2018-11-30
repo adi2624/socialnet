@@ -461,29 +461,33 @@ void receive_userinfo() {
     userinfo_vector = UserInfo.recv();
     for (size_t i = 0; i < userinfo_vector.size(); i++) 
     {
-        print(userinfo_vector[i]);
-        User static_user;
-        std::vector<std::string> user_interests;
-        known_nodes++;
-        all_posts += userinfo_vector[i].number_of_highest_post;
-        static_user.set_number_of_highest_post(userinfo_vector[i].number_of_highest_post);
-        static_user.set_date_of_birth(userinfo_vector[i].date_of_birth);
-        static_user.set_first_name(std::string(userinfo_vector[i].first_name));
-        static_user.set_last_name(std::string(userinfo_vector[i].last_name));
-        static_user.set_user_uuid(userinfo_vector[i].uuid);
-        for (size_t j = 0; j < userinfo_vector[i].interests.length(); j++) {
-            user_interests.push_back(std::string(userinfo_vector[i].interests[j]));
-        }
-        static_user.set_interests(user_interests);
-        if((strcmp(static_user.return_uuid(),my_user.return_uuid())!=0))
+        auto located = user_hash_map.find(userinfo_vector[i].uuid);
+        if(located == user_hash_map.end())
         {
-            static_user.write_to_file();
+            print(userinfo_vector[i]);
+            User static_user;
+            std::vector<std::string> user_interests;
+            known_nodes++;
+            all_posts += userinfo_vector[i].number_of_highest_post;
+            static_user.set_number_of_highest_post(userinfo_vector[i].number_of_highest_post);
+            static_user.set_date_of_birth(userinfo_vector[i].date_of_birth);
+            static_user.set_first_name(std::string(userinfo_vector[i].first_name));
+            static_user.set_last_name(std::string(userinfo_vector[i].last_name));
+            static_user.set_user_uuid(userinfo_vector[i].uuid);
+            for (size_t j = 0; j < userinfo_vector[i].interests.length(); j++) {
+                user_interests.push_back(std::string(userinfo_vector[i].interests[j]));
+            }
+            static_user.set_interests(user_interests);
+            if((strcmp(static_user.return_uuid(),my_user.return_uuid())!=0))
+            {
+                static_user.write_to_file();
+            }
+             else if(strcmp(static_user.return_uuid(),my_user.return_uuid())==0 && is_first_run==true && receive_counter==0)
+            {
+                static_user.write_to_file();
+            }
+            if(static_user.get_number_of_highest_post() != 0) grab_posts(static_user);
         }
-         else if(strcmp(static_user.return_uuid(),my_user.return_uuid())==0 && is_first_run==true && receive_counter==0)
-        {
-            static_user.write_to_file();
-        }
-        if(static_user.get_number_of_highest_post() != 0) grab_posts(static_user);
     }
 }
 
