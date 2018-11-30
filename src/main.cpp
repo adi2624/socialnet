@@ -168,7 +168,7 @@ void get_content()
 ////////////////////////////////// */
 int OSPL_MAIN(int argc, char *argv[]) {
     init_params();
-    bool temp = user_is_initiated;
+    //bool temp = user_is_initiated;
     int user_action_num;
     std::ifstream file;
     file.open("my_user.tsn");
@@ -395,6 +395,7 @@ TSN::user_information initialize_user(bool * is_initialized) {
         return User::make_instance_user_information(temp);
         
     }
+
     
     if (myfile.tellg() != 0 || !myfile.good()) {
         *is_initialized = true;
@@ -459,7 +460,9 @@ TSN::user_information initialize_user(bool * is_initialized) {
 
         return msgInstance;
     }
-
+  TSN::user_information blank_instance;
+  strcpy(blank_instance.first_name,"fail");
+  return blank_instance;
 }
 
 void print(TSN::user_information D) {

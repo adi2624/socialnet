@@ -44,7 +44,7 @@ BOOST_AUTO_TEST_CASE(testUsers)
     dummy_user.set_interests(interests);
     vector<std::string> testInterests = dummy_user.get_interests();
     
-    for(int i = 0; i < testInterests.size(); i++)
+    for(unsigned int i = 0; i < testInterests.size(); i++)
     {
         cout << "Interest " << i << "is: " << testInterests[i] << std::endl;
     }
