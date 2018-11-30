@@ -198,7 +198,7 @@ int OSPL_MAIN(int argc, char *argv[]) {
     }
     std::thread update_content(get_content);
     user_action_num = -1;
-    while (user_action_num != 9) {
+    while (user_action_num != 10) {
         std::string user_action;
         std::cout << "What would you like to do?" << std::endl;
         std::cout << "1. List users" << std::endl;
@@ -209,7 +209,8 @@ int OSPL_MAIN(int argc, char *argv[]) {
         std::cout << "6. Show statistics" << std::endl;
         std::cout << "7. Request Post" << std::endl;
         std::cout << "8. Send message" << std::endl;
-        std::cout << "9. Exit" << std::endl;
+        std::cout << "9. Reply to thread" << std::endl;
+        std::cout << "10. Reply to thread" << std::endl;
         std::cout << "Enter your choice: ";
         cin.clear();
         std::cin.sync();
@@ -261,7 +262,7 @@ int OSPL_MAIN(int argc, char *argv[]) {
                             {
                                 break;
                             }
-                            for(int j = 0; j < reqsend_instance.user_requests[i].requested_posts.length(); j++)
+                            for(int j = 0; j < static_cast<int>(reqsend_instance.user_requests[i].requested_posts.length()); j++)
                             {
                                 std::cout << found.get_post_from_map(reqsend_instance.user_requests[i].requested_posts[j]) << std::endl;
                             }
@@ -274,8 +275,10 @@ int OSPL_MAIN(int argc, char *argv[]) {
             case 8:
                 send_message();
                 break;
+            case 9:
+                break;
         }
-        if (user_action_num == 9)
+        if (user_action_num == 10)
         {
             runFlag=false;
             break;
@@ -728,7 +731,7 @@ void send_message()
 }
 bool is_request_to_send(TSN::request req)
 {
-    for(int i = 0; i < req.user_requests.length(); i++)
+    for(int i = 0; i < static_cast<int>(req.user_requests.length()); i++)
     {
         std::string locate(req.user_requests[i].fulfiller_uuid);
         if(user_hash_map.find(locate) != user_hash_map.end())
@@ -765,8 +768,7 @@ void grab_posts(User user_to_request)
     }
     else if(user_to_request.get_number_of_highest_post() != 0)
     {
-        std::map<std::string, User>::iterator it = user_hash_map.find(locate
-            );
+        std::map<std::string, User>::iterator it = user_hash_map.find(locate);
         User found_user = it->second;
         if(found_user.get_number_of_highest_post() > user_to_request.get_number_of_highest_post())
         {
