@@ -11,6 +11,10 @@
 #include <regex>
 #include <fstream>
 #include <unistd.h>
+#include <ncurses.h>
+#include <cassert>
+#include <form.h>
+#include <menu.h>
 #include "DDSEntityManager.h"
 #include "ccpp_tsn.h"
 #include "User.h"
@@ -21,6 +25,7 @@
 #include "Response.h"
 #include "Post.h"
 #include "Message.h"
+#define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 using namespace DDS;
 using namespace TSN;
 
@@ -60,7 +65,10 @@ bool runFlag=true;  //determines whether to run or end program.
 / DDS_IO STRUCTURES TO SEND DATA OVER NETWORK      /
 /                                                  /
 ///////////////////////////////////////////////////*/
-
+WINDOW *display_menu(int height, int width, int starty, int startx);
+void destroy_win(WINDOW *local_win);
+int kbhit();
+void entry_point(void);
 auto req =
         dds_io<request,
                 requestSeq,
@@ -188,6 +196,11 @@ void print_all();
 /
 ////////////////////////////////// */
 int OSPL_MAIN(int argc, char *argv[]) {
+    initscr();
+    cbreak();
+    noecho();
+    keypad(stdscr, TRUE);
+    entry_point();
     init_params();                       // Loads up parameters necessary to check whether there is user information present from a previous run.
     int user_action_num;                // STORES USER INPUT
     std::ifstream file;
@@ -485,7 +498,8 @@ TSN::user_information initialize_user(bool * is_initialized) {
     }
 
     
-    if (myfile.tellg() != 0 || !myfile.good()) {
+    if (myfile.tellg() != 0 || !myfile.good()) 
+    {
         *is_initialized = true;
         std::string temp_user;
         cout << "Enter your first name: " << std::endl;
@@ -931,3 +945,117 @@ void print_all()
         print_queue.pop();
     }
 }
+void entry_point()
+{
+    std::string logo[16];
+    logo[0] =  "TTTTTTTTTTTTTTTTTTTTTTT   SSSSSSSSSSSSSSS NNNNNNNN        NNNNNNNN";
+    logo[1] =  "T:::::::::::::::::::::T SS:::::::::::::::SN:::::::N       N::::::N";
+    logo[2] =  "T:::::::::::::::::::::TS:::::SSSSSS::::::SN::::::::N      N::::::N";
+    logo[3] =  "T:::::TT:::::::TT:::::TS:::::S     SSSSSSSN:::::::::N     N::::::N";
+    logo[4] =  "TTTTTT  T:::::T  TTTTTTS:::::S            N::::::::::N    N::::::N";
+    logo[5] =  "        T:::::T        S:::::S            N:::::::::::N   N::::::N";
+    logo[6] =  "        T:::::T         S::::SSSS         N:::::::N::::N  N::::::N";
+    logo[7] =  "        T:::::T          SS::::::SSSSS    N::::::N N::::N N::::::N";
+    logo[8] =  "        T:::::T            SSS::::::::SS  N::::::N  N::::N:::::::N";
+    logo[9] =  "        T:::::T               SSSSSS::::S N::::::N   N:::::::::::N";
+    logo[10] = "        T:::::T                    S:::::SN::::::N    N::::::::::N";
+    logo[11] = "        T:::::T                    S:::::SN::::::N     N:::::::::N";
+    logo[12] = "      TT:::::::TT      SSSSSSS     S:::::SN::::::N      N::::::::N";
+    logo[13] = "      T:::::::::T      S::::::SSSSSS:::::SN::::::N       N:::::::N";
+    logo[14] = "      T:::::::::T      S:::::::::::::::SS N::::::N        N::::::N";
+    logo[15] = "      TTTTTTTTTTT       SSSSSSSSSSSSSSS   NNNNNNNN         NNNNNNN";
+    WINDOW * login = newwin(LINES, COLS,0,0);
+    box(login, '|', '~');
+    wborder(login, '|', '|', '~', '~', '+', '+', '+', '+');
+    wrefresh(login);
+    int j = 3;
+    start_color();
+    init_pair(1, COLOR_BLUE, COLOR_BLACK);
+    init_pair(2, COLOR_WHITE, COLOR_BLACK);
+    wbkgd(stdscr,COLOR_PAIR(1));
+    wbkgd(login, COLOR_PAIR(1));
+    refresh();
+    wrefresh(login);
+    wattron(login,COLOR_PAIR(2));
+    mvwprintw(login,3, COLS/2 - 35, "Made by: EDGAR, ADI, ATAFO, TUFAN");
+    wattroff(login,COLOR_PAIR(2));
+    mvwprintw(login,LINES-2, 2, "PRESS ANY KEY TO CONTINUE");
+    for(int i = 0; i < 16; i++)
+    {
+        mvwprintw(login,++j, COLS/2 - 35, logo[i].c_str());
+        wrefresh(login);
+    }
+    refresh();
+    getchar();
+    endwin();
+}
+int kbhit()
+{
+    int ch = getch();
+
+    if (ch != ERR) {
+        ungetch(ch);  std::string choices[] = {"List Users", "Show User", "Edit", "Resync", "Post", "Show Statistics","Request Post", "Message", "Exit"};
+    int choice;
+    int highlight = 0;
+    WINDOW * menu_screen_lhs;
+    WINDOW * menu_screen_rhs;
+    menu_screen_lhs = newwin(LINES - 8,COLS / 2 - 20, 7,15);
+    menu_screen_rhs = newwin(LINES - 8,COLS / 2 - 20, 7,COLS / 2 + 1);
+    keypad(menu_screen_lhs, TRUE);
+    box(menu_screen_lhs, 0, 0);
+    box(menu_screen_rhs, 0, 0);
+    wattron(menu_screen_lhs, COLOR_PAIR(1));
+    wattron(menu_screen_rhs, COLOR_PAIR(1));
+    wborder(menu_screen_lhs, '|', '|', '=', '=', '+', '+', '+', '+');
+    wborder(menu_screen_rhs, '|', '|', '=', '=', '+', '+', '+', '+');
+    while(1)
+    {
+        wrefresh(menu_screen_rhs);
+        wrefresh(menu_screen_lhs);
+        int y;
+        int x;
+        getmaxyx(menu_screen_lhs,y,x);
+        y++;
+        for(size_t i = 0; i < 9; i++)
+        {
+            if((int)i == highlight)
+                wattron(menu_screen_lhs,A_REVERSE);
+
+            mvwprintw(menu_screen_lhs,i+1,x/2 - 7, choices[i].c_str());
+            wattroff(menu_screen_lhs, A_REVERSE);
+        }
+        choice = wgetch(menu_screen_lhs);
+
+        switch(choice)
+        {
+            case KEY_UP:
+                highlight--;
+                if(highlight == -1)
+                    highlight = 0;
+                break;
+            case KEY_DOWN:
+                highlight++;
+                if(highlight == 9)
+                    highlight = 8;
+                break;
+            default:
+                break;
+        }
+        if(highlight == 8 && choice == 10) break;
+    }
+    wrefresh(menu_screen_lhs);
+    wrefresh(menu_screen_rhs);
+    refresh();
+    getchar();
+        return 1;
+    } else {
+        return 0;
+    }
+}
+void destroy_win(WINDOW *local_win)
+{   
+    wborder(local_win, ' ', ' ', ' ',' ',' ',' ',' ',' ');
+    wrefresh(local_win);
+    delwin(local_win);
+}
+
