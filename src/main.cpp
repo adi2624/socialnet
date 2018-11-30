@@ -363,6 +363,7 @@ void receive_response() {
                 std::cout << "SETTTING" << std::endl;
                 User temp_t = located->second;
                 temp_t.set_post_singular(data,id);
+                located->second = temp_t;
             }
         }
     }
@@ -406,11 +407,7 @@ void receive_request() {
 
 void list_all_users()
 {
-    std::vector<User> temp = Request::list_pub_users();
-    for(size_t i = 0; i < temp.size(); i++)
-    {
-        std::cout << temp[i] << std::endl;
-    }
+    std::cout << my_user << std::endl;
 }
 
 /*//////////////////////////////////////////////////
@@ -766,7 +763,7 @@ void show_user()
         std::vector<Post> bleh=temp_user_t.get_post();
         for(size_t i =0; i < bleh.size();i++)
         {
-            std::cout << bleh[i].get_post_data() << std::endl;
+            std::cout << bleh[i].get_post_data() << bleh[i].get_serial_number() << std::endl;
         }
     }
 }
@@ -889,7 +886,6 @@ void grab_posts(User user_to_request)
     {
         std::map<std::string, User>::iterator it = user_hash_map.find(locate);
         User found_user = it->second;
-        std::cout << found_user.get_number_of_highest_post() << "COMPARED: " << user_to_request.get_number_of_highest_post();
         if(found_user.get_number_of_highest_post() < user_to_request.get_number_of_highest_post())
         {
             node_request temp_request_t;
