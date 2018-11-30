@@ -99,6 +99,8 @@ std::string Response::load_post(int post_no)
      }
      post_file.close();
 
+     return "Fail";
+
 }
 
 void Response::dispose()
