@@ -54,9 +54,8 @@ public:
         }
         out << "Posts Total:"  << t.number_of_highest_post << std::endl;
         std::vector<Post> temp = t.get_post();
-        std::cout << temp.size() << std::endl;
         std::cout << "Posts:" << std::endl;
-        for(auto i = 0; i < temp.size(); i++)
+        for(size_t i = 0; i < temp.size(); i++)
         {
             std::cout << temp[i].get_serial_number() << std::endl << temp[i].get_post_data() << std::endl;
         }

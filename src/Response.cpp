@@ -40,7 +40,6 @@ Response::Response()
 }
 void Response::publishEvent(TSN::response response_instance)
 {
-    std::cout << "We are here!" <<std::endl;
     dds_io<response,
             responseSeq,
             responseTypeSupport_var,
@@ -66,7 +65,6 @@ TSN::response Response::draft_response(char* uuid,unsigned long post_no,std::str
     {
         resp_instance.uuid[i]=uuid[i];
     }
-    std::cout<<"RESP UUID: "<<resp_instance.uuid<<std::endl;
     resp_instance.post_id=post_no;
     resp_instance.post_body=post_body.c_str();
     resp_instance.date_of_creation=doc;

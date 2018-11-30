@@ -1,5 +1,6 @@
 #include <future>
 #include <string>
+#include <queue>
 #include <sstream>
 #include <stdlib.h>
 #include <iostream>
@@ -35,7 +36,7 @@ using namespace TSN;
  *
  *===============================
  */
-
+std::queue<std::string> print_queue;
 std::map<std::string, User > user_hash_map;
 bool user_is_initiated = false;
 bool is_first_run=true;
@@ -169,7 +170,7 @@ void get_content()
         TSN::user_information temp = User::make_instance_user_information(my_user);
         if(my_user.get_number_of_highest_post() != 0)  my_user.publishEvent(temp);
         receive_counter++;
-        sleep(20);  
+        sleep(60);  
     }
 }
 
@@ -178,6 +179,8 @@ bool is_request_to_send(TSN::request req);
 void grab_posts(User user_to_request);
 
 void participate_thread();
+
+void print_all(); 
 /*////////////////////////////////////
 /
 /       MAIN
@@ -205,7 +208,8 @@ int OSPL_MAIN(int argc, char *argv[]) {
     }
     std::thread update_content(get_content);                             //Launch thread of subscribers.
     user_action_num = -1;
-    while (user_action_num != 10) {
+    while (user_action_num != 9) {
+        print_all();
         std::string user_action;
         std::cout << "What would you like to do?" << std::endl;
         std::cout << "1. List users" << std::endl;
@@ -216,14 +220,11 @@ int OSPL_MAIN(int argc, char *argv[]) {
         std::cout << "6. Show statistics" << std::endl;
         std::cout << "7. Request Post" << std::endl;
         std::cout << "8. Send message" << std::endl;
-        std::cout << "9. Reply to thread" << std::endl;
-        std::cout << "10. Quit" << std::endl;
+        std::cout << "9. Quit" << std::endl;
         std::cout << "Enter your choice: ";
         cin.clear();
         std::cin.sync();
-        getline(std::cin, user_action);
-        std::cout << "USER ACTION IS: " << user_action << std::endl;
-        
+        getline(std::cin, user_action);        
         user_action_num = stoi(user_action);
         //Update User Values every loop 
         my_user.update_user_information_file(); 
@@ -283,11 +284,8 @@ int OSPL_MAIN(int argc, char *argv[]) {
             case 8:
                 send_message();             //SEND MESSAGE
                 break;
-            case 9:
-                participate_thread();
-                break;
         }
-        if (user_action_num == 10)
+        if (user_action_num == 9)
         {
             runFlag=false;
             break;
@@ -306,17 +304,19 @@ int OSPL_MAIN(int argc, char *argv[]) {
 /                                                  /
 ///////////////////////////////////////////////////*/
 
-void print(TSN::request D) {
-    //print_time ();
-    std::cout << "Received : request" << std::endl;
-    std::cout << "               " << D.uuid << std::endl;
+void print(TSN::request D) 
+{
+    std::stringstream ss;
+    ss << "Received : request" << std::endl;
+    ss << "               " << D.uuid << std::endl;
     for (unsigned int i = 0; i < D.user_requests.length(); i++) {
-        std::cout << "                 uuid    " << D.user_requests[i].fulfiller_uuid << std::endl;
+        ss << "                 uuid    " << D.user_requests[i].fulfiller_uuid << std::endl;
         for (unsigned int j = 0; j < D.user_requests[i].requested_posts.length(); j++) {
-            std::cout << "                 posts   " << D.user_requests[i].requested_posts[j] << std::endl;
+            ss << "                 posts   " << D.user_requests[i].requested_posts[j] << std::endl;
         }
     }
-    std::cout << std::endl;
+    ss << std::endl;
+    print_queue.push(ss.str());
 }
 
 /*//////////////////////////////////////////////////
@@ -352,6 +352,7 @@ void receive_response() {
     response_vec = res.recv();
     for (size_t i = 0; i < response_vec.size(); i++) 
     {
+        print(response_vec[i]);
         std::string locate(response_vec[i].uuid);
         auto located = user_hash_map.find(locate);
         if(located != user_hash_map.end())
@@ -360,7 +361,6 @@ void receive_response() {
             int id= (int)response_vec[i].post_id;
             if(!(located->second.is_in_map(id)))
             {
-                std::cout << "SETTTING" << std::endl;
                 User temp_t = located->second;
                 temp_t.set_post_singular(data,id);
                 located->second = temp_t;
@@ -377,7 +377,9 @@ void receive_response() {
 void receive_request() {
     int i = 0;
     V = req.recv();
-    for (unsigned int i = 0; i < V.size(); i++) {
+    for (unsigned int i = 0; i < V.size(); i++) 
+    {
+        print(V[i]);
         for(size_t j=0;j<V[i].user_requests.length();j++)
         {
             char *uuidArray;
@@ -418,11 +420,13 @@ void list_all_users()
 
 void receive_message()
 {
+    std::stringstream ss;
     message_vec = message_.recv();
     for(size_t i = 0; i < message_vec.size(); i++)
     {
-        std::cout << message_vec[i].message_body << std::endl;
+        ss << message_vec[i].message_body << std::endl;
     }
+    print_queue.push(ss.str());
 }
 
 /*//////////////////////////////////////////////////
@@ -432,8 +436,9 @@ void receive_message()
 
 void receive_userinfo() {
     userinfo_vector = UserInfo.recv();
-    for (size_t i = 0; i < userinfo_vector.size(); i++) {
-
+    for (size_t i = 0; i < userinfo_vector.size(); i++) 
+    {
+        print(userinfo_vector[i]);
         User static_user;
         std::vector<std::string> user_interests;
         known_nodes++;
@@ -529,7 +534,7 @@ TSN::user_information initialize_user(bool * is_initialized) {
         strncpy(msgInstance.uuid, uuidCharArray, 42 - 5);
         std::vector<Post> temp_post_vec;
         //my_user.write_to_file();
-         msgInstance.first_name = my_user.get_first_name().c_str();    //SET FNAME AND LNAME IS MSGINSTANCE
+        msgInstance.first_name = my_user.get_first_name().c_str();    //SET FNAME AND LNAME IS MSGINSTANCE
         msgInstance.last_name = my_user.get_last_name().c_str();
         msgInstance.date_of_birth = my_user.get_date_of_birth();
         my_user.set_number_of_highest_post(0);
@@ -553,16 +558,23 @@ TSN::user_information initialize_user(bool * is_initialized) {
 /                                                  /
 ///////////////////////////////////////////////////*/
 
-void print(TSN::user_information D) {
-    std::cout << "Received : user_information" << std::endl;
-    std::cout << "               " << D.uuid << " "
+void print(TSN::user_information D) 
+{
+    std::stringstream ss;
+    auto locate = user_hash_map.find(D.uuid);
+    if(locate == user_hash_map.end())
+    {
+        ss << "USER ONLINE: " << std::endl;
+    }
+    ss << "Received : user_information" << std::endl;
+    ss << "               " << D.uuid << " "
               << D.first_name << " "
               << D.last_name << std::endl;
     for (unsigned int i = 0; i < D.interests.length(); i++) {
         std::cout << "(" << D.interests[i] << ") ";
     }
-    std::cout << std::endl;
-    std::cout << std::endl;
+    ss << std::endl;
+    print_queue.push(ss.str());
 }
 
 /*//////////////////////////////////////////////////
@@ -588,14 +600,16 @@ TSN::response test_data_response() {
 /                                                  /
 ///////////////////////////////////////////////////*/
 
-void print(TSN::response D) {
-
-    std::cout << "Received : response" << std::endl;
-    std::cout << "               " << D.uuid << " "
+void print(TSN::response D) 
+{
+    std::stringstream ss;
+    ss << "Received : response" << std::endl;
+    ss << "               " << D.uuid << " "
               << D.post_id << " "
               << D.post_body << " "
               << D.date_of_creation << std::endl;
-    std::cout << std::endl;
+    ss << std::endl;
+    print_queue.push(ss.str());
 }
 
 /*//////////////////////////////////////////////////
@@ -864,7 +878,6 @@ void grab_posts(User user_to_request)
     std::string locate(user_uuid);
     if(user_hash_map.find(locate) == user_hash_map.end() && user_to_request.get_number_of_highest_post() != 0)
     {
-        std::cout << "HERE" << std::endl;
         node_request temp_request_t;
         strcpy(temp_request_t.fulfiller_uuid, user_uuid);
         request temp_request;
@@ -910,7 +923,11 @@ void grab_posts(User user_to_request)
     }
 }
 
-void participate_thread()
+void print_all()
 {
-    show_user();
+    while(!print_queue.empty())
+    {
+        std::cout << print_queue.front() << std::endl;
+        print_queue.pop();
+    }
 }

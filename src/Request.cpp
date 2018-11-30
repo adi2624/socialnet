@@ -73,8 +73,6 @@ void Request::initPublisher(char uuid[], TSN::node_request &temp) {
     m_instance->user_requests[0] = temp;
 
     userHandle = _requestDataWriter->register_instance(*m_instance);
-
-
 }
 
 Request::Request() {
@@ -103,7 +101,6 @@ void Request::publishEvent(TSN::request reqsend_instance) {
                 //        topic name,         publish, subscribe
                // cout<<"Debug"<<std::endl;
 		req.publish(reqsend_instance);
-        std::cout<<"Publishing successful"<<std::endl;
 }
 
 void Request::dispose() {
@@ -149,7 +146,6 @@ TSN::request Request::draft_request()
     int length = 0 ;
     while(!(temp == "end"))
     {
-        std::cout << "*" << temp << "*" << std::endl;
         input = stoi(temp);
         serial_number.push_back(input);
         length++;
