@@ -4,7 +4,7 @@
 using namespace TSN;
 
 
-std::vector<User> Request::list_pub_users() 
+std::vector<User> Request::list_pub_users()             //Returns list of all users known.
 {
     std::vector<User> users;
     std::vector <std::string> my_interests;
@@ -25,7 +25,7 @@ std::vector<User> Request::list_pub_users()
         getline(iss, interest, ' ');
         if(interest != "UUID:") my_interests.push_back(interest);
         while(!(interest == "UUID:"))
-        {
+        {                                                                                                                       //FILE_IO
             getline(iss, interest, ' ');
             if(interest != "UUID:") my_interests.push_back(interest);
         }

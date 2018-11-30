@@ -44,18 +44,22 @@ int sno = 0;
 long post_count = 0;
 long known_nodes = 0;
 unsigned long long all_posts = 0;
-Request *pub;         // *****************************************
-Response *res_pub;    // <--- DONT FORGET TO FREE 
-Request req_to_send;
-TSN::request reqsend_instance; 
+Request req_to_send; //Initial Request object to iniotialize.
+TSN::request reqsend_instance; //TSN::request to send request over the network.
 std::map<int, std::string> userPostMap;
 Post my_post;
 User my_user;
-std::vector<TSN::request> V;
-std::vector<TSN::user_information> userinfo_vector;
-std::vector<TSN::response> response_vec;
-std::vector<TSN::private_message> message_vec;
-bool runFlag=true;
+std::vector<TSN::request> V; //Vector to store received requests
+std::vector<TSN::user_information> userinfo_vector; //Vector to store received user information
+std::vector<TSN::response> response_vec; //Vector to store received responses.
+std::vector<TSN::private_message> message_vec; //Vector to store received messages.
+bool runFlag=true;  //determines whether to run or end program.
+
+/*//////////////////////////////////////////////////
+/ DDS_IO STRUCTURES TO SEND DATA OVER NETWORK      /
+/                                                  /
+///////////////////////////////////////////////////*/
+
 auto req =
         dds_io<request,
                 requestSeq,
@@ -149,6 +153,11 @@ void send_message();
 
 void receive_message();
 
+/*//////////////////////////////////////////////////
+/ FUNCTION THAT IS LAUNCHED BYA THREAD AND RUNS    /
+/ SUBSCRIBERS CONTINUOSLY.                         /
+///////////////////////////////////////////////////*/
+
 void get_content()
 {
     while(runFlag)
@@ -167,6 +176,9 @@ void get_content()
 bool is_request_to_send(TSN::request req);
 
 void grab_posts(User user_to_request);
+
+//end of function prototypes.
+
 /*////////////////////////////////////
 /
 /       MAIN
@@ -174,29 +186,31 @@ void grab_posts(User user_to_request);
 /
 ////////////////////////////////// */
 int OSPL_MAIN(int argc, char *argv[]) {
-    init_params();
-    //bool temp = user_is_initiated;
-    int user_action_num;
+    init_params();                       // Loads up parameters necessary to check whether there is user information present from a previous run.
+    int user_action_num;                // STORES USER INPUT
     std::ifstream file;
     file.open("my_user.tsn");
     file.seekg(0, std::ios::end);
     std::string user_action;
     std::string answer = "Y";
     user_information userinfo_instance;
+
+    //DEBUG OUTPUT
+
     std::cout << "FILE IS GOOD: " << file.good() << std::endl;
     std::cout << "SIZE: " << file.tellg() << std::endl;
     
     if(!file.good() && file.tellg() == -1)
     {
-        userinfo_instance = initialize_user(&user_is_initiated);
+        userinfo_instance = initialize_user(&user_is_initiated);        //Initialize user if first run.
         my_user.publishEvent(userinfo_instance);
     }
     else 
     {
-        my_user = User::populate_my_user();
+        my_user = User::populate_my_user();                              //Load info if not the first run.
         std::cout << my_user << std::endl;
     }
-    std::thread update_content(get_content);
+    std::thread update_content(get_content);                             //Launch thread of subscribers.
     user_action_num = -1;
     while (user_action_num != 10) {
         std::string user_action;
@@ -204,7 +218,7 @@ int OSPL_MAIN(int argc, char *argv[]) {
         std::cout << "1. List users" << std::endl;
         std::cout << "2. Show 'user'" << std::endl;
         std::cout << "3. Edit" << std::endl;
-        std::cout << "4. Resync" << std::endl;
+        std::cout << "4. Resync" << std::endl;                          //USER MENU
         std::cout << "5. Post" << std::endl;
         std::cout << "6. Show statistics" << std::endl;
         std::cout << "7. Request Post" << std::endl;
@@ -222,7 +236,7 @@ int OSPL_MAIN(int argc, char *argv[]) {
         my_user.update_user_information_file(); 
         switch (user_action_num) {
             case 1:
-                list_all_users();
+                list_all_users();                                   //list info about the user of this program.
                 break; 
             case 2:
 		        show_user();
@@ -234,13 +248,13 @@ int OSPL_MAIN(int argc, char *argv[]) {
                 resync();
                 break; //action for resync
             case 5:
-                make_post(userinfo_instance.uuid, sno++);
+                make_post(userinfo_instance.uuid, sno++);          //MAKE A POST
                 break;
             case 6:
                 calculate_stats();
                 break; //action for statistics
             case 7:
-                {
+                {                                                   //MAKE A REQUEST FOR A POST
                     reqsend_instance=req_to_send.draft_request();
                     bool to_send = is_request_to_send(reqsend_instance);
                     if(to_send)
@@ -273,7 +287,7 @@ int OSPL_MAIN(int argc, char *argv[]) {
                 }
                 break;
             case 8:
-                send_message();
+                send_message();             //SEND MESSAGE
                 break;
             case 9:
                 break;
@@ -285,21 +299,32 @@ int OSPL_MAIN(int argc, char *argv[]) {
         } 
 
     }
-    update_content.join();
-  //  std::cout << "FLAG: " << user_is_initiated << std::endl;
+    update_content.join();                   //JOIN THE THREADS.
     set_params();
     file.close();
-    /*
-    req_thread.join();
-    userinfo_thread.join();
-    res_thread.join();
-    message_thread.join();
-    */
-    //pub->dispose();
-    //delete pub;
-    //delete res_pub;
     return 0;
 }
+
+/*//////////////////////////////////////////////////
+/                                                  /
+/                                                  /             
+/                                                  /    
+/                                                  /
+/         DEFINITION OF FUNCTIONS                  /
+/                                                  /
+/                                                  /
+/                                                  /
+/                                                 /
+///////////////////////////////////////////////////*/
+
+
+
+
+
+/*//////////////////////////////////////////////////
+/ Function to print out info on receiving request. /
+/                                                  /
+///////////////////////////////////////////////////*/
 
 void print(TSN::request D) {
     //print_time ();
@@ -313,6 +338,11 @@ void print(TSN::request D) {
     }
     std::cout << std::endl;
 }
+
+/*//////////////////////////////////////////////////
+/ Test request function                            /
+/                                                  /
+///////////////////////////////////////////////////*/
 
 TSN::request test_data_request() {
     TSN::request D;
@@ -333,6 +363,11 @@ TSN::request test_data_request() {
     return D;
 }
 
+/*//////////////////////////////////////////////////
+/ RECEIVE RESPONSES                                /
+/                                                  /
+///////////////////////////////////////////////////*/
+
 void receive_response() {
     response_vec = res.recv();
     for (size_t i = 0; i < response_vec.size(); i++) 
@@ -347,6 +382,11 @@ void receive_response() {
         }
     }
 }
+
+/*//////////////////////////////////////////////////
+/ RECEIVE REQUESTS                                 /
+/                                                  /
+///////////////////////////////////////////////////*/
 
 void receive_request() {
     int i = 0;
@@ -373,6 +413,12 @@ void receive_request() {
     }
     i++;
 }
+
+/*//////////////////////////////////////////////////
+/ LIST USERS                                       /
+/                                                  /
+///////////////////////////////////////////////////*/
+
 void list_all_users()
 {
     std::vector<User> temp = Request::list_pub_users();
@@ -381,6 +427,13 @@ void list_all_users()
         std::cout << temp[i] << std::endl;
     }
 }
+
+/*//////////////////////////////////////////////////
+/ RECEIVE MESSAGES                                 /
+/                                                  /
+///////////////////////////////////////////////////*/
+
+
 void receive_message()
 {
     message_vec = message_.recv();
@@ -389,6 +442,12 @@ void receive_message()
         std::cout << message_vec[i].message_body << std::endl;
     }
 }
+
+/*//////////////////////////////////////////////////
+/ RECEIVE USERINFO                                 /
+/                                                  /
+///////////////////////////////////////////////////*/
+
 void receive_userinfo() {
     userinfo_vector = UserInfo.recv();
     for (size_t i = 0; i < userinfo_vector.size(); i++) {
@@ -417,6 +476,11 @@ void receive_userinfo() {
         if(static_user.get_number_of_highest_post() != 0) grab_posts(static_user);
     }
 }
+
+/*//////////////////////////////////////////////////
+/ INITIALIZE USER                                  /
+/                                                  /
+///////////////////////////////////////////////////*/
 
 TSN::user_information initialize_user(bool * is_initialized) {
 
@@ -502,6 +566,11 @@ TSN::user_information initialize_user(bool * is_initialized) {
   return blank_instance;
 }
 
+/*//////////////////////////////////////////////////
+/ PRINT USER INFORMATION                           /
+/                                                  /
+///////////////////////////////////////////////////*/
+
 void print(TSN::user_information D) {
     std::cout << "Received : user_information" << std::endl;
     std::cout << "               " << D.uuid << " "
@@ -513,6 +582,11 @@ void print(TSN::user_information D) {
     std::cout << std::endl;
     std::cout << std::endl;
 }
+
+/*//////////////////////////////////////////////////
+/ TEST DATA RESPONSE                               /
+/                                                  /
+///////////////////////////////////////////////////*/
 
 TSN::response test_data_response() {
     TSN::response D;
@@ -527,6 +601,11 @@ TSN::response test_data_response() {
     return D;
 }
 
+/*//////////////////////////////////////////////////
+/ PRINT RESPONSE                                   /
+/                                                  /
+///////////////////////////////////////////////////*/
+
 void print(TSN::response D) {
 
     std::cout << "Received : response" << std::endl;
@@ -536,6 +615,11 @@ void print(TSN::response D) {
               << D.date_of_creation << std::endl;
     std::cout << std::endl;
 }
+
+/*//////////////////////////////////////////////////
+/ EDIT USER DATA                                   /
+/                                                  /
+///////////////////////////////////////////////////*/
 
 void edit_user_data() {
 
@@ -583,6 +667,11 @@ void edit_user_data() {
 
 }
 
+/*//////////////////////////////////////////////////
+/ MAKE POST                                        /
+/                                                  /
+///////////////////////////////////////////////////*/
+
 void make_post(char string[37], int sno) {
     std::ofstream myfile;
     myfile.open("my_user.tsn", ios::app);
@@ -596,6 +685,12 @@ void make_post(char string[37], int sno) {
     my_user.set_number_of_highest_post(post_count);
     myfile.close();
 }
+
+/*//////////////////////////////////////////////////
+/ RESYNC                                           /
+/                                                  /
+///////////////////////////////////////////////////*/
+
 void resync() {
 
     if (remove("users.tsn") != 0)
@@ -604,6 +699,12 @@ void resync() {
         cout << "File successfully deleted\n" << std::endl;
 
 }
+
+/*//////////////////////////////////////////////////
+/ INITIALIZE PARAMETERS                            /
+/                                                  /
+///////////////////////////////////////////////////*/
+
 void init_params()
 {
     std::ifstream inputFile("params.tsn");
@@ -619,6 +720,11 @@ void init_params()
     inputFile.close();
 }
 
+/*//////////////////////////////////////////////////
+/ SET PARAMETERS                                   /
+/                                                  /
+///////////////////////////////////////////////////*/
+
 void set_params()
 {
     std::ofstream file;
@@ -626,6 +732,12 @@ void set_params()
     file << sno << " " << user_is_initiated << " " << post_count << " " << known_nodes;  
     file.close();
 }
+
+/*//////////////////////////////////////////////////
+/ CALCULATE STATS- NOT FUNCTIONAL                  /
+/                                                  /
+///////////////////////////////////////////////////*/
+
 void calculate_stats()
 {
     int count = static_cast<int>(my_user.get_number_of_highest_post());
@@ -640,6 +752,12 @@ void calculate_stats()
     std::cout << "TOTAL NODES: " << nodes << std::endl;
     std::cout << "Pecentage in this node: " <<( (double)count / (double)total ) * 100 << std::endl;
 }
+
+ 
+/*//////////////////////////////////////////////////
+/ VIEW INFORMATION ABOUT A PARTICULAR USER         /
+/                                                  /
+///////////////////////////////////////////////////*/
 
 void show_user()
 {
@@ -663,6 +781,12 @@ void show_user()
     temp[user_idx].set_post(returns);
     std::cout << temp[user_idx] << std::endl;
 }
+
+/*//////////////////////////////////////////////////
+/ GET POSTS                                        /
+/                                                  /
+///////////////////////////////////////////////////*/
+
 std::vector<Post> get_posts(unsigned long long number_of_posts, User to_request)
 {
     std::vector<TSN::response> responses;
@@ -693,6 +817,12 @@ std::vector<Post> get_posts(unsigned long long number_of_posts, User to_request)
     }
     return temp_posts;
 }
+
+/*//////////////////////////////////////////////////
+/ SEND MESSAGE                                     /
+/                                                  /
+///////////////////////////////////////////////////*/
+
 void send_message()
 {
     TSN::private_message msg;
@@ -711,6 +841,7 @@ void send_message()
     // check if answer is a number 
     char * p;
     strtol(answer.c_str(),&p,10);
+
     while(p == 0)
     {
         std::cout<< "Enter a valid number" << std::endl;
