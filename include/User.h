@@ -52,12 +52,16 @@ public:
         {
             out << t.get_interests().at(i) << std::endl;
         }
-        out << "Posts Total:"  << t.number_of_highest_post << std::endl;
+        out << "Posts Total: "  << t.number_of_highest_post << std::endl;
         std::vector<Post> temp = t.get_post();
-        std::cout << "Posts:" << std::endl;
-        for(size_t i = 0; i < temp.size(); i++)
+        if(temp.size() != 0)
         {
-            std::cout << temp[i].get_serial_number() << " " << temp[i].get_post_data() << std::endl;
+            std::cout << "Posts:" << std::endl;
+            for(size_t i = 0; i < temp.size(); i++)
+            {
+                std::cout << "Serial Number:" << temp[i].get_serial_number() << std::endl;
+                std::cout << "Post: " << temp[i].get_post_data() << std::endl;
+            }
         }
         return out;
     }
