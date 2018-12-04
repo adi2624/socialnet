@@ -538,6 +538,18 @@ TSN::user_information initialize_user(bool * is_initialized) {
         std::cout << std::endl << "When is your birthday?(mm/dd/yyyy)" << std::endl;
         std::cin.sync();
         getline(std::cin, date);
+        //error check for birth date
+        std::string year;
+        year = date.substr(6,9);
+        std::cout << "Year is " << year << std::endl;
+        
+        if(strcmp(year.c_str(),"1970") < 0)
+        {
+            std::cout << "The year you entered is invalid." << std::endl;
+            exit(0);
+        }
+
+
         my_user.set_date_of_birth(date);
         user_information msgInstance;
         char uuidCharArray[42];
