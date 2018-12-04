@@ -546,9 +546,9 @@ TSN::user_information initialize_user(bool * is_initialized) {
         boost::uuids::uuid uuid = boost::uuids::random_generator()();
         std::string uuid_string = to_string(uuid);
 
-        for (int i = 0; i <= 37; i++) {
-            uuidCharArray[i] = uuid_string[i];
-            if (i == 37) {                                       //COPY GENERATED UUID TO uuidCharArray
+        for (int i = 0; i < 37; i++) {
+            uuidCharArray[i] = uuid_string[i];                  //NOTE: FIXED ERROR BY changing to i<37 and null character index to i=36
+            if (i == 36) {                                       //COPY GENERATED UUID TO uuidCharArray
                 uuidCharArray[i] = '\0';
             }
         }
