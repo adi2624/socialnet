@@ -135,7 +135,16 @@ TSN::request Request::draft_request()
     std::cout << "Enter the user number" << std::endl;    //ENTER THE USER NUMBER.
     std::cin.sync();
     std::getline(std::cin, temp);
+    try
+    {
     input = stoi(temp);
+    }
+    catch(...)
+    {
+        std::cout<<"Error occured during integer conversion. Please enter only an INTEGER for input."<<std::endl;
+        std::getline(std::cin,temp);
+        input = stoi(temp);
+    }
     node_request user_request;
     strcpy(user_request.fulfiller_uuid, name_user.at(input - 1).return_uuid());
     std::cout << "The received request was for UUID:" << user_request.fulfiller_uuid
@@ -146,7 +155,17 @@ TSN::request Request::draft_request()
     int length = 0 ;
     while(!(temp == "end"))
     {
+        try
+        {
         input = stoi(temp);
+        }
+        catch(...)
+        {
+        
+            std::cout<<"Error occured during integer conversion. Please enter only an INTEGER for input."<<std::endl;
+            std::getline(std::cin,temp);
+            input = stoi(temp);
+        }
         serial_number.push_back(input);
         length++;
         std::cin.sync();
