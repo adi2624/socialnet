@@ -239,8 +239,20 @@ int OSPL_MAIN(int argc, char *argv[]) {
         std::cout << "Enter your choice: ";
         cin.clear();
         std::cin.sync();
-        getline(std::cin, user_action);        
-        user_action_num = stoi(user_action);
+        getline(std::cin, user_action);     
+        try{
+            user_action_num = stoi(user_action);
+        }   
+        catch(...)
+        {
+            std::cout<<"Invalid input. Try again"<<std::endl;
+            std::cin.clear();
+            std::cin.sync();
+            getline(std::cin, user_action);
+            user_action_num = stoi(user_action);
+
+        }
+
         //Update User Values every loop 
         my_user.update_user_information_file(); 
         switch (user_action_num) {
@@ -881,7 +893,20 @@ void send_message()
     std::getline(std::cin, message_data);
     long result = static_cast<long>(std::time(nullptr));
     msg.date_of_creation = result;
-    int index = std::stoi(answer);
+    int index=0;
+    try
+    {
+     index = std::stoi(answer);
+    }
+    catch(...)
+    {
+        std::cout<<"You entered an invalid input. Please try again from the menu"<<std::endl;
+        std::cin.clear();
+        std::cin.sync();
+       
+
+
+    }
     msg = Message::construct_message(users[index].return_uuid(), my_user.return_uuid(),
                                     message_data, result);
     Message m(msg);
