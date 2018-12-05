@@ -50,10 +50,10 @@ char* User::return_uuid()
 
 void User::set_user_uuid(std::string uuid_string)
 {
-    for(int i = 0; i <=37;i++)
+    for(int i = 0; i <37;i++)
     {
         
-        if(i == 37)
+        if(i == 36)
         {
             this->uuidCharArray[i] = '\0';
         }
@@ -69,10 +69,10 @@ void User::set_user_information()
     //boost::uuids::string_generator gen;
     boost::uuids::uuid uuid = boost::uuids::random_generator()();
     std::string uuid_string = to_string(uuid);
-    for(int i = 0; i <=37;i++)
+    for(int i = 0; i <37;i++)
     {
         this->uuidCharArray[i] = uuid_string[i];
-        if(i == 37)
+        if(i == 36)
         {
             this->uuidCharArray[i] = '\0';
         }
