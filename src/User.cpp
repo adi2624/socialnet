@@ -177,10 +177,11 @@ void User::update_user_information_file()
          system("rm -f users.tmp");
          this->write_to_file();
      }
-     else
+     /*else
      {
          std::cerr<<"File not found";
      }
+     */
 
 }
 User User::populate_my_user()

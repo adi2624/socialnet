@@ -254,7 +254,7 @@ int OSPL_MAIN(int argc, char *argv[]) {
         }
 
         //Update User Values every loop 
-        my_user.update_user_information_file(); 
+       
         switch (user_action_num) {
             case 1:
                 list_all_users();                                   //list info about the user of this program.
@@ -312,6 +312,7 @@ int OSPL_MAIN(int argc, char *argv[]) {
                 send_message();             //SEND MESSAGE
                 break;
         }
+        my_user.update_user_information_file(); 
         if (user_action_num == 9)
         {
             runFlag=false;
